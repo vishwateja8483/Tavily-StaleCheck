@@ -1,0 +1,19 @@
+{
+  "acquisition_sha256": "eb1d9aa6ab34911a1a05795883c61c0d40769fdead757c8bb01d01f043acabc8",
+  "candidate_id": "candidate-1",
+  "candidate_sha256": "455ef2a8fc08fa16832ca8d89f4b79ea71b065b0eef36c5468f602d1a666f6ce",
+  "content_sha256": "08829864a2c70a014f5b9a0419d2fb1b4dcac31968e39e04e417b380d4e84646",
+  "quote": "Invented lifecycle: Synthetic service is supported from 2025-01-01 until 2026-06-01. It is unsupported from 2026-06-01.",
+  "quote_start_byte": 0,
+  "quote_end_byte": 119,
+  "subject": "Synthetic service",
+  "assertion": "is_supported",
+  "scope": "synthetic",
+  "value": false,
+  "effective_from": "2026-06-01",
+  "end_state": "open_ended",
+  "reviewer": "Invented synthetic fixture reviewer (NOT actual human review)",
+  "attested": true,
+  "reviewed_at": "2026-11-01T12:00:00Z",
+  "rationale": "Explicitly invented attestation and lifecycle dates for offline plumbing demonstration, not publisher truth or authenticated human review."
+}

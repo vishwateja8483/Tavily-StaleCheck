@@ -1,0 +1,21 @@
+# Normalise text to LF in the repository and in every checkout, so fixture digests do not depend on the platform.
+* text=auto eol=lf
+
+# Windows launchers need CRLF.
+*.cmd text eol=crlf
+*.bat text eol=crlf
+
+# Binary assets
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.pdf binary
+*.pptx binary
+*.mp4 binary
+*.webm binary
+*.zip binary
+*.whl binary
+*.woff binary
+*.woff2 binary

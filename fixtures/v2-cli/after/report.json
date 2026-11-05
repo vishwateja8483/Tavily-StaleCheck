@@ -1,0 +1,442 @@
+{
+  "schema_version": "2.0",
+  "project_id": "stalecheck",
+  "run_id": "fd-7703cedcdf4740c48d49c078f9fd3d41",
+  "mode": "replay",
+  "title": "StaleCheck reviewed temporal verification v2",
+  "summary": "1 claim(s), 0 abstention(s); reviewed evidence-conditioned replay.",
+  "limitations": [
+    "Offline replay: no model, retrieval, paid API, network, or credential access.",
+    "Supplied attestations and reviewer identities are not authenticated authorship, semantic entailment, source truth, or independently reviewed effectiveness.",
+    "Only exact subject/assertion/scope point-in-time lifecycle annotations are assessed; ambiguous or unsupported interpretations abstain.",
+    "Intervals are half-open; explicit unknown end or unknown start cannot establish active coverage. Publication/retrieval dates never become effective dates.",
+    "Provider publication metadata may estimate publication or update. Search snippets and extracted text are not original publisher document bytes.",
+    "Corrections retain immediate prior linkage only, not a complete authenticated review history; they do not erase or temporally supersede prior statements. Only explicitly selected reviews become evidence.",
+    "Partial acquisitions remain partial; reviewing selected candidates does not establish retrieval completeness. Synthetic attestations demonstrate plumbing, not actual human review."
+  ],
+  "claims": [
+    {
+      "id": "synthetic-claim",
+      "text": "Synthetic service is supported in synthetic.",
+      "subject": "Synthetic service",
+      "assertion": "is_supported",
+      "scope": "synthetic",
+      "public": true,
+      "as_of": "2026-11-01",
+      "verdict": "STALE",
+      "reason": "Unconflicted support at answer_date and later effective invalidation establish a stale transition.",
+      "evidence_ids": [
+        "review-9fa3ecedb9aa013837695a7a6cae660c127c6c5ca960717f1a7751ec1a86a4ba",
+        "review-d7eaa70df8e1ac601e8d65d0ffd814376641920aba64b6c7c3dddbc943dc9f6b"
+      ],
+      "citations": [
+        {
+          "evidence_id": "review-9fa3ecedb9aa013837695a7a6cae660c127c6c5ca960717f1a7751ec1a86a4ba",
+          "statement_id": "statement-9fa3ecedb9aa013837695a7a6cae660c127c6c5ca960717f1a7751ec1a86a4ba",
+          "review_sha256": "9fa3ecedb9aa013837695a7a6cae660c127c6c5ca960717f1a7751ec1a86a4ba",
+          "quote": "Invented lifecycle: Synthetic service is supported from 2025-01-01 until 2026-06-01. It is unsupported from 2026-06-01.",
+          "effective_from": "2025-01-01",
+          "effective_to": "2026-06-01",
+          "end_state": "dated"
+        },
+        {
+          "evidence_id": "review-d7eaa70df8e1ac601e8d65d0ffd814376641920aba64b6c7c3dddbc943dc9f6b",
+          "statement_id": "statement-d7eaa70df8e1ac601e8d65d0ffd814376641920aba64b6c7c3dddbc943dc9f6b",
+          "review_sha256": "d7eaa70df8e1ac601e8d65d0ffd814376641920aba64b6c7c3dddbc943dc9f6b",
+          "quote": "Invented lifecycle: Synthetic service is supported from 2025-01-01 until 2026-06-01. It is unsupported from 2026-06-01.",
+          "effective_from": "2026-06-01",
+          "effective_to": null,
+          "end_state": "open_ended"
+        }
+      ],
+      "freshness": "changed/contradicted",
+      "explanation": {
+        "schema_version": "2.0",
+        "reason_code": "STALE_TRANSITION",
+        "original_as_of": null,
+        "target_date": "2026-11-01",
+        "answer_date": "2026-01-01",
+        "verification_date": "2026-11-01",
+        "prior": {
+          "date": "2026-01-01",
+          "state": "supported",
+          "support": [
+            {
+              "evidence_id": "review-9fa3ecedb9aa013837695a7a6cae660c127c6c5ca960717f1a7751ec1a86a4ba",
+              "statement_id": "statement-9fa3ecedb9aa013837695a7a6cae660c127c6c5ca960717f1a7751ec1a86a4ba",
+              "review_sha256": "9fa3ecedb9aa013837695a7a6cae660c127c6c5ca960717f1a7751ec1a86a4ba"
+            }
+          ],
+          "contradiction": [],
+          "excluded": [
+            {
+              "evidence_id": "review-d7eaa70df8e1ac601e8d65d0ffd814376641920aba64b6c7c3dddbc943dc9f6b",
+              "statement_id": "statement-d7eaa70df8e1ac601e8d65d0ffd814376641920aba64b6c7c3dddbc943dc9f6b",
+              "review_sha256": "d7eaa70df8e1ac601e8d65d0ffd814376641920aba64b6c7c3dddbc943dc9f6b",
+              "reason_code": "NOT_YET_EFFECTIVE"
+            }
+          ]
+        },
+        "current": {
+          "date": "2026-11-01",
+          "state": "contradicted",
+          "support": [],
+          "contradiction": [
+            {
+              "evidence_id": "review-d7eaa70df8e1ac601e8d65d0ffd814376641920aba64b6c7c3dddbc943dc9f6b",
+              "statement_id": "statement-d7eaa70df8e1ac601e8d65d0ffd814376641920aba64b6c7c3dddbc943dc9f6b",
+              "review_sha256": "d7eaa70df8e1ac601e8d65d0ffd814376641920aba64b6c7c3dddbc943dc9f6b"
+            }
+          ],
+          "excluded": [
+            {
+              "evidence_id": "review-9fa3ecedb9aa013837695a7a6cae660c127c6c5ca960717f1a7751ec1a86a4ba",
+              "statement_id": "statement-9fa3ecedb9aa013837695a7a6cae660c127c6c5ca960717f1a7751ec1a86a4ba",
+              "review_sha256": "9fa3ecedb9aa013837695a7a6cae660c127c6c5ca960717f1a7751ec1a86a4ba",
+              "reason_code": "ENDED"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "evidence": [
+    {
+      "title": "Invented offline lifecycle fixture",
+      "url": "https://example.com/synthetic-lifecycle",
+      "content": "Invented lifecycle: Synthetic service is supported from 2025-01-01 until 2026-06-01. It is unsupported from 2026-06-01.",
+      "content_sha256": "08829864a2c70a014f5b9a0419d2fb1b4dcac31968e39e04e417b380d4e84646",
+      "retrieved_at": "2026-11-01T14:42:42.504566+00:00",
+      "published_at": null,
+      "id": "review-9fa3ecedb9aa013837695a7a6cae660c127c6c5ca960717f1a7751ec1a86a4ba",
+      "provenance": "human_attested_acquisition",
+      "statements": [
+        {
+          "subject": "Synthetic service",
+          "assertion": "is_supported",
+          "scope": "synthetic",
+          "value": true,
+          "quote": "Invented lifecycle: Synthetic service is supported from 2025-01-01 until 2026-06-01. It is unsupported from 2026-06-01.",
+          "effective_from": "2025-01-01",
+          "end_state": "dated",
+          "quote_start_byte": 0,
+          "quote_end_byte": 119,
+          "id": "statement-9fa3ecedb9aa013837695a7a6cae660c127c6c5ca960717f1a7751ec1a86a4ba",
+          "effective_to": "2026-06-01",
+          "annotation_provenance": "user_reviewed",
+          "review_sha256": "9fa3ecedb9aa013837695a7a6cae660c127c6c5ca960717f1a7751ec1a86a4ba"
+        }
+      ],
+      "review_sha256": "9fa3ecedb9aa013837695a7a6cae660c127c6c5ca960717f1a7751ec1a86a4ba",
+      "candidate_sha256": "455ef2a8fc08fa16832ca8d89f4b79ea71b065b0eef36c5468f602d1a666f6ce",
+      "acquisition_sha256": "eb1d9aa6ab34911a1a05795883c61c0d40769fdead757c8bb01d01f043acabc8",
+      "extraction_method": "extracted_text"
+    },
+    {
+      "title": "Invented offline lifecycle fixture",
+      "url": "https://example.com/synthetic-lifecycle",
+      "content": "Invented lifecycle: Synthetic service is supported from 2025-01-01 until 2026-06-01. It is unsupported from 2026-06-01.",
+      "content_sha256": "08829864a2c70a014f5b9a0419d2fb1b4dcac31968e39e04e417b380d4e84646",
+      "retrieved_at": "2026-11-01T14:42:42.504566+00:00",
+      "published_at": null,
+      "id": "review-d7eaa70df8e1ac601e8d65d0ffd814376641920aba64b6c7c3dddbc943dc9f6b",
+      "provenance": "human_attested_acquisition",
+      "statements": [
+        {
+          "subject": "Synthetic service",
+          "assertion": "is_supported",
+          "scope": "synthetic",
+          "value": false,
+          "quote": "Invented lifecycle: Synthetic service is supported from 2025-01-01 until 2026-06-01. It is unsupported from 2026-06-01.",
+          "effective_from": "2026-06-01",
+          "end_state": "open_ended",
+          "quote_start_byte": 0,
+          "quote_end_byte": 119,
+          "id": "statement-d7eaa70df8e1ac601e8d65d0ffd814376641920aba64b6c7c3dddbc943dc9f6b",
+          "effective_to": null,
+          "annotation_provenance": "user_reviewed",
+          "review_sha256": "d7eaa70df8e1ac601e8d65d0ffd814376641920aba64b6c7c3dddbc943dc9f6b"
+        }
+      ],
+      "review_sha256": "d7eaa70df8e1ac601e8d65d0ffd814376641920aba64b6c7c3dddbc943dc9f6b",
+      "candidate_sha256": "455ef2a8fc08fa16832ca8d89f4b79ea71b065b0eef36c5468f602d1a666f6ce",
+      "acquisition_sha256": "eb1d9aa6ab34911a1a05795883c61c0d40769fdead757c8bb01d01f043acabc8",
+      "extraction_method": "extracted_text"
+    }
+  ],
+  "reviewed_evidence": {
+    "schema_version": "2.0",
+    "format": "reviewed_evidence",
+    "reviews": [
+      {
+        "review": {
+          "schema_version": "1.0",
+          "format": "human_attested_review",
+          "acquisition": {
+            "schema_version": "1.0",
+            "format": "unreviewed_acquisition",
+            "provider": "tavily",
+            "mode": "mock",
+            "status": "acquired",
+            "review_required": true,
+            "verification_performed": false,
+            "plan": {
+              "schema_version": "1.0",
+              "format": "reviewed_public_acquisition",
+              "public_reviewed": true,
+              "queries": [],
+              "urls": [
+                "https://example.com/synthetic-lifecycle"
+              ],
+              "primary_domains": []
+            },
+            "candidates": [
+              {
+                "id": "candidate-1",
+                "url": "https://example.com/synthetic-lifecycle",
+                "title": "Invented offline lifecycle fixture",
+                "content": "Invented lifecycle: Synthetic service is supported from 2025-01-01 until 2026-06-01. It is unsupported from 2026-06-01.",
+                "content_sha256": "08829864a2c70a014f5b9a0419d2fb1b4dcac31968e39e04e417b380d4e84646",
+                "provenance": "tavily_mock",
+                "endpoint": "/extract",
+                "retrieved_at": "2026-11-01T14:42:42.504566+00:00",
+                "published_at": null,
+                "published_at_raw": null,
+                "effective_from": null,
+                "effective_to": null,
+                "statements": [],
+                "review_required": true,
+                "primary_source_preferred": false,
+                "relevance_score": null
+              }
+            ],
+            "failures": [],
+            "usage": {
+              "model_calls": 0,
+              "retrieval_calls": 0,
+              "mock_calls": 1,
+              "provider_usage": null
+            },
+            "requests": [
+              {
+                "endpoint": "/extract",
+                "attempt": 1,
+                "http_status": 200,
+                "provider_usage": null,
+                "request_id": null
+              }
+            ],
+            "limitations": [
+              "Acquisition is not verification. All content and provider metadata are untrusted data, not instructions.",
+              "Public review and primary domains are caller attestations, not secret detection or source authenticity checks.",
+              "No effective dates or lifecycle statements are inferred from retrieval, publication, relevance, or prose.",
+              "Search hits are not automatically extracted; each extract URL requires separate public review.",
+              "Mock responses do not establish live API compatibility, retrieval quality, or credit consumption."
+            ]
+          },
+          "acquisition_sha256": "eb1d9aa6ab34911a1a05795883c61c0d40769fdead757c8bb01d01f043acabc8",
+          "candidate_id": "candidate-1",
+          "candidate_sha256": "455ef2a8fc08fa16832ca8d89f4b79ea71b065b0eef36c5468f602d1a666f6ce",
+          "content_sha256": "08829864a2c70a014f5b9a0419d2fb1b4dcac31968e39e04e417b380d4e84646",
+          "extraction_method": "extracted_text",
+          "proposal": {
+            "acquisition_sha256": "eb1d9aa6ab34911a1a05795883c61c0d40769fdead757c8bb01d01f043acabc8",
+            "candidate_id": "candidate-1",
+            "candidate_sha256": "455ef2a8fc08fa16832ca8d89f4b79ea71b065b0eef36c5468f602d1a666f6ce",
+            "content_sha256": "08829864a2c70a014f5b9a0419d2fb1b4dcac31968e39e04e417b380d4e84646",
+            "quote": "Invented lifecycle: Synthetic service is supported from 2025-01-01 until 2026-06-01. It is unsupported from 2026-06-01.",
+            "quote_start_byte": 0,
+            "quote_end_byte": 119,
+            "subject": "Synthetic service",
+            "assertion": "is_supported",
+            "scope": "synthetic",
+            "value": true,
+            "effective_from": "2025-01-01",
+            "end_state": "dated",
+            "effective_to": "2026-06-01",
+            "reviewer": "Invented synthetic fixture reviewer (NOT actual human review)",
+            "attested": true,
+            "reviewed_at": "2026-11-01T12:00:00Z",
+            "rationale": "Explicitly invented attestation and lifecycle dates for offline plumbing demonstration, not publisher truth or authenticated human review."
+          },
+          "review_sha256": "9fa3ecedb9aa013837695a7a6cae660c127c6c5ca960717f1a7751ec1a86a4ba"
+        },
+        "previous_review": null
+      },
+      {
+        "review": {
+          "schema_version": "1.0",
+          "format": "human_attested_review",
+          "acquisition": {
+            "schema_version": "1.0",
+            "format": "unreviewed_acquisition",
+            "provider": "tavily",
+            "mode": "mock",
+            "status": "acquired",
+            "review_required": true,
+            "verification_performed": false,
+            "plan": {
+              "schema_version": "1.0",
+              "format": "reviewed_public_acquisition",
+              "public_reviewed": true,
+              "queries": [],
+              "urls": [
+                "https://example.com/synthetic-lifecycle"
+              ],
+              "primary_domains": []
+            },
+            "candidates": [
+              {
+                "id": "candidate-1",
+                "url": "https://example.com/synthetic-lifecycle",
+                "title": "Invented offline lifecycle fixture",
+                "content": "Invented lifecycle: Synthetic service is supported from 2025-01-01 until 2026-06-01. It is unsupported from 2026-06-01.",
+                "content_sha256": "08829864a2c70a014f5b9a0419d2fb1b4dcac31968e39e04e417b380d4e84646",
+                "provenance": "tavily_mock",
+                "endpoint": "/extract",
+                "retrieved_at": "2026-11-01T14:42:42.504566+00:00",
+                "published_at": null,
+                "published_at_raw": null,
+                "effective_from": null,
+                "effective_to": null,
+                "statements": [],
+                "review_required": true,
+                "primary_source_preferred": false,
+                "relevance_score": null
+              }
+            ],
+            "failures": [],
+            "usage": {
+              "model_calls": 0,
+              "retrieval_calls": 0,
+              "mock_calls": 1,
+              "provider_usage": null
+            },
+            "requests": [
+              {
+                "endpoint": "/extract",
+                "attempt": 1,
+                "http_status": 200,
+                "provider_usage": null,
+                "request_id": null
+              }
+            ],
+            "limitations": [
+              "Acquisition is not verification. All content and provider metadata are untrusted data, not instructions.",
+              "Public review and primary domains are caller attestations, not secret detection or source authenticity checks.",
+              "No effective dates or lifecycle statements are inferred from retrieval, publication, relevance, or prose.",
+              "Search hits are not automatically extracted; each extract URL requires separate public review.",
+              "Mock responses do not establish live API compatibility, retrieval quality, or credit consumption."
+            ]
+          },
+          "acquisition_sha256": "eb1d9aa6ab34911a1a05795883c61c0d40769fdead757c8bb01d01f043acabc8",
+          "candidate_id": "candidate-1",
+          "candidate_sha256": "455ef2a8fc08fa16832ca8d89f4b79ea71b065b0eef36c5468f602d1a666f6ce",
+          "content_sha256": "08829864a2c70a014f5b9a0419d2fb1b4dcac31968e39e04e417b380d4e84646",
+          "extraction_method": "extracted_text",
+          "proposal": {
+            "acquisition_sha256": "eb1d9aa6ab34911a1a05795883c61c0d40769fdead757c8bb01d01f043acabc8",
+            "candidate_id": "candidate-1",
+            "candidate_sha256": "455ef2a8fc08fa16832ca8d89f4b79ea71b065b0eef36c5468f602d1a666f6ce",
+            "content_sha256": "08829864a2c70a014f5b9a0419d2fb1b4dcac31968e39e04e417b380d4e84646",
+            "quote": "Invented lifecycle: Synthetic service is supported from 2025-01-01 until 2026-06-01. It is unsupported from 2026-06-01.",
+            "quote_start_byte": 0,
+            "quote_end_byte": 119,
+            "subject": "Synthetic service",
+            "assertion": "is_supported",
+            "scope": "synthetic",
+            "value": false,
+            "effective_from": "2026-06-01",
+            "end_state": "open_ended",
+            "reviewer": "Invented synthetic fixture reviewer (NOT actual human review)",
+            "attested": true,
+            "reviewed_at": "2026-11-01T12:00:00Z",
+            "rationale": "Explicitly invented attestation and lifecycle dates for offline plumbing demonstration, not publisher truth or authenticated human review."
+          },
+          "review_sha256": "d7eaa70df8e1ac601e8d65d0ffd814376641920aba64b6c7c3dddbc943dc9f6b"
+        },
+        "previous_review": null
+      }
+    ],
+    "evidence": [
+      {
+        "title": "Invented offline lifecycle fixture",
+        "url": "https://example.com/synthetic-lifecycle",
+        "content": "Invented lifecycle: Synthetic service is supported from 2025-01-01 until 2026-06-01. It is unsupported from 2026-06-01.",
+        "content_sha256": "08829864a2c70a014f5b9a0419d2fb1b4dcac31968e39e04e417b380d4e84646",
+        "retrieved_at": "2026-11-01T14:42:42.504566+00:00",
+        "published_at": null,
+        "id": "review-9fa3ecedb9aa013837695a7a6cae660c127c6c5ca960717f1a7751ec1a86a4ba",
+        "provenance": "human_attested_acquisition",
+        "statements": [
+          {
+            "subject": "Synthetic service",
+            "assertion": "is_supported",
+            "scope": "synthetic",
+            "value": true,
+            "quote": "Invented lifecycle: Synthetic service is supported from 2025-01-01 until 2026-06-01. It is unsupported from 2026-06-01.",
+            "effective_from": "2025-01-01",
+            "end_state": "dated",
+            "quote_start_byte": 0,
+            "quote_end_byte": 119,
+            "id": "statement-9fa3ecedb9aa013837695a7a6cae660c127c6c5ca960717f1a7751ec1a86a4ba",
+            "effective_to": "2026-06-01",
+            "annotation_provenance": "user_reviewed",
+            "review_sha256": "9fa3ecedb9aa013837695a7a6cae660c127c6c5ca960717f1a7751ec1a86a4ba"
+          }
+        ],
+        "review_sha256": "9fa3ecedb9aa013837695a7a6cae660c127c6c5ca960717f1a7751ec1a86a4ba",
+        "candidate_sha256": "455ef2a8fc08fa16832ca8d89f4b79ea71b065b0eef36c5468f602d1a666f6ce",
+        "acquisition_sha256": "eb1d9aa6ab34911a1a05795883c61c0d40769fdead757c8bb01d01f043acabc8",
+        "extraction_method": "extracted_text"
+      },
+      {
+        "title": "Invented offline lifecycle fixture",
+        "url": "https://example.com/synthetic-lifecycle",
+        "content": "Invented lifecycle: Synthetic service is supported from 2025-01-01 until 2026-06-01. It is unsupported from 2026-06-01.",
+        "content_sha256": "08829864a2c70a014f5b9a0419d2fb1b4dcac31968e39e04e417b380d4e84646",
+        "retrieved_at": "2026-11-01T14:42:42.504566+00:00",
+        "published_at": null,
+        "id": "review-d7eaa70df8e1ac601e8d65d0ffd814376641920aba64b6c7c3dddbc943dc9f6b",
+        "provenance": "human_attested_acquisition",
+        "statements": [
+          {
+            "subject": "Synthetic service",
+            "assertion": "is_supported",
+            "scope": "synthetic",
+            "value": false,
+            "quote": "Invented lifecycle: Synthetic service is supported from 2025-01-01 until 2026-06-01. It is unsupported from 2026-06-01.",
+            "effective_from": "2026-06-01",
+            "end_state": "open_ended",
+            "quote_start_byte": 0,
+            "quote_end_byte": 119,
+            "id": "statement-d7eaa70df8e1ac601e8d65d0ffd814376641920aba64b6c7c3dddbc943dc9f6b",
+            "effective_to": null,
+            "annotation_provenance": "user_reviewed",
+            "review_sha256": "d7eaa70df8e1ac601e8d65d0ffd814376641920aba64b6c7c3dddbc943dc9f6b"
+          }
+        ],
+        "review_sha256": "d7eaa70df8e1ac601e8d65d0ffd814376641920aba64b6c7c3dddbc943dc9f6b",
+        "candidate_sha256": "455ef2a8fc08fa16832ca8d89f4b79ea71b065b0eef36c5468f602d1a666f6ce",
+        "acquisition_sha256": "eb1d9aa6ab34911a1a05795883c61c0d40769fdead757c8bb01d01f043acabc8",
+        "extraction_method": "extracted_text"
+      }
+    ]
+  },
+  "answer_text": "Synthetic service is supported in synthetic.",
+  "answer_date": "2026-01-01",
+  "verification_date": "2026-11-01",
+  "scope": "synthetic",
+  "warnings": [
+    "review-9fa3ecedb9aa013837695a7a6cae660c127c6c5ca960717f1a7751ec1a86a4ba: publication date missing",
+    "review-d7eaa70df8e1ac601e8d65d0ffd814376641920aba64b6c7c3dddbc943dc9f6b: publication date missing"
+  ],
+  "input_sha256": "c00f9a848ef3fc2f64bc985fde483f3331d3f1ef4754cbd02bc24018ce041767",
+  "config_sha256": "e49a9bacffa4c2139246fab75c57e3012455f46ef9cf9b1dd269cee07955fab9",
+  "usage": {
+    "model_calls": 0,
+    "retrieval_calls": 0,
+    "provider_usage": null
+  },
+  "version": "0.2.0"
+}

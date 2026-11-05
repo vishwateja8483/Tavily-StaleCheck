@@ -1,0 +1,10 @@
+{
+  "schema_version": "1.0",
+  "format": "reviewed_public_acquisition",
+  "public_reviewed": true,
+  "queries": [],
+  "urls": [
+    "https://example.com/synthetic-lifecycle"
+  ],
+  "primary_domains": []
+}

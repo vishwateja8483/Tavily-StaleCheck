@@ -1,0 +1,1 @@
+Python 3.12 is the newest stable release of Python. It was released in October 2023, and the core team supports each release for five years. Python 3.8 reached end of life in October 2024, and Python 3.9 will keep receiving security fixes until October 2025. The experimental free-threaded build, which removes the GIL, ships with Python 3.13.

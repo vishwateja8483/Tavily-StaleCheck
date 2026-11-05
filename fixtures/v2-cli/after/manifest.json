@@ -1,0 +1,44 @@
+{
+  "schema_version": "1.0",
+  "project_id": "stalecheck",
+  "run_id": "fd-7703cedcdf4740c48d49c078f9fd3d41",
+  "mode": "replay",
+  "status": "completed",
+  "created_at": "2026-11-01T14:42:46.691083+00:00",
+  "artifacts": [
+    {
+      "path": "input.json",
+      "sha256": "c00f9a848ef3fc2f64bc985fde483f3331d3f1ef4754cbd02bc24018ce041767",
+      "bytes": 13084
+    },
+    {
+      "path": "config.json",
+      "sha256": "e49a9bacffa4c2139246fab75c57e3012455f46ef9cf9b1dd269cee07955fab9",
+      "bytes": 139
+    },
+    {
+      "path": "report.json",
+      "sha256": "4fdb0d130a0f42a27b1e8042351517b4c18c3f8e7631bcd73a7957758383c998",
+      "bytes": 21937
+    },
+    {
+      "path": "events.jsonl",
+      "sha256": "fa45b85a1093787a119252bde4da772c0d9388f3a0a3414539983f3168a4ac53",
+      "bytes": 479
+    },
+    {
+      "path": "errors.jsonl",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    }
+  ],
+  "limitations": [
+    "Offline replay: no model, retrieval, paid API, network, or credential access.",
+    "Supplied attestations and reviewer identities are not authenticated authorship, semantic entailment, source truth, or independently reviewed effectiveness.",
+    "Only exact subject/assertion/scope point-in-time lifecycle annotations are assessed; ambiguous or unsupported interpretations abstain.",
+    "Intervals are half-open; explicit unknown end or unknown start cannot establish active coverage. Publication/retrieval dates never become effective dates.",
+    "Provider publication metadata may estimate publication or update. Search snippets and extracted text are not original publisher document bytes.",
+    "Corrections retain immediate prior linkage only, not a complete authenticated review history; they do not erase or temporally supersede prior statements. Only explicitly selected reviews become evidence.",
+    "Partial acquisitions remain partial; reviewing selected candidates does not establish retrieval completeness. Synthetic attestations demonstrate plumbing, not actual human review."
+  ]
+}

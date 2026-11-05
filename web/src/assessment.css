@@ -1,0 +1,28 @@
+.assessment { max-width: 960px; }
+.assessment-section { margin-top: 24px; padding: 24px; }
+.assessment fieldset { border: 0; padding: 0; margin: 0; min-width: 0; }
+.assessment label { display: flex; flex-direction: column; gap: 8px; margin: 16px 0; color: var(--secondary); }
+.assessment textarea, .assessment input:not([type='checkbox']) { width: 100%; min-width: 0; padding: 12px; border: 1px solid var(--border-strong); border-radius: var(--radius-md); background: var(--page); color: var(--ink); font: inherit; }
+.assessment textarea { resize: vertical; }
+.assessment .assessment-guidance { margin: 8px 0; color: var(--secondary); font-size: .9rem; }
+.assessment .assessment-field-error { margin: 8px 0; color: var(--ink); font-weight: 600; }
+.assessment [aria-invalid='true'] { border: 2px solid var(--warning-border); }
+.assessment textarea:read-only, .assessment input:read-only:not([type='checkbox']) { border-style: dashed; }
+.assessment textarea:focus-visible, .assessment input:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+.assessment-fields { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; }
+.assessment .assessment-consent { flex-direction: row; align-items: flex-start; padding: 16px; border: 1px solid var(--warning-border); border-radius: var(--radius-md); }
+.assessment-consent input { margin-top: 5px; accent-color: var(--accent); }
+.assessment button:disabled { cursor: not-allowed; opacity: .55; }
+.assessment-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 16px; }
+.assessment .button { white-space: normal; }
+.assessment-config { padding-left: 20px; color: var(--secondary); }
+.assessment-approval, .assessment-artifacts { border-top: 1px solid var(--border); padding-top: 24px; margin-top: 24px; }
+.assessment pre { white-space: pre-wrap; overflow-wrap: anywhere; font-family: var(--mono); padding: 12px; background: var(--page); border: 1px solid var(--border); }
+.assessment-hash { overflow-wrap: anywhere; color: var(--secondary); }
+.assessment-report { display: block; width: 100%; min-height: 720px; border: 1px solid var(--border); background: white; }
+.assessment-footer { padding: 0 0 32px; }
+@media (max-width: 640px) {
+  .assessment { width: calc(100% - 32px); }
+  .assessment-section { padding: 16px; }
+  .assessment-fields { gap: 0; }
+}

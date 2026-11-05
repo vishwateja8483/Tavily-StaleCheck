@@ -1,0 +1,16 @@
+[
+  {
+    "path": "/extract",
+    "status": 200,
+    "body": {
+      "results": [
+        {
+          "url": "https://example.com/synthetic-lifecycle",
+          "title": "Invented offline lifecycle fixture",
+          "raw_content": "Invented lifecycle: Synthetic service is supported from 2025-01-01 until 2026-06-01. It is unsupported from 2026-06-01."
+        }
+      ],
+      "failed_results": []
+    }
+  }
+]

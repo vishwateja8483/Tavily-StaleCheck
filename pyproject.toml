@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "stalecheck"
+version = "0.4.0"
+description = "Offline temporal verification and consent-gated stale-answer assessment"
+requires-python = ">=3.12"
+dependencies = []
+
+[project.optional-dependencies]
+test = ["pytest>=8,<10"]
+
+[project.scripts]
+stalecheck = "stalecheck.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+stalecheck = ["fixtures/*.json", "assessment_static/index.html", "assessment_static/assets/*.js", "assessment_static/assets/*.css"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]

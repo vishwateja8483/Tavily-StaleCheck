@@ -1,0 +1,43 @@
+{
+  "schema_version": "1.0",
+  "project_id": "stalecheck",
+  "run_id": "fd-a9092aae4e1d4ec7a94be15b84701008",
+  "mode": "replay",
+  "status": "completed",
+  "created_at": "2026-11-01T10:47:53.175807+00:00",
+  "artifacts": [
+    {
+      "path": "input.json",
+      "sha256": "fbd118319655438d8cdd077eb5524c5daa30aaa913aa8d1f741f25362e612d56",
+      "bytes": 4293
+    },
+    {
+      "path": "config.json",
+      "sha256": "0ee31e4e466c4ed214a7e905cc130df439893fcb9514b00f5dca813e0698910e",
+      "bytes": 139
+    },
+    {
+      "path": "report.json",
+      "sha256": "8c9c4731242a6d16248e0f8cbd3bbe4dbd7e675f72018ba7a377f0640f1f3251",
+      "bytes": 9653
+    },
+    {
+      "path": "events.jsonl",
+      "sha256": "e34caa3303525e1c40db0da75cdbfbb2ddba04afb50d46d74f6de9ee6a296dde",
+      "bytes": 509
+    },
+    {
+      "path": "errors.jsonl",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    }
+  ],
+  "limitations": [
+    "Offline replay: no model, retrieval, paid API, network, or credential access.",
+    "Synthetic fixtures demonstrate plumbing, not official source truths or measured model/retrieval effectiveness.",
+    "User-supplied annotations are trusted inputs, not independently validated semantic entailment. Exact quotes and hashes establish consistency, not truth or authenticity.",
+    "Only exact subject/scope is_supported point-in-time assertions are supported; unsupported or ambiguous prose abstains.",
+    "Intervals are [effective_from, effective_to), with null end explicitly meaning open-ended applicability supplied by the annotator; missing start is unknown.",
+    "Retrieval/publication dates never substitute for effective dates. Future retrieval can capture historic applicability but is not proof of what was known then."
+  ]
+}

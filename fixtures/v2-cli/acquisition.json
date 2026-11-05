@@ -1,0 +1,62 @@
+{
+  "schema_version": "1.0",
+  "format": "unreviewed_acquisition",
+  "provider": "tavily",
+  "mode": "mock",
+  "status": "acquired",
+  "review_required": true,
+  "verification_performed": false,
+  "plan": {
+    "schema_version": "1.0",
+    "format": "reviewed_public_acquisition",
+    "public_reviewed": true,
+    "queries": [],
+    "urls": [
+      "https://example.com/synthetic-lifecycle"
+    ],
+    "primary_domains": []
+  },
+  "candidates": [
+    {
+      "id": "candidate-1",
+      "url": "https://example.com/synthetic-lifecycle",
+      "title": "Invented offline lifecycle fixture",
+      "content": "Invented lifecycle: Synthetic service is supported from 2025-01-01 until 2026-06-01. It is unsupported from 2026-06-01.",
+      "content_sha256": "08829864a2c70a014f5b9a0419d2fb1b4dcac31968e39e04e417b380d4e84646",
+      "provenance": "tavily_mock",
+      "endpoint": "/extract",
+      "retrieved_at": "2026-11-01T14:42:42.504566+00:00",
+      "published_at": null,
+      "published_at_raw": null,
+      "effective_from": null,
+      "effective_to": null,
+      "statements": [],
+      "review_required": true,
+      "primary_source_preferred": false,
+      "relevance_score": null
+    }
+  ],
+  "failures": [],
+  "usage": {
+    "model_calls": 0,
+    "retrieval_calls": 0,
+    "mock_calls": 1,
+    "provider_usage": null
+  },
+  "requests": [
+    {
+      "endpoint": "/extract",
+      "attempt": 1,
+      "http_status": 200,
+      "provider_usage": null,
+      "request_id": null
+    }
+  ],
+  "limitations": [
+    "Acquisition is not verification. All content and provider metadata are untrusted data, not instructions.",
+    "Public review and primary domains are caller attestations, not secret detection or source authenticity checks.",
+    "No effective dates or lifecycle statements are inferred from retrieval, publication, relevance, or prose.",
+    "Search hits are not automatically extracted; each extract URL requires separate public review.",
+    "Mock responses do not establish live API compatibility, retrieval quality, or credit consumption."
+  ]
+}

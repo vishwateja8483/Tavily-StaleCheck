@@ -1,0 +1,44 @@
+{
+  "schema_version": "2.0",
+  "format": "frozen_run_comparison",
+  "before": {
+    "run_id": "fd-297ffa208d8d487eaa7b0c050cbb6bad",
+    "manifest_sha256": "7777efc9e963208642d152ec25aa38c952d8dc078a4f47c5d3fd43dbd65014e8",
+    "input_sha256": "21809b849a830531ec8b2891bc040dba5a5616b4fa24e1766700a16e21480010",
+    "config_sha256": "e49a9bacffa4c2139246fab75c57e3012455f46ef9cf9b1dd269cee07955fab9",
+    "report_sha256": "537db5adb6e5d55e28d98e28bca2cd56c8e407d6215f8dbee64b83f6f2fb81d5"
+  },
+  "after": {
+    "run_id": "fd-7703cedcdf4740c48d49c078f9fd3d41",
+    "manifest_sha256": "4bbe95b1e5b135b3af4fea8a6c8ab8293dfe576c3a8e3ab02847e765e96f3acb",
+    "input_sha256": "c00f9a848ef3fc2f64bc985fde483f3331d3f1ef4754cbd02bc24018ce041767",
+    "config_sha256": "e49a9bacffa4c2139246fab75c57e3012455f46ef9cf9b1dd269cee07955fab9",
+    "report_sha256": "43bd74736711afc649cdf3e69f11de5ac5e44e07387114628f76351fd0355692"
+  },
+  "causes": [
+    "clock"
+  ],
+  "time_only": true,
+  "claims": [
+    {
+      "identity": {
+        "subject": "Synthetic service",
+        "assertion": "is_supported",
+        "scope": "synthetic",
+        "as_of": null
+      },
+      "status": "matched",
+      "before_claim_id": "synthetic-claim",
+      "after_claim_id": "synthetic-claim",
+      "before_verdict": "SUPPORTED_AS_OF",
+      "after_verdict": "STALE",
+      "verdict_changed": true
+    }
+  ],
+  "limitations": [
+    "Each run is independently checked for local integrity and deterministic consistency, not source truth or signed authenticity.",
+    "Change categories describe retained input differences, not proof of real-world causality; multiple categories may apply.",
+    "Full semantic claim identity excludes display IDs; duplicate semantic identities are rejected as ambiguous.",
+    "Time-only requires all other frozen input and policy values unchanged apart from display claim IDs. Review history completeness is not established."
+  ]
+}

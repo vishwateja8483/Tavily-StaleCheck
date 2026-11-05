@@ -1,0 +1,62 @@
+{
+  "$schema": "https://www.getbifrost.ai/schema",
+  "client": {
+    "enforce_auth_on_inference": true,
+    "drop_excess_requests": false,
+    "enable_logging": true
+  },
+  "framework": {
+    "pricing": {
+      "pricing_url": "http://127.0.0.1:9301/datasheet",
+      "model_parameters_url": "http://127.0.0.1:9301/model-parameters",
+      "mcp_library_sync_interval": 0,
+      "live_models_sync_interval": 0
+    }
+  },
+  "providers": {
+    "stub-primary": {
+      "custom_provider_config": { "base_provider_type": "openai" },
+      "network_config": { "base_url": "http://127.0.0.1:9101", "default_request_timeout_in_seconds": 20, "max_retries": 0 },
+      "keys": [ { "name": "stub-primary-key", "value": "env.GATEWAY_CHECK_LLM_KEY", "models": ["*"], "weight": 1.0 } ]
+    },
+    "stub-backup": {
+      "custom_provider_config": { "base_provider_type": "openai" },
+      "network_config": { "base_url": "http://127.0.0.1:9102", "default_request_timeout_in_seconds": 20, "max_retries": 0 },
+      "keys": [ { "name": "stub-backup-key", "value": "env.GATEWAY_CHECK_LLM_KEY", "models": ["*"], "weight": 1.0 } ]
+    }
+  },
+  "relays": [
+    {
+      "name": "tavily",
+      "description": "Tavily Search for StaleCheck (stub upstream in this check)",
+      "base_url": "http://127.0.0.1:9201",
+      "auth": { "type": "bearer" },
+      "credential": { "value": "env.GATEWAY_CHECK_TAVILY_KEY" },
+      "usage": { "units_path": "usage.credits", "cost_per_unit": 0.008 },
+      "routes": [ { "method": "POST", "path": "/search" } ]
+    }
+  ],
+  "governance": {
+    "budgets": [ { "id": "budget-demo", "max_limit": 0.045, "reset_duration": "1h", "virtual_key_id": "vk-demo" } ],
+    "virtual_keys": [
+      {
+        "id": "vk-demo",
+        "name": "stalecheck-demo",
+        "value": "env.GATEWAY_CHECK_VK_DEMO",
+        "is_active": true,
+        "provider_configs": [
+          { "provider": "stub-primary", "allowed_models": ["*"], "key_ids": ["*"], "weight": 1 },
+          { "provider": "stub-backup", "allowed_models": ["*"], "key_ids": ["*"], "weight": 1 }
+        ],
+        "relay_grants": [ { "relay_name": "tavily" } ]
+      },
+      {
+        "id": "vk-no-relay",
+        "name": "llm-only",
+        "value": "sk-bf-llm-only-key-0123456789",
+        "is_active": true,
+        "provider_configs": [ { "provider": "stub-primary", "allowed_models": ["*"], "key_ids": ["*"], "weight": 1 } ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,629 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "StaleCheck local assessment",
+    "version": "1.0.0",
+    "description": "Loopback single-user service; no CORS. Per-launch token handed off in URL fragment, never HTTP URLs. All reads/writes/downloads authenticated. Demo is explicit, not live evidence."
+  },
+  "servers": [
+    {
+      "url": "http://127.0.0.1:{port}",
+      "variables": {
+        "port": {
+          "default": "4190"
+        }
+      }
+    }
+  ],
+  "security": [
+    {
+      "LaunchToken": []
+    }
+  ],
+  "paths": {
+    "/api/capabilities": {
+      "get": {
+        "summary": "Configuration presence, not connectivity",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Capabilities"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Rejected safely; no automatic retry. See ASSESSMENT-API.md for status semantics.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/jobs": {
+      "post": {
+        "summary": "Create once per immutable idempotency key; 200 identical retry, 201 new job",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Job"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Rejected safely; no automatic retry. See ASSESSMENT-API.md for status semantics.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Job"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "Origin",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Exact bound http://127.0.0.1:port origin"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "idempotency_key",
+                  "input"
+                ],
+                "properties": {
+                  "idempotency_key": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z0-9_-]{16,100}$"
+                  },
+                  "input": {
+                    "$ref": "#/components/schemas/Input"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/jobs/{id}": {
+      "get": {
+        "summary": "Poll without repeating extraction",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Job"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Rejected safely; no automatic retry. See ASSESSMENT-API.md for status semantics.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{32}$"
+          }
+        }
+      ]
+    },
+    "/api/jobs/{id}/approval": {
+      "post": {
+        "summary": "Decide exact complete approval object once",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Job"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Rejected safely; no automatic retry. See ASSESSMENT-API.md for status semantics.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "Origin",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Exact bound http://127.0.0.1:port origin"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "request",
+                  "approved"
+                ],
+                "properties": {
+                  "request": {
+                    "$ref": "#/components/schemas/Approval"
+                  },
+                  "approved": {
+                    "type": "boolean"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{32}$"
+          }
+        }
+      ]
+    },
+    "/api/jobs/{id}/cancel": {
+      "post": {
+        "summary": "Request cooperative cancellation; in-flight calls may be billed",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Job"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Rejected safely; no automatic retry. See ASSESSMENT-API.md for status semantics.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "Origin",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Exact bound http://127.0.0.1:port origin"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [],
+                "properties": {}
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{32}$"
+          }
+        }
+      ]
+    },
+    "/api/jobs/{id}/report": {
+      "get": {
+        "summary": "Verified frozen v4 report (domain contract is V4-CONTRACT.md)",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Rejected safely; no automatic retry. See ASSESSMENT-API.md for status semantics.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{32}$"
+          }
+        }
+      ]
+    },
+    "/api/jobs/{id}/artifacts/{name}": {
+      "get": {
+        "summary": "Fetch allowlisted verified artifact with launch-token header",
+        "responses": {
+          "200": {
+            "description": "Verified artifact bytes; HTML is rendered from verified v4 report",
+            "content": {
+              "application/json": {},
+              "text/html": {}
+            }
+          },
+          "default": {
+            "description": "Not available or rejected",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{32}$"
+          }
+        },
+        {
+          "name": "name",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "enum": [
+              "report.html",
+              "report.json",
+              "input.json",
+              "manifest.json"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "LaunchToken": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-Assessment-Token"
+      }
+    },
+    "schemas": {
+      "Input": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "answer_text",
+          "verification_date",
+          "answer_date",
+          "primary_domains",
+          "max_claims",
+          "max_attempts",
+          "max_seconds",
+          "consent"
+        ],
+        "properties": {
+          "answer_text": {
+            "type": "string",
+            "minLength": 1
+          },
+          "verification_date": {
+            "type": "string",
+            "format": "date"
+          },
+          "answer_date": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date"
+          },
+          "primary_domains": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "max_claims": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 8
+          },
+          "max_attempts": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 25
+          },
+          "max_seconds": {
+            "type": "number",
+            "exclusiveMinimum": 0,
+            "maximum": 180
+          },
+          "consent": {
+            "const": true
+          }
+        }
+      },
+      "Approval": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "queries",
+          "primary_domains",
+          "sha256"
+        ],
+        "properties": {
+          "queries": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "primary_domains": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          }
+        }
+      },
+      "Error": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "error"
+        ],
+        "properties": {
+          "error": {
+            "type": "string"
+          }
+        }
+      },
+      "Job": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "mode",
+          "state",
+          "remaining_seconds",
+          "approval",
+          "stop_reason",
+          "attempts",
+          "artifacts"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{32}$"
+          },
+          "mode": {
+            "enum": [
+              "demo",
+              "live"
+            ]
+          },
+          "state": {
+            "enum": [
+              "extracting",
+              "awaiting_approval",
+              "researching",
+              "cancel_requested",
+              "completed",
+              "partial",
+              "declined",
+              "expired",
+              "cancelled",
+              "failed"
+            ]
+          },
+          "remaining_seconds": {
+            "type": "number",
+            "minimum": 0
+          },
+          "approval": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Approval"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "stop_reason": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "attempts": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 25
+          },
+          "artifacts": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": {
+              "enum": [
+                "report.html",
+                "report.json",
+                "input.json",
+                "manifest.json"
+              ]
+            }
+          }
+        }
+      },
+      "Capabilities": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "mode",
+          "configured",
+          "configuration",
+          "max_sessions",
+          "demo_input"
+        ],
+        "properties": {
+          "mode": {
+            "enum": [
+              "demo",
+              "live"
+            ]
+          },
+          "configured": {
+            "type": "boolean"
+          },
+          "configuration": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "BIFROST_URL",
+              "BIFROST_MODEL",
+              "BIFROST_VIRTUAL_KEY",
+              "TAVILY_API_KEY",
+              "BIFROST_SEARCH_RELAY"
+            ],
+            "properties": {
+              "BIFROST_URL": {
+                "type": "boolean"
+              },
+              "BIFROST_MODEL": {
+                "type": "boolean"
+              },
+              "BIFROST_VIRTUAL_KEY": {
+                "type": "boolean"
+              },
+              "TAVILY_API_KEY": {
+                "type": "boolean"
+              },
+              "BIFROST_SEARCH_RELAY": {
+                "type": "boolean"
+              }
+            }
+          },
+          "max_sessions": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 128
+          },
+          "demo_input": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Input"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        }
+      }
+    }
+  }
+}

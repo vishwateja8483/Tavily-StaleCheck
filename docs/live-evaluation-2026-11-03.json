@@ -1,0 +1,789 @@
+{
+  "meta": {
+    "date": "2026-11-03",
+    "model": "ollama/qwen2.5:3b",
+    "search": "through the Bifrost relay 'tavily'",
+    "gateway": "http://127.0.0.1:8080",
+    "gateway_timeout_seconds": 150.0,
+    "files_containing_a_key": 0
+  },
+  "dataset_as_of": "2026-11-03",
+  "summary": {
+    "items": 26,
+    "host_verified": {
+      "correct": 6,
+      "abstained": 12,
+      "missed_stale": 0,
+      "false_alarm": 4,
+      "no_verdict": 4
+    },
+    "model_only": {
+      "correct": 9,
+      "abstained": 0,
+      "missed_stale": 0,
+      "false_alarm": 11,
+      "no_verdict": 6
+    },
+    "by_label": {
+      "STALE": {
+        "items": 12,
+        "correct": 6,
+        "abstained": 4,
+        "missed_stale": 0,
+        "false_alarm": 0,
+        "no_verdict": 2
+      },
+      "CURRENT": {
+        "items": 14,
+        "correct": 0,
+        "abstained": 8,
+        "missed_stale": 0,
+        "false_alarm": 4,
+        "no_verdict": 2
+      }
+    },
+    "transitions": {
+      "correct -> abstained": 3,
+      "correct -> correct": 6,
+      "false_alarm -> abstained": 7,
+      "false_alarm -> false_alarm": 4,
+      "no_verdict -> abstained": 2,
+      "no_verdict -> no_verdict": 4
+    },
+    "accuracy": {
+      "host_verified": {
+        "correct": 6,
+        "of": 26,
+        "wilson95": [
+          0.11,
+          0.421
+        ]
+      },
+      "model_only": {
+        "correct": 9,
+        "of": 26,
+        "wilson95": [
+          0.194,
+          0.538
+        ]
+      }
+    },
+    "wrong_verdicts": {
+      "host_verified": 4,
+      "model_only": 11
+    },
+    "among_judged": {
+      "items": 22,
+      "host_verified": {
+        "correct": 6,
+        "of": 22,
+        "wilson95": [
+          0.132,
+          0.482
+        ]
+      },
+      "model_only": {
+        "correct": 9,
+        "of": 22,
+        "wilson95": [
+          0.233,
+          0.613
+        ]
+      }
+    },
+    "coverage": {
+      "answers": 26,
+      "claim_extracted": 22,
+      "claim_extracted_wilson95": [
+        0.665,
+        0.939
+      ],
+      "judged": 22,
+      "statuses": {
+        "no_claim": 4,
+        "ok": 22
+      },
+      "rejection_reasons": {
+        "invalid_reply": 4
+      },
+      "dropped_quote_reasons": {
+        "quote_not_in_source": 19,
+        "quote_too_short": 2
+      }
+    }
+  },
+  "items": [
+    {
+      "id": "py-39-security",
+      "label": "STALE",
+      "category": "version",
+      "exit_code": 0,
+      "seconds": 6.5,
+      "status": "no_claim",
+      "verdict": null,
+      "proposed": null,
+      "stop_reason": null,
+      "rejected": [
+        "invalid_reply"
+      ],
+      "dropped_quotes": [],
+      "usage": {
+        "gateway_calls": 1,
+        "search_calls": 0,
+        "tokens": 290,
+        "tokens_complete": true,
+        "credits": 0
+      }
+    },
+    {
+      "id": "py-313-newest",
+      "label": "STALE",
+      "category": "version",
+      "exit_code": 0,
+      "seconds": 36.9,
+      "status": "ok",
+      "verdict": "POTENTIALLY_CHANGED",
+      "proposed": "CHANGED",
+      "stop_reason": null,
+      "rejected": [],
+      "dropped_quotes": [],
+      "usage": {
+        "gateway_calls": 2,
+        "search_calls": 1,
+        "tokens": 2392,
+        "tokens_complete": true,
+        "credits": 1
+      },
+      "claim": "Python 3.13 is the newest stable release of Python.",
+      "query": "latest python version",
+      "reason_code": "MODEL_CONTRADICTION_WITH_VERBATIM_QUOTE",
+      "quotes": 3,
+      "freshness": 99
+    },
+    {
+      "id": "py-38-eol",
+      "label": "CURRENT",
+      "category": "version",
+      "exit_code": 0,
+      "seconds": 46.8,
+      "status": "ok",
+      "verdict": "UNVERIFIABLE",
+      "proposed": "CHANGED",
+      "stop_reason": null,
+      "rejected": [],
+      "dropped_quotes": [],
+      "usage": {
+        "gateway_calls": 2,
+        "search_calls": 1,
+        "tokens": 2184,
+        "tokens_complete": true,
+        "credits": 1
+      },
+      "claim": "Python 3.8 reached end of life in October 2024.",
+      "query": "end of life Python 3.8",
+      "reason_code": "NO_VERBATIM_CONTRADICTING_QUOTE",
+      "quotes": 3,
+      "freshness": 0
+    },
+    {
+      "id": "py-312-security",
+      "label": "CURRENT",
+      "category": "version",
+      "exit_code": 0,
+      "seconds": 39.6,
+      "status": "ok",
+      "verdict": "UNVERIFIABLE",
+      "proposed": "CHANGED",
+      "stop_reason": null,
+      "rejected": [],
+      "dropped_quotes": [
+        "quote_not_in_source"
+      ],
+      "usage": {
+        "gateway_calls": 2,
+        "search_calls": 1,
+        "tokens": 2141,
+        "tokens_complete": true,
+        "credits": 1
+      },
+      "claim": "Python 3.12 is in its security-fixes phase and stays supported until October 2028.",
+      "query": "python 3.12 support duration",
+      "reason_code": "NO_VERBATIM_CONTRADICTING_QUOTE",
+      "quotes": 1,
+      "freshness": 60
+    },
+    {
+      "id": "py-310-supported",
+      "label": "STALE",
+      "category": "version",
+      "exit_code": 0,
+      "seconds": 9.6,
+      "status": "no_claim",
+      "verdict": null,
+      "proposed": null,
+      "stop_reason": null,
+      "rejected": [
+        "invalid_reply"
+      ],
+      "dropped_quotes": [],
+      "usage": {
+        "gateway_calls": 1,
+        "search_calls": 0,
+        "tokens": 303,
+        "tokens_complete": true,
+        "credits": 0
+      }
+    },
+    {
+      "id": "py-311-2027",
+      "label": "CURRENT",
+      "category": "version",
+      "exit_code": 0,
+      "seconds": 55.5,
+      "status": "ok",
+      "verdict": "UNVERIFIABLE",
+      "proposed": null,
+      "stop_reason": null,
+      "rejected": [],
+      "dropped_quotes": [],
+      "usage": {
+        "gateway_calls": 2,
+        "search_calls": 1,
+        "tokens": 2384,
+        "tokens_complete": true,
+        "credits": 1
+      },
+      "claim": "Python 3.11 will receive security fixes until October 2027.",
+      "query": "Python 3.11 security support",
+      "reason_code": "ASSESSMENT_INVALID_REPLY",
+      "quotes": 0,
+      "freshness": null
+    },
+    {
+      "id": "node-18-lts",
+      "label": "STALE",
+      "category": "version",
+      "exit_code": 0,
+      "seconds": 38.5,
+      "status": "ok",
+      "verdict": "POTENTIALLY_CHANGED",
+      "proposed": "CHANGED",
+      "stop_reason": null,
+      "rejected": [],
+      "dropped_quotes": [],
+      "usage": {
+        "gateway_calls": 2,
+        "search_calls": 1,
+        "tokens": 2565,
+        "tokens_complete": true,
+        "credits": 1
+      },
+      "claim": "Node.js 18 is a long-term support release that still gets security updates.",
+      "query": "node js 18 updates",
+      "reason_code": "MODEL_CONTRADICTION_WITH_VERBATIM_QUOTE",
+      "quotes": 2,
+      "freshness": 0
+    },
+    {
+      "id": "node-20-latest-lts",
+      "label": "STALE",
+      "category": "version",
+      "exit_code": 0,
+      "seconds": 48.0,
+      "status": "ok",
+      "verdict": "POTENTIALLY_CHANGED",
+      "proposed": "CHANGED",
+      "stop_reason": null,
+      "rejected": [],
+      "dropped_quotes": [
+        "quote_not_in_source",
+        "quote_too_short"
+      ],
+      "usage": {
+        "gateway_calls": 2,
+        "search_calls": 1,
+        "tokens": 2099,
+        "tokens_complete": true,
+        "credits": 1
+      },
+      "claim": "Node.js 20 is the latest long-term support release of Node.js.",
+      "query": "latest node.js version",
+      "reason_code": "MODEL_CONTRADICTION_WITH_VERBATIM_QUOTE",
+      "quotes": 1,
+      "freshness": 0
+    },
+    {
+      "id": "node-22-lts",
+      "label": "CURRENT",
+      "category": "version",
+      "exit_code": 0,
+      "seconds": 48.9,
+      "status": "ok",
+      "verdict": "POTENTIALLY_CHANGED",
+      "proposed": "CHANGED",
+      "stop_reason": null,
+      "rejected": [],
+      "dropped_quotes": [
+        "quote_not_in_source"
+      ],
+      "usage": {
+        "gateway_calls": 2,
+        "search_calls": 1,
+        "tokens": 1998,
+        "tokens_complete": true,
+        "credits": 1
+      },
+      "claim": "Node.js 22 is still a supported long-term support release.",
+      "query": "is node js 22 still supported",
+      "reason_code": "MODEL_CONTRADICTION_WITH_VERBATIM_QUOTE",
+      "quotes": 1,
+      "freshness": 0
+    },
+    {
+      "id": "node-20-eol",
+      "label": "CURRENT",
+      "category": "version",
+      "exit_code": 0,
+      "seconds": 60.9,
+      "status": "ok",
+      "verdict": "POTENTIALLY_CHANGED",
+      "proposed": "CHANGED",
+      "stop_reason": null,
+      "rejected": [],
+      "dropped_quotes": [
+        "quote_not_in_source"
+      ],
+      "usage": {
+        "gateway_calls": 2,
+        "search_calls": 1,
+        "tokens": 2467,
+        "tokens_complete": true,
+        "credits": 1
+      },
+      "claim": "Node.js 20 has reached end of life.",
+      "query": "status of Node.js 20",
+      "reason_code": "MODEL_CONTRADICTION_WITH_VERBATIM_QUOTE",
+      "quotes": 2,
+      "freshness": 0
+    },
+    {
+      "id": "k8s-134-supported",
+      "label": "STALE",
+      "category": "version",
+      "exit_code": 0,
+      "seconds": 24.0,
+      "status": "ok",
+      "verdict": "UNVERIFIABLE",
+      "proposed": "CHANGED",
+      "stop_reason": null,
+      "rejected": [],
+      "dropped_quotes": [
+        "quote_not_in_source"
+      ],
+      "usage": {
+        "gateway_calls": 2,
+        "search_calls": 1,
+        "tokens": 1572,
+        "tokens_complete": true,
+        "credits": 1
+      },
+      "claim": "Kubernetes 1.34 is a currently supported release.",
+      "query": "currently supported kubernetes version",
+      "reason_code": "NO_VERBATIM_CONTRADICTING_QUOTE",
+      "quotes": 0,
+      "freshness": null
+    },
+    {
+      "id": "k8s-136-supported",
+      "label": "CURRENT",
+      "category": "version",
+      "exit_code": 0,
+      "seconds": 39.4,
+      "status": "ok",
+      "verdict": "POTENTIALLY_CHANGED",
+      "proposed": "CHANGED",
+      "stop_reason": null,
+      "rejected": [],
+      "dropped_quotes": [
+        "quote_not_in_source"
+      ],
+      "usage": {
+        "gateway_calls": 2,
+        "search_calls": 1,
+        "tokens": 2111,
+        "tokens_complete": true,
+        "credits": 1
+      },
+      "claim": "Kubernetes 1.36 is a currently supported minor release.",
+      "query": "kubernetes version 1.36 supported",
+      "reason_code": "MODEL_CONTRADICTION_WITH_VERBATIM_QUOTE",
+      "quotes": 1,
+      "freshness": 40
+    },
+    {
+      "id": "k8s-136-latest",
+      "label": "STALE",
+      "category": "version",
+      "exit_code": 0,
+      "seconds": 39.5,
+      "status": "ok",
+      "verdict": "UNVERIFIABLE",
+      "proposed": "CHANGED",
+      "stop_reason": null,
+      "rejected": [],
+      "dropped_quotes": [
+        "quote_not_in_source",
+        "quote_not_in_source",
+        "quote_not_in_source"
+      ],
+      "usage": {
+        "gateway_calls": 2,
+        "search_calls": 1,
+        "tokens": 1615,
+        "tokens_complete": true,
+        "credits": 1
+      },
+      "claim": "Kubernetes 1.36 is the latest Kubernetes minor release.",
+      "query": "latest kubernetes version",
+      "reason_code": "NO_VERBATIM_CONTRADICTING_QUOTE",
+      "quotes": 0,
+      "freshness": null
+    },
+    {
+      "id": "k8s-three-branches",
+      "label": "CURRENT",
+      "category": "other",
+      "exit_code": 0,
+      "seconds": 29.3,
+      "status": "ok",
+      "verdict": "UNVERIFIABLE",
+      "proposed": "CHANGED",
+      "stop_reason": null,
+      "rejected": [],
+      "dropped_quotes": [],
+      "usage": {
+        "gateway_calls": 2,
+        "search_calls": 1,
+        "tokens": 1764,
+        "tokens_complete": true,
+        "credits": 1
+      },
+      "claim": "The Kubernetes project maintains release branches for the three most recent minor releases.",
+      "query": "kubernetes project release branches",
+      "reason_code": "CONFLICTING_EVIDENCE",
+      "quotes": 2,
+      "freshness": 81
+    },
+    {
+      "id": "go-125-supported",
+      "label": "STALE",
+      "category": "version",
+      "exit_code": 0,
+      "seconds": 54.5,
+      "status": "ok",
+      "verdict": "POTENTIALLY_CHANGED",
+      "proposed": "CHANGED",
+      "stop_reason": null,
+      "rejected": [],
+      "dropped_quotes": [],
+      "usage": {
+        "gateway_calls": 2,
+        "search_calls": 1,
+        "tokens": 1171,
+        "tokens_complete": true,
+        "credits": 1
+      },
+      "claim": "Go 1.25 is a supported Go release.",
+      "query": "is go 1.25 still supported",
+      "reason_code": "MODEL_CONTRADICTION_WITH_VERBATIM_QUOTE",
+      "quotes": 1,
+      "freshness": null
+    },
+    {
+      "id": "go-126-supported",
+      "label": "CURRENT",
+      "category": "version",
+      "exit_code": 0,
+      "seconds": 148.8,
+      "status": "ok",
+      "verdict": "UNVERIFIABLE",
+      "proposed": "CHANGED",
+      "stop_reason": null,
+      "rejected": [],
+      "dropped_quotes": [
+        "quote_not_in_source",
+        "quote_not_in_source"
+      ],
+      "usage": {
+        "gateway_calls": 2,
+        "search_calls": 1,
+        "tokens": 2051,
+        "tokens_complete": true,
+        "credits": 1
+      },
+      "claim": "Go 1.26 is a supported Go release.",
+      "query": "is go 1.26 still supported",
+      "reason_code": "NO_VERBATIM_CONTRADICTING_QUOTE",
+      "quotes": 0,
+      "freshness": null
+    },
+    {
+      "id": "go-126-latest",
+      "label": "STALE",
+      "category": "version",
+      "exit_code": 0,
+      "seconds": 62.5,
+      "status": "ok",
+      "verdict": "POTENTIALLY_CHANGED",
+      "proposed": "CHANGED",
+      "stop_reason": null,
+      "rejected": [],
+      "dropped_quotes": [],
+      "usage": {
+        "gateway_calls": 2,
+        "search_calls": 1,
+        "tokens": 2017,
+        "tokens_complete": true,
+        "credits": 1
+      },
+      "claim": "Go 1.26 is the latest major release of Go.",
+      "query": "latest go version",
+      "reason_code": "MODEL_CONTRADICTION_WITH_VERBATIM_QUOTE",
+      "quotes": 2,
+      "freshness": 80
+    },
+    {
+      "id": "go-policy",
+      "label": "CURRENT",
+      "category": "other",
+      "exit_code": 0,
+      "seconds": 66.5,
+      "status": "ok",
+      "verdict": "POTENTIALLY_CHANGED",
+      "proposed": "CHANGED",
+      "stop_reason": null,
+      "rejected": [],
+      "dropped_quotes": [],
+      "usage": {
+        "gateway_calls": 2,
+        "search_calls": 1,
+        "tokens": 1988,
+        "tokens_complete": true,
+        "credits": 1
+      },
+      "claim": "Each major Go release is supported until there are two newer major releases.",
+      "query": "go language support period",
+      "reason_code": "MODEL_CONTRADICTION_WITH_VERBATIM_QUOTE",
+      "quotes": 3,
+      "freshness": 96
+    },
+    {
+      "id": "ubuntu-2404-latest-lts",
+      "label": "STALE",
+      "category": "version",
+      "exit_code": 0,
+      "seconds": 69.8,
+      "status": "ok",
+      "verdict": "POTENTIALLY_CHANGED",
+      "proposed": "CHANGED",
+      "stop_reason": null,
+      "rejected": [],
+      "dropped_quotes": [
+        "quote_not_in_source",
+        "quote_not_in_source"
+      ],
+      "usage": {
+        "gateway_calls": 2,
+        "search_calls": 1,
+        "tokens": 1852,
+        "tokens_complete": true,
+        "credits": 1
+      },
+      "claim": "Ubuntu 24.04 LTS is the latest long-term support release of Ubuntu.",
+      "query": "latest ubuntu version",
+      "reason_code": "MODEL_CONTRADICTION_WITH_VERBATIM_QUOTE",
+      "quotes": 1,
+      "freshness": null
+    },
+    {
+      "id": "ubuntu-2204-security",
+      "label": "CURRENT",
+      "category": "version",
+      "exit_code": 0,
+      "seconds": 7.2,
+      "status": "no_claim",
+      "verdict": null,
+      "proposed": null,
+      "stop_reason": null,
+      "rejected": [
+        "invalid_reply"
+      ],
+      "dropped_quotes": [],
+      "usage": {
+        "gateway_calls": 1,
+        "search_calls": 0,
+        "tokens": 301,
+        "tokens_complete": true,
+        "credits": 0
+      }
+    },
+    {
+      "id": "ubuntu-2004-standard",
+      "label": "STALE",
+      "category": "version",
+      "exit_code": 0,
+      "seconds": 80.5,
+      "status": "ok",
+      "verdict": "UNVERIFIABLE",
+      "proposed": "CHANGED",
+      "stop_reason": null,
+      "rejected": [],
+      "dropped_quotes": [
+        "quote_not_in_source",
+        "quote_not_in_source"
+      ],
+      "usage": {
+        "gateway_calls": 2,
+        "search_calls": 1,
+        "tokens": 2419,
+        "tokens_complete": true,
+        "credits": 1
+      },
+      "claim": "Ubuntu 20.04 LTS still receives standard security maintenance.",
+      "query": "Ubuntu 20.04 LTS maintenance status",
+      "reason_code": "NO_VERBATIM_CONTRADICTING_QUOTE",
+      "quotes": 0,
+      "freshness": null
+    },
+    {
+      "id": "ubuntu-2404-standard",
+      "label": "CURRENT",
+      "category": "version",
+      "exit_code": 0,
+      "seconds": 6.7,
+      "status": "no_claim",
+      "verdict": null,
+      "proposed": null,
+      "stop_reason": null,
+      "rejected": [
+        "invalid_reply"
+      ],
+      "dropped_quotes": [],
+      "usage": {
+        "gateway_calls": 1,
+        "search_calls": 0,
+        "tokens": 307,
+        "tokens_complete": true,
+        "credits": 0
+      }
+    },
+    {
+      "id": "tavily-free-credits",
+      "label": "CURRENT",
+      "category": "pricing",
+      "exit_code": 0,
+      "seconds": 52.8,
+      "status": "ok",
+      "verdict": "UNVERIFIABLE",
+      "proposed": "CHANGED",
+      "stop_reason": null,
+      "rejected": [],
+      "dropped_quotes": [
+        "quote_not_in_source"
+      ],
+      "usage": {
+        "gateway_calls": 2,
+        "search_calls": 1,
+        "tokens": 1974,
+        "tokens_complete": true,
+        "credits": 1
+      },
+      "claim": "Tavily's free plan includes 1,000 API credits per month.",
+      "query": "Tavily free plan API credits",
+      "reason_code": "CONFLICTING_EVIDENCE",
+      "quotes": 2,
+      "freshness": 0
+    },
+    {
+      "id": "tavily-search-credits",
+      "label": "CURRENT",
+      "category": "pricing",
+      "exit_code": 0,
+      "seconds": 55.4,
+      "status": "ok",
+      "verdict": "UNVERIFIABLE",
+      "proposed": "CHANGED",
+      "stop_reason": null,
+      "rejected": [],
+      "dropped_quotes": [
+        "quote_not_in_source",
+        "quote_not_in_source"
+      ],
+      "usage": {
+        "gateway_calls": 2,
+        "search_calls": 1,
+        "tokens": 2178,
+        "tokens_complete": true,
+        "credits": 1
+      },
+      "claim": "A basic Tavily search costs 1 API credit and an advanced search costs 2 API credits.",
+      "query": "Tavily API credits pricing",
+      "reason_code": "NO_VERBATIM_CONTRADICTING_QUOTE",
+      "quotes": 0,
+      "freshness": null
+    },
+    {
+      "id": "tavily-depths",
+      "label": "STALE",
+      "category": "api",
+      "exit_code": 0,
+      "seconds": 61.8,
+      "status": "ok",
+      "verdict": "UNVERIFIABLE",
+      "proposed": null,
+      "stop_reason": null,
+      "rejected": [],
+      "dropped_quotes": [],
+      "usage": {
+        "gateway_calls": 2,
+        "search_calls": 1,
+        "tokens": 2035,
+        "tokens_complete": true,
+        "credits": 1
+      },
+      "claim": "Tavily Search supports only two search depths, basic and advanced.",
+      "query": "Tavily Search search depths",
+      "reason_code": "ASSESSMENT_INVALID_REPLY",
+      "quotes": 0,
+      "freshness": null
+    },
+    {
+      "id": "tavily-payg",
+      "label": "CURRENT",
+      "category": "pricing",
+      "exit_code": 0,
+      "seconds": 57.6,
+      "status": "ok",
+      "verdict": "UNVERIFIABLE",
+      "proposed": "CHANGED",
+      "stop_reason": null,
+      "rejected": [],
+      "dropped_quotes": [
+        "quote_not_in_source",
+        "quote_too_short"
+      ],
+      "usage": {
+        "gateway_calls": 2,
+        "search_calls": 1,
+        "tokens": 2142,
+        "tokens_complete": true,
+        "credits": 1
+      },
+      "claim": "Tavily's pay-as-you-go price is $0.008 per credit.",
+      "query": "Tavily pay-as-you-go price",
+      "reason_code": "NO_VERBATIM_CONTRADICTING_QUOTE",
+      "quotes": 1,
+      "freshness": 0
+    }
+  ]
+}

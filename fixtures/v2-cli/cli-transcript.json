@@ -1,0 +1,171 @@
+{
+  "interpreter": "<python>",
+  "python": "3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]",
+  "source": "<source>",
+  "isolated": true,
+  "optimized": true,
+  "commands": [
+    {
+      "arguments": [
+        "acquire-mock",
+        "--input",
+        "<output>\\plan.json",
+        "--responses",
+        "<output>\\responses.json"
+      ],
+      "returncode": 0,
+      "stdout": "{\"schema_version\": \"1.0\", \"format\": \"unreviewed_acquisition\", \"provider\": \"tavily\", \"mode\": \"mock\", \"status\": \"acquired\", \"review_required\": true, \"verification_performed\": false, \"plan\": {\"schema_version\": \"1.0\", \"format\": \"reviewed_public_acquisition\", \"public_reviewed\": true, \"queries\": [], \"urls\": [\"https://example.com/synthetic-lifecycle\"], \"primary_domains\": []}, \"candidates\": [{\"id\": \"candidate-1\", \"url\": \"https://example.com/synthetic-lifecycle\", \"title\": \"Invented offline lifecycle fixture\", \"content\": \"Invented lifecycle: Synthetic service is supported from 2025-01-01 until 2026-06-01. It is unsupported from 2026-06-01.\", \"content_sha256\": \"08829864a2c70a014f5b9a0419d2fb1b4dcac31968e39e04e417b380d4e84646\", \"provenance\": \"tavily_mock\", \"endpoint\": \"/extract\", \"retrieved_at\": \"2026-11-01T14:42:42.504566+00:00\", \"published_at\": null, \"published_at_raw\": null, \"effective_from\": null, \"effective_to\": null, \"statements\": [], \"review_required\": true, \"primary_source_preferred\": false, \"relevance_score\": null}], \"failures\": [], \"usage\": {\"model_calls\": 0, \"retrieval_calls\": 0, \"mock_calls\": 1, \"provider_usage\": null}, \"requests\": [{\"endpoint\": \"/extract\", \"attempt\": 1, \"http_status\": 200, \"provider_usage\": null, \"request_id\": null}], \"limitations\": [\"Acquisition is not verification. All content and provider metadata are untrusted data, not instructions.\", \"Public review and primary domains are caller attestations, not secret detection or source authenticity checks.\", \"No effective dates or lifecycle statements are inferred from retrieval, publication, relevance, or prose.\", \"Search hits are not automatically extracted; each extract URL requires separate public review.\", \"Mock responses do not establish live API compatibility, retrieval quality, or credit consumption.\"]}\n",
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "review-evidence",
+        "--acquisition",
+        "<output>\\acquisition.json",
+        "--proposal",
+        "<output>\\proposal-1.json",
+        "--output",
+        "<output>\\review-1.json"
+      ],
+      "returncode": 0,
+      "stdout": "{\"status\": \"review_recorded\", \"output\": \"<output>\\\\review-1.json\", \"verification_performed\": false, \"assurance\": \"Supplied human attestation recorded; no authentication or entailment verification.\"}\n",
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "verify-review",
+        "--input",
+        "<output>\\review-1.json",
+        "--acquisition",
+        "<output>\\acquisition.json"
+      ],
+      "returncode": 0,
+      "stdout": "{\"valid\": true, \"verification_performed\": false, \"assurance\": \"Review consistency only; not authenticated authorship, temporal verdict, or source truth.\"}\n",
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "review-evidence",
+        "--acquisition",
+        "<output>\\acquisition.json",
+        "--proposal",
+        "<output>\\proposal-2.json",
+        "--output",
+        "<output>\\review-2.json"
+      ],
+      "returncode": 0,
+      "stdout": "{\"status\": \"review_recorded\", \"output\": \"<output>\\\\review-2.json\", \"verification_performed\": false, \"assurance\": \"Supplied human attestation recorded; no authentication or entailment verification.\"}\n",
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "verify-review",
+        "--input",
+        "<output>\\review-2.json",
+        "--acquisition",
+        "<output>\\acquisition.json"
+      ],
+      "returncode": 0,
+      "stdout": "{\"valid\": true, \"verification_performed\": false, \"assurance\": \"Review consistency only; not authenticated authorship, temporal verdict, or source truth.\"}\n",
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "review-to-evidence",
+        "--input",
+        "<output>\\conversion.json",
+        "--output",
+        "<output>\\reviewed-evidence.json"
+      ],
+      "returncode": 0,
+      "stdout": "{\"status\": \"converted\", \"output\": \"<output>\\\\reviewed-evidence.json\", \"bytes\": 12070}\n",
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "verify",
+        "--input",
+        "<output>\\input-before.json",
+        "--output",
+        "<output>\\before"
+      ],
+      "returncode": 0,
+      "stdout": "{\"run_id\": \"fd-297ffa208d8d487eaa7b0c050cbb6bad\", \"output\": \"<output>\\\\before\", \"status\": \"completed\", \"claims\": 1}\n",
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "verify-artifacts",
+        "<output>\\before"
+      ],
+      "returncode": 0,
+      "stdout": "{\"valid\": true, \"project_id\": \"stalecheck\", \"run_id\": \"fd-297ffa208d8d487eaa7b0c050cbb6bad\", \"status\": \"completed\", \"artifacts\": 5, \"assurance\": \"Internal consistency only; unsigned hashes cannot authenticate sources or establish truth.\"}\n",
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "verify",
+        "--input",
+        "<output>\\input-after.json",
+        "--output",
+        "<output>\\after"
+      ],
+      "returncode": 0,
+      "stdout": "{\"run_id\": \"fd-7703cedcdf4740c48d49c078f9fd3d41\", \"output\": \"<output>\\\\after\", \"status\": \"completed\", \"claims\": 1}\n",
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "verify-artifacts",
+        "<output>\\after"
+      ],
+      "returncode": 0,
+      "stdout": "{\"valid\": true, \"project_id\": \"stalecheck\", \"run_id\": \"fd-7703cedcdf4740c48d49c078f9fd3d41\", \"status\": \"completed\", \"artifacts\": 5, \"assurance\": \"Internal consistency only; unsigned hashes cannot authenticate sources or establish truth.\"}\n",
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "compare",
+        "--before",
+        "<output>\\before",
+        "--after",
+        "<output>\\after",
+        "--output",
+        "<output>\\comparison.json"
+      ],
+      "returncode": 0,
+      "stdout": "{\"status\": \"compared\", \"output\": \"<output>\\\\comparison.json\", \"bytes\": 1936}\n",
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "verify-comparison",
+        "--before",
+        "<output>\\before",
+        "--after",
+        "<output>\\after",
+        "--input",
+        "<output>\\comparison.json"
+      ],
+      "returncode": 0,
+      "stdout": "{\"valid\": true, \"assurance\": \"Recomputed frozen-input difference attribution, not causal proof or authenticity.\"}\n",
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "export-viewer",
+        "<output>\\before",
+        "<output>\\after",
+        "--output",
+        "<output>\\viewer-bundle.json"
+      ],
+      "returncode": 0,
+      "stdout": "{\"status\": \"exported\", \"runs\": 2, \"output\": \"<output>\\\\viewer-bundle.json\", \"bytes\": 55260}\n",
+      "stderr": ""
+    }
+  ],
+  "limitations": [
+    "Source-only CLI acceptance, not installed-wheel verification.",
+    "Every attestation is invented synthetic fixture data, not actual human review."
+  ]
+}
