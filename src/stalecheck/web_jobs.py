@@ -1,11 +1,12 @@
 """Bounded launch-local jobs; one collector invocation survives human approval."""
 from copy import deepcopy
+from importlib.resources import files
 from pathlib import Path
 import re
 import secrets
 import threading
 
-from .contracts import ValidationError, json_bytes, require, safe_path
+from .contracts import ValidationError, decode, json_bytes, require, safe_path
 from .export import write_exclusive_json
 from .gateway import BifrostRelayTransport, GatewayClient, MockGatewayTransport, canonical
 from .acquisition import MockTransport
@@ -17,12 +18,9 @@ from .verify_artifacts import load_verified_run
 SETTINGS = ('BIFROST_URL', 'BIFROST_MODEL', 'BIFROST_VIRTUAL_KEY', 'TAVILY_API_KEY', 'BIFROST_SEARCH_RELAY')
 ARTIFACTS = ('report.html', 'report.json', 'input.json', 'manifest.json')
 TERMINAL = {'completed', 'partial', 'declined', 'expired', 'cancelled', 'failed'}
-DEMO_INPUT = {
-    'answer_text': "Acme Cloud's Starter plan costs $19 per month.",
-    'verification_date': '2026-11-01', 'answer_date': None,
-    'primary_domains': ['example.com'], 'max_claims': 5,
-    'max_attempts': 25, 'max_seconds': 180, 'consent': True,
-}
+_DEMO = decode(files('stalecheck').joinpath('fixtures', 'stale-check-v4-demo.json').read_bytes())
+DEMO_INPUT = {key: _DEMO[key] for key in ('answer_text', 'verification_date', 'answer_date', 'primary_domains')}
+DEMO_INPUT.update(_DEMO['limits'], consent=True)
 
 
 class ServiceError(Exception):
@@ -48,24 +46,29 @@ class ServiceBudget(JourneyBudget):
 
 
 def demo_transports():
-    def completion(payload):
+    """Run the browser journey against the same sample as the offline CLI."""
+    def completion(reply):
         return {'status': 200, 'body': {
-            'model': 'demo', 'choices': [{'message': {'content': canonical(payload).decode()}, 'finish_reason': 'stop'}],
-            'usage': {'prompt_tokens': 100, 'completion_tokens': 30, 'total_tokens': 130}}}
-    gateway = MockGatewayTransport([
-        completion({'claims': [{'quote': DEMO_INPUT['answer_text'][:-1], 'category': 'pricing',
-                               'time_sensitivity': 'high', 'reason': 'Synthetic changing price', 'query': 'Acme Starter pricing'}]}),
-        completion({'verdict': 'CHANGED', 'observed': 'Synthetic current price is $24.',
-                    'evidence': [{'source_id': 'claim-1-src-1', 'relation': 'contradicts',
-                                  'quote': 'The Starter plan costs $24 per month.'}],
-                    'rationale': 'Scripted example, not live evidence.', 'rewrite': 'The Starter plan costs $24 per month.'}),
-    ])
-    search = MockTransport([{'path': '/search', 'status': 200, 'body': {
-        'results': [{'url': 'https://docs.example.com/pricing', 'title': 'Synthetic pricing',
-                     'content': 'The Starter plan costs $24 per month.', 'published_date': '2026-10-20', 'score': 0.9}],
-        'usage': {'credits': 1}}}])
-    return {'gateway': GatewayClient('http://127.0.0.1:8080', 'openai/demo', transport=gateway),
-            'search_transport': search, 'now': lambda: '2026-11-01T12:00:00+00:00'}
+            'model': 'demo', 'choices': [{'message': {'content': reply['text']}, 'finish_reason': 'stop'}],
+            'usage': reply['usage'],
+        }}
+
+    completions = [completion(_DEMO['extraction']['reply'])]
+    searches = []
+    for check in _DEMO['checks']:
+        results = [
+            {'url': row['url'], 'title': row['title'], 'content': row['content'],
+             'published_date': row['published_at_raw'], 'score': row['relevance_score']}
+            for row in check['search']['sources']
+        ]
+        searches.append({'path': '/search', 'status': 200, 'body': {'results': results, 'usage': {'credits': 1}}})
+        if check['assessment']['status'] == 'ok':
+            completions.append(completion(check['assessment']['reply']))
+    return {
+        'gateway': GatewayClient('http://127.0.0.1:8080', 'openai/demo', transport=MockGatewayTransport(completions)),
+        'search_transport': MockTransport(searches),
+        'now': lambda: _DEMO['checks'][0]['search']['sources'][0]['retrieved_at'],
+    }
 
 
 def validated_input(value):
@@ -166,7 +169,10 @@ class JobManager:
             if self.closed or not self.configured:
                 raise ServiceError(409, 'service closed or live configuration required')
             if self.active is not None:
-                raise ServiceError(409, 'another assessment is still active')
+                previous = self.jobs[self.active]
+                with previous.condition:
+                    if previous.state not in TERMINAL:
+                        raise ServiceError(409, 'another assessment is still active')
             if len(self.keys) >= self.max_sessions:
                 raise ServiceError(429, 'launch session capacity reached')
             identifier = secrets.token_hex(16)
@@ -247,9 +253,10 @@ class JobManager:
                 job.budget.check()
                 write_run(transcript, job.directory / 'run')
                 load_verified_run(job.directory / 'run')
-                job.reason = transcript['stop_reason']
-                job.state = 'completed' if job.reason is None else ('declined' if job.reason == 'approval_declined' else 'partial')
-                write_exclusive_json({'state': job.state, 'stop_reason': job.reason}, job.directory / 'completion.json')
+                reason = transcript['stop_reason']
+                state = 'completed' if reason is None else ('declined' if reason == 'approval_declined' else 'partial')
+                write_exclusive_json({'state': state, 'stop_reason': reason}, job.directory / 'completion.json')
+                job.state, job.reason = state, reason
                 job.has_report = True
                 job.final_seconds = 0  # freeze the clock together with the terminal state, not after the lock is released
         except BaseException as exc:
@@ -265,7 +272,8 @@ class JobManager:
             with job.condition:
                 job.final_seconds = 0
             with self.lock:
-                self.active = None
+                if self.active == job.id:
+                    self.active = None
 
     def artifact(self, identifier, name):
         if name not in ARTIFACTS:

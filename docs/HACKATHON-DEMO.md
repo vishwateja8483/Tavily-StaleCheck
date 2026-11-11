@@ -19,9 +19,9 @@ Keep the process running and open the private `127.0.0.1` launch URL it prints. 
 
 Walkthrough:
 
-1. Select **Use service-provided demo input**.
+1. Select **Load Acme example**.
 2. Read the mock-mode label and the answer; give consent and select **Start mocked assessment**.
-3. Review the exact proposed query and domain. Select **Approve exact mocked searches** to complete the demo, or **Decline searches** to show that declining prevents research.
+3. Review the four proposed queries and the exact domain. Select **Approve exact mocked searches** to complete the demo, or **Decline searches** to show that declining prevents research.
 4. Open the verified report. Point out the quote/source, the per-claim verdict and freshness, the model-generated rewrite, and the explicit limitations. Download `report.json` or `manifest.json` to show the verifiable artifacts.
 5. Explain that a completed job means processing finished; it does not mean every claim is true.
 
@@ -38,7 +38,7 @@ python -m stalecheck verify-artifacts runs/hackathon-cli-demo
 python -m stalecheck stale-report runs/hackathon-cli-demo --output runs/hackathon-cli-demo.html
 ```
 
-The committed fixture produces four selected claims: one model-supported, one potentially changed, and two unverifiable. Verification checks artifact consistency, not source authenticity or truth. This path is offline and does not need API keys.
+The browser and CLI share a fixture that produces four selected claims: one model-supported, one potentially changed, and two unverifiable. Verification checks artifact consistency, not source authenticity or truth. This path is offline and does not need API keys.
 
 ## Live Bifrost and Tavily integration
 

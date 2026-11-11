@@ -59,11 +59,11 @@ def test_approval_polling_and_idempotency_do_not_repeat_extraction(manager):
     with pytest.raises(ServiceError, match='conflicting'):
         manager.approve(first['id'], pending['approval'], False)
     complete = wait(manager, first['id'], {'completed'})
-    assert complete['attempts'] == 3 and complete['stop_reason'] is None
-    assert len(transports['gateway'].transport.calls) == 2
-    assert len(transports['search_transport'].calls) == 1
+    assert complete['attempts'] == 8 and complete['stop_reason'] is None
+    assert len(transports['gateway'].transport.calls) == 4
+    assert len(transports['search_transport'].calls) == 4
     report = decode(manager.artifact(first['id'], 'report.json'))
-    assert report['claims'][0]['verdict'] == 'POTENTIALLY_CHANGED'
+    assert report['counts'] == {'MODEL_SUPPORTED': 1, 'POTENTIALLY_CHANGED': 1, 'UNVERIFIABLE': 2}
     assert report['usage']['credits']['scope'] == 'mock_observations_not_spending'
     assert b'Full original answer' in manager.artifact(first['id'], 'report.html')
 

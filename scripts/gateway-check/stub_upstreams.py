@@ -123,22 +123,23 @@ class Handler(BaseHTTPRequestHandler):
                                    "total_tokens": max(1, len(system + user) // 4) + max(1, len(text) // 4)}})
 
 
-def serve(service, port, log, mode="up"):
-    server = ThreadingHTTPServer(("127.0.0.1", port), Handler)
-    server.service, server.log, server.mode, server.lock = service, log, mode, threading.Lock()
+def serve(service, port, log, bind):
+    server = ThreadingHTTPServer((bind, port), Handler)
+    server.service, server.log, server.mode, server.lock = service, log, "up", threading.Lock()
     return server
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--log", required=True)
+    parser.add_argument("--bind", default="127.0.0.1")
     parser.add_argument("--primary-port", type=int, default=9101)
     parser.add_argument("--backup-port", type=int, default=9102)
     parser.add_argument("--tavily-port", type=int, default=9201)
     parser.add_argument("--catalog-port", type=int, default=9301)
     args = parser.parse_args()
-    servers = [serve("llm-primary", args.primary_port, args.log), serve("llm-backup", args.backup_port, args.log),
-               serve("tavily", args.tavily_port, args.log), serve("catalog", args.catalog_port, args.log)]
+    servers = [serve("llm-primary", args.primary_port, args.log, args.bind), serve("llm-backup", args.backup_port, args.log, args.bind),
+               serve("tavily", args.tavily_port, args.log, args.bind), serve("catalog", args.catalog_port, args.log, args.bind)]
     for server in servers[1:]:
         threading.Thread(target=server.serve_forever, daemon=True).start()
     print("stub upstreams listening", [s.server_address[1] for s in servers], flush=True)

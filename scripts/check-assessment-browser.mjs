@@ -38,12 +38,12 @@ try {
   await page.getByRole('heading', { name: 'Demo mode — mocked providers' }).waitFor();
   if (new URL(page.url()).hash) throw new Error('Launch fragment not stripped');
   if (await page.evaluate(() => localStorage.length + sessionStorage.length)) throw new Error('Unexpected persistent storage');
-  await page.screenshot({ path: resolve(output, 'setup-desktop.png') });
+  await page.screenshot({ animations: 'disabled', path: resolve(output, 'setup-desktop.png') });
   await page.setViewportSize({ width: 390, height: 844 });
   if (await page.evaluate(() => document.documentElement.scrollWidth > innerWidth)) throw new Error('Mobile setup overflow');
   await page.setViewportSize({ width: 1440, height: 1050 });
   const start = async () => {
-    await page.getByRole('button', { name: 'Use service-provided demo input' }).click();
+    await page.getByRole('button', { name: 'Load Acme example' }).click();
     for (const label of ['Full answer', 'Verification date', 'Answer date (optional)', 'Primary domains']) {
       const field = page.getByLabel(label, { exact: label !== 'Primary domains' });
       if (!await field.evaluate(element => element.readOnly)) throw new Error('Demo fixture field is editable');
@@ -54,7 +54,7 @@ try {
     const approval = page.getByRole('heading', { name: '2. Review exact search request' });
     await approval.waitFor();
     if (!await approval.evaluate(el => el === document.activeElement)) throw new Error('Approval did not receive focus');
-    await page.getByText('"Acme Starter pricing"', { exact: true }).waitFor();
+    await page.getByText('"Acme Cloud Starter plan price per month"', { exact: true }).waitFor();
   };
   await start();
   await page.getByRole('button', { name: 'Decline searches' }).focus();
@@ -63,7 +63,8 @@ try {
   await page.getByRole('button', { name: 'Prepare another assessment' }).click();
   if (!await page.getByRole('heading', { name: 'Answer and scope' }).evaluate(el => el === document.activeElement)) throw new Error('New assessment did not return focus to setup');
   await start();
-  await page.screenshot({ path: resolve(output, 'approval-desktop.png'), fullPage: true });
+  await page.screenshot({ animations: 'disabled', path: resolve(output, 'approval-desktop.png'), fullPage: true });
+  await page.locator('.assessment-progress').screenshot({ animations: 'disabled', path: resolve(output, 'approval-detail.png') });
   await page.getByRole('button', { name: 'Approve exact mocked searches' }).click();
   await page.getByRole('status').filter({ hasText: 'completed' }).waitFor();
   await page.getByRole('button', { name: 'Open verified report' }).click();
@@ -72,8 +73,11 @@ try {
   if (!await reportHeading.evaluate(el => el === document.activeElement)) throw new Error('Opening the report did not focus its heading');
   const frame = page.frameLocator('iframe');
   await frame.getByText('Full original answer', { exact: true }).waitFor();
-  await frame.getByRole('heading', { name: /POTENTIALLY_CHANGED/ }).waitFor();
+  await frame.getByRole('heading', { name: /Potentially changed/ }).waitFor();
   await frame.getByRole('heading', { name: 'At a glance' }).waitFor();
+  await frame.locator('section').filter({ hasText: 'At a glance' }).screenshot({ animations: 'disabled', path: resolve(output, 'report-summary.png') });
+  const verdicts = await frame.locator('article').evaluateAll(articles => articles.map(article => article.dataset.verdict));
+  if (verdicts.join(',') !== 'POTENTIALLY_CHANGED,MODEL_SUPPORTED,UNVERIFIABLE,UNVERIFIABLE') throw new Error('The demo did not show all three verdicts');
   if (await frame.locator('body').evaluate(el => el.ownerDocument.compatMode) !== 'CSS1Compat') throw new Error('Report is not in standards mode');
   await frame.getByRole('link', { name: 'claim-1', exact: true }).click();
   await frame.locator('article:target').waitFor({ timeout: 2000 });
@@ -84,13 +88,13 @@ try {
   await (await downloaded).saveAs(resolve(output, 'downloaded-report.json'));
   await page.locator('iframe').scrollIntoViewIfNeeded();
   await page.waitForTimeout(300);
-  await page.screenshot({ path: resolve(output, 'report-desktop-viewport.png') });
-  await page.screenshot({ path: resolve(output, 'result-desktop.png'), fullPage: true });
+  await page.screenshot({ animations: 'disabled', path: resolve(output, 'report-desktop-viewport.png') });
+  await page.screenshot({ animations: 'disabled', path: resolve(output, 'result-desktop.png'), fullPage: true });
   await page.setViewportSize({ width: 390, height: 844 });
   await page.locator('iframe').scrollIntoViewIfNeeded();
   await page.waitForTimeout(300);
-  await page.screenshot({ path: resolve(output, 'report-mobile-viewport.png') });
-  await page.screenshot({ path: resolve(output, 'result-mobile.png'), fullPage: true });
+  await page.screenshot({ animations: 'disabled', path: resolve(output, 'report-mobile-viewport.png') });
+  await page.screenshot({ animations: 'disabled', path: resolve(output, 'result-mobile.png'), fullPage: true });
   if (await page.evaluate(() => document.documentElement.scrollWidth > innerWidth)) throw new Error('Mobile page overflow');
   if (await frame.locator('body').evaluate(el => el.scrollWidth > el.ownerDocument.documentElement.clientWidth)) throw new Error('Mobile report overflow');
   await page.getByRole('button', { name: 'Close report' }).click();

@@ -1,0 +1,146 @@
+{
+  "assessment": "completed",
+  "artifact_verification": {
+    "valid": true,
+    "project_id": "stalecheck",
+    "run_id": "fd-10ac289b6099412d950a8084ef035a1a",
+    "status": "completed",
+    "artifacts": 5,
+    "assurance": "Internal consistency only; unsigned hashes cannot authenticate sources or establish truth."
+  },
+  "approval": {
+    "queries": [
+      "latest Python 3.14 maintenance release version",
+      "Python 3.14.10 release date"
+    ],
+    "primary_domains": [
+      "python.org"
+    ],
+    "sha256": "1f4577972b9237b03a764ea17b783b3aea9edafc9758ee50c51a300e1788ff55",
+    "approved": true
+  },
+  "verdicts": {
+    "MODEL_SUPPORTED": 0,
+    "POTENTIALLY_CHANGED": 1,
+    "UNVERIFIABLE": 1
+  },
+  "usage": {
+    "attempts": 5,
+    "provenance": {
+      "gateway": "bifrost",
+      "search": "tavily"
+    },
+    "gateway_calls": 3,
+    "tokens": {
+      "known_subtotal": {
+        "prompt_tokens": 16003,
+        "completion_tokens": 767,
+        "total_tokens": 16770
+      },
+      "complete": true,
+      "scope": "provider_reported_not_invoice"
+    },
+    "search_calls": 2,
+    "credits": {
+      "known_subtotal": {
+        "credits": 2
+      },
+      "complete": true,
+      "scope": "provider_reported_not_invoice"
+    },
+    "routing": {
+      "observed_fallbacks": 0,
+      "unknown_calls": 0
+    }
+  },
+  "attempts": [
+    {
+      "service": "gateway",
+      "status": "ok",
+      "usage": {
+        "prompt_tokens": 4192,
+        "completion_tokens": 225,
+        "total_tokens": 4417
+      },
+      "routing": {
+        "provider": "copilot-cli",
+        "model": "claude-sonnet-5.5",
+        "is_fallback": false
+      }
+    },
+    {
+      "service": "search",
+      "status": "ok",
+      "usage": {
+        "credits": 1
+      },
+      "routing": null
+    },
+    {
+      "service": "gateway",
+      "status": "ok",
+      "usage": {
+        "prompt_tokens": 5949,
+        "completion_tokens": 311,
+        "total_tokens": 6260
+      },
+      "routing": {
+        "provider": "copilot-cli",
+        "model": "claude-sonnet-5.5",
+        "is_fallback": false
+      }
+    },
+    {
+      "service": "search",
+      "status": "ok",
+      "usage": {
+        "credits": 1
+      },
+      "routing": null
+    },
+    {
+      "service": "gateway",
+      "status": "ok",
+      "usage": {
+        "prompt_tokens": 5862,
+        "completion_tokens": 231,
+        "total_tokens": 6093
+      },
+      "routing": {
+        "provider": "copilot-cli",
+        "model": "claude-sonnet-5.5",
+        "is_fallback": false
+      }
+    }
+  ],
+  "claims": [
+    {
+      "text": "Python 3.14.8 is still the latest Python 3.14 maintenance release.",
+      "verdict": "POTENTIALLY_CHANGED",
+      "reason_code": "MODEL_CONTRADICTION_WITH_VERBATIM_QUOTE",
+      "freshness": {
+        "state": "current",
+        "newest_source_date": "2026-10-25",
+        "age_days": 17,
+        "score": 95,
+        "maximum": 100,
+        "calibrated": false
+      },
+      "retained_quotes": 2
+    },
+    {
+      "text": "Python 3.14.10 was released on October 25, 2026.",
+      "verdict": "UNVERIFIABLE",
+      "reason_code": "SUPPORT_QUOTE_LACKS_CLAIM_FIGURES",
+      "freshness": {
+        "state": "undated",
+        "newest_source_date": null,
+        "age_days": null,
+        "score": null,
+        "maximum": 100,
+        "calibrated": false
+      },
+      "retained_quotes": 1
+    }
+  ]
+}

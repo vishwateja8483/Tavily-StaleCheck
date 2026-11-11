@@ -15,6 +15,7 @@ function initialDraft(): Draft {
   };
 }
 const errorText = (error: unknown) => error instanceof Error ? error.message : 'Assessment request failed. No action was retried.';
+const textureLine = '+ · : ; { } [ ] / = ~ + · [ ] { } : = / ~ · ';
 const framePolicy = '<meta http-equiv="Content-Security-Policy" content="default-src \'none\'; style-src \'unsafe-inline\'; img-src data:; form-action \'none\'; base-uri \'none\'">';
 
 export default function AssessmentApp({ api }: { api: AssessmentApi | null }) {
@@ -188,29 +189,33 @@ export default function AssessmentApp({ api }: { api: AssessmentApi | null }) {
 
   const step = job ? (isActive(job) && job.state !== 'researching' ? 1 : 2) : 0;
   const demo = capabilities?.mode === 'demo';
-  const steps = [
-    ['Enter an answer', 'Set the dates, source domains and run limits.'],
-    ['Approve searches', 'Review the exact queries and domains before research starts.'],
-    ['Review evidence', 'Read claim verdicts, source quotes and freshness scores.'],
-  ];
-
+  const steps = ['Answer', 'Search approval', 'Report'];
   return (
     <>
+      <div className="ambience" aria-hidden="true">
+        <div className="texture">{Array.from({ length: 30 }, (_, line) =>
+          <span key={line}>{textureLine.slice(line % 13).repeat(9)}</span>
+        )}</div>
+      </div>
       <a className="skip-link" href="#assessment-main">Skip to assessment</a>
       <header className="topbar">
         <div className="topbar-inner">
           <div className="brand"><span className="brand-mark" aria-hidden="true" />StaleCheck</div>
-          <span className="local-badge">{capabilities ? (demo ? 'Local demo' : 'Local live assessment') : 'Local workspace'}</span>
+          <span className="provider-indicator">{capabilities ? (demo ? 'Offline sample' : 'Bifrost + Tavily') : 'StaleCheck workspace'}</span>
         </div>
       </header>
       <main className="workspace" id="assessment-main" tabIndex={-1}>
-        <section className="hero" aria-labelledby="page-title">
-          <div className="hero-copy">
-            <h1 id="page-title">Check if an AI answer<br className="hero-break" /> is still current.</h1>
-            <p>Find time-sensitive claims, approve the searches, and see what the sources support.</p>
-          </div>
-          <div className="hero-pattern" aria-hidden="true"><span /><span /><span /></div>
-        </section>
+        <div className="workspace-header">
+          <h1>{job ? 'Assessment' : 'New assessment'}</h1>
+          {!job && <p>Check an AI answer against current sources.</p>}
+        </div>
+        <ol className="workflow" aria-label="Assessment progress">
+          {steps.map((title, index) => (
+            <li key={title} aria-current={step === index ? 'step' : undefined} data-complete={index < step}>
+              <span aria-hidden="true">{index < step ? '✓' : index + 1}</span>{title}
+            </li>
+          ))}
+        </ol>
 
         {!api && (
           <div className="notice danger" role="alert">
@@ -220,67 +225,36 @@ export default function AssessmentApp({ api }: { api: AssessmentApi | null }) {
         )}
         {error && <div className="notice danger" role="alert">{error}</div>}
 
-        <div className="workspace-grid">
-          <div className="workspace-main">
-            {api && !capabilities && (
-              <section className="panel panel-body">
-                <h2>{error ? 'Service unavailable' : 'Connecting to the local service'}</h2>
-                {error
-                  ? <button className="button secondary" disabled={busy} onClick={() => void perform(async () => setCapabilities(await api.capabilities()))}>Retry capabilities</button>
-                  : <p role="status">Loading assessment settings…</p>}
-              </section>
-            )}
-
-            {pending && !busy && (
-              <section className="notice caution" aria-labelledby="pending-heading">
-                <h2 id="pending-heading">Creation outcome uncertain</h2>
-                <p>Keep this page open. Retrying uses the original input and request key, so the service can return the existing assessment if it started one.</p>
-                <button className="button secondary" onClick={retryCreation}>Retry identical creation request</button>
-              </section>
-            )}
-
-            {capabilities?.mode === 'live' && !capabilities.configured && <p className="notice caution">Live creation disabled. Configure the local service and relaunch.</p>}
-            {capabilities && !job && (
-              <AssessmentForm formRef={formRef} draft={draft} capabilities={capabilities} locked={busy || !!pending} busy={busy}
-                demoLoaded={demoLoaded} consent={consent} inputErrors={inputErrors} onLoadDemo={loadDemo}
-                onChange={updateDraft} onConsent={setConsent} onSubmit={submit} />
-            )}
-            {job && (
-              <AssessmentProgress job={job} busy={busy} pollPaused={pollPaused}
-                decisionRecorded={decided === `${job.id}:${job.approval?.sha256}`}
-                onRefresh={refresh} onCancel={cancel} onDecide={decide} onShowReport={showReport}
-                onDownload={download} onReset={resetAssessment} />
-            )}
-          </div>
-
-          <aside className="workspace-side" aria-label="Assessment information">
-            <section className="panel side-panel" aria-labelledby="workflow-heading">
-              <h2 id="workflow-heading">Assessment workflow</h2>
-              <ol className="workflow">
-                {steps.map(([title, description], index) => (
-                  <li key={title} aria-current={step === index ? 'step' : undefined}>
-                    <span className="step-number" aria-hidden="true">{index + 1}</span>
-                    <div><h3>{title}</h3><p>{description}</p></div>
-                  </li>
-                ))}
-              </ol>
+        <div className="workspace-main">
+          {api && !capabilities && (
+            <section className="panel panel-body">
+              <h2>{error ? 'Service unavailable' : 'Connecting to the local service'}</h2>
+              {error
+                ? <button className="button secondary" disabled={busy} onClick={() => void perform(async () => setCapabilities(await api.capabilities()))}>Retry capabilities</button>
+                : <p role="status">Loading assessment settings…</p>}
             </section>
+          )}
 
-            {capabilities && (
-              <section className="panel side-panel" aria-labelledby="connection-heading">
-                <span className="mode-badge" data-mode={capabilities.mode}>{demo ? 'Demo' : 'Live'}</span>
-                <h2 id="connection-heading">{demo ? 'Demo mode — mocked providers' : 'Live mode — external providers'}</h2>
-                <p>{demo ? 'Explore the workflow with invented evidence. This run makes no external calls.' : `Bifrost identifies claims and evaluates excerpts. Tavily searches approved domains${capabilities.configuration.BIFROST_SEARCH_RELAY ? ' through the Bifrost relay' : ''}.`}</p>
-                <details className="run-details">
-                  <summary>Service configuration</summary>
-                  <p>Configuration presence is not connectivity or a successful credential check. This launch allows {capabilities.max_sessions} sessions.</p>
-                  <ul className="configuration">
-                    {configurationKeys.map(key => <li key={key}><code>{key}</code><span>{capabilities.configuration[key] ? 'Present' : 'Absent'}</span></li>)}
-                  </ul>
-                </details>
-              </section>
-            )}
-          </aside>
+          {pending && !busy && (
+            <section className="notice caution" aria-labelledby="pending-heading">
+              <h2 id="pending-heading">Creation outcome uncertain</h2>
+              <p>Keep this page open. Retrying uses the original input and request key, so the service can return the existing assessment if it started one.</p>
+              <button className="button secondary" onClick={retryCreation}>Retry identical creation request</button>
+            </section>
+          )}
+
+          {capabilities?.mode === 'live' && !capabilities.configured && <p className="notice caution">Live creation disabled. Configure the local service and relaunch.</p>}
+          {capabilities && !job && (
+            <AssessmentForm formRef={formRef} draft={draft} capabilities={capabilities} locked={busy || !!pending} busy={busy}
+              demoLoaded={demoLoaded} consent={consent} inputErrors={inputErrors} onLoadDemo={loadDemo}
+              onChange={updateDraft} onConsent={setConsent} onSubmit={submit} />
+          )}
+          {job && (
+            <AssessmentProgress job={job} busy={busy} pollPaused={pollPaused}
+              decisionRecorded={decided === `${job.id}:${job.approval?.sha256}`}
+              onRefresh={refresh} onCancel={cancel} onDecide={decide} onShowReport={showReport}
+              onDownload={download} onReset={resetAssessment} />
+          )}
         </div>
 
         {report !== null && (
@@ -296,7 +270,22 @@ export default function AssessmentApp({ api }: { api: AssessmentApi | null }) {
           </section>
         )}
 
-        <footer className="assessment-footer">The launch token and answer stay out of browser storage. Restarting the service clears active sessions.</footer>
+        <footer className="assessment-footer">
+          {capabilities && (
+            <section className="service-configuration" aria-labelledby="provider-heading">
+              <h2 id="provider-heading">{demo ? 'Demo mode — mocked providers' : 'Bifrost and Tavily'}</h2>
+              <details>
+                <summary>Service configuration</summary>
+                <p>{demo ? 'The sample uses invented evidence and runs offline.' : `Bifrost handles model requests. Tavily searches the approved domains${capabilities.configuration.BIFROST_SEARCH_RELAY ? ' through the Bifrost relay' : ''}.`}</p>
+                <p>Configuration presence is not connectivity or a successful credential check. This launch allows {capabilities.max_sessions} sessions.</p>
+                <ul className="configuration">
+                  {configurationKeys.map(key => <li key={key}><code>{key}</code><span>{capabilities.configuration[key] ? 'Present' : 'Absent'}</span></li>)}
+                </ul>
+              </details>
+            </section>
+          )}
+          <p>Answers and launch tokens stay out of browser storage.</p>
+        </footer>
       </main>
     </>
   );

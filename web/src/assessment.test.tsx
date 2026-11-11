@@ -12,14 +12,14 @@ function mockApi(): AssessmentApi {
 }
 async function start(api: AssessmentApi) {
   render(<AssessmentApp api={api} />);
-  fireEvent.click(await screen.findByRole('button', { name: 'Use service-provided demo input' }));
+  fireEvent.click(await screen.findByRole('button', { name: 'Load Acme example' }));
   fireEvent.click(screen.getByRole('checkbox'));
   fireEvent.click(screen.getByRole('button', { name: 'Start mocked assessment' }));
 }
 async function setupLive(api: AssessmentApi) {
   vi.mocked(api.capabilities).mockResolvedValue({ ...capabilities, mode: 'live', configured: true, demo_input: null });
   render(<AssessmentApp api={api} />);
-  await screen.findByRole('heading', { name: 'Live mode — external providers' });
+  await screen.findByRole('heading', { name: 'Bifrost and Tavily' });
   fireEvent.change(screen.getByLabelText('Full answer'), { target: { value: input.answer_text } });
   fireEvent.change(screen.getByLabelText('Verification date'), { target: { value: input.verification_date } });
   fireEvent.change(screen.getByLabelText(/Primary domains/), { target: { value: input.primary_domains.join('\n') } });
@@ -140,7 +140,7 @@ describe('local assessment experience', () => {
   });
   it('requires fresh explicit consent, labels mocks and uses only service demo input', async () => {
     const api = mockApi(); render(<AssessmentApp api={api} />);
-    fireEvent.click(await screen.findByRole('button', { name: 'Use service-provided demo input' }));
+    fireEvent.click(await screen.findByRole('button', { name: 'Load Acme example' }));
     expect(screen.getByLabelText('Full answer')).toHaveValue('Mock answer');
     expect(screen.getByRole('button', { name: 'Start mocked assessment' })).toBeDisabled();
     expect(screen.getByText(/Configuration presence is not connectivity/)).toBeInTheDocument();
@@ -155,7 +155,7 @@ describe('local assessment experience', () => {
   });
   it('keeps demo fields read-only, requires explicit loading, and resets consent on reload', async () => {
     const api = mockApi(); render(<AssessmentApp api={api} />);
-    const load = await screen.findByRole('button', { name: 'Use service-provided demo input' });
+    const load = await screen.findByRole('button', { name: 'Load Acme example' });
     expect(screen.getByLabelText('Full answer')).toHaveValue('');
     expect(screen.getByRole('checkbox')).toBeDisabled();
     for (const label of ['Full answer', 'Verification date', 'Answer date (optional)', 'Primary domains (one per line, at least one required)']) {
@@ -251,7 +251,7 @@ describe('local assessment experience', () => {
     const api = mockApi(); const { container } = render(<AssessmentApp api={api} />);
     // The service may answer before its worker leaves awaiting_approval.
     vi.mocked(api.approve).mockResolvedValue(job);
-    fireEvent.click(await screen.findByRole('button', { name: 'Use service-provided demo input' }));
+    fireEvent.click(await screen.findByRole('button', { name: 'Load Acme example' }));
     fireEvent.click(screen.getByRole('checkbox'));
     fireEvent.click(screen.getByRole('button', { name: 'Start mocked assessment' }));
     await screen.findByRole('heading', { name: '2. Review exact search request' });
@@ -266,13 +266,13 @@ describe('local assessment experience', () => {
   it('offers a fresh decision for a later job with an identical approval request', async () => {
     const api = mockApi(); render(<AssessmentApp api={api} />);
     vi.mocked(api.approve).mockResolvedValue({ ...job, state: 'declined', approval: null });
-    fireEvent.click(await screen.findByRole('button', { name: 'Use service-provided demo input' }));
+    fireEvent.click(await screen.findByRole('button', { name: 'Load Acme example' }));
     fireEvent.click(screen.getByRole('checkbox'));
     fireEvent.click(screen.getByRole('button', { name: 'Start mocked assessment' }));
     fireEvent.click(await screen.findByRole('button', { name: 'Decline searches' }));
     fireEvent.click(await screen.findByRole('button', { name: 'Prepare another assessment' }));
     vi.mocked(api.create).mockResolvedValue({ ...job, id: 'b'.repeat(32) });
-    fireEvent.click(screen.getByRole('button', { name: 'Use service-provided demo input' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Load Acme example' }));
     fireEvent.click(screen.getByRole('checkbox'));
     fireEvent.click(screen.getByRole('button', { name: 'Start mocked assessment' }));
     expect(await screen.findByRole('button', { name: 'Approve exact mocked searches' })).not.toBeDisabled();

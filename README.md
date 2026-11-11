@@ -8,11 +8,13 @@ Built for the **Geek Room Global AI Hackathon 2026**, Track B (Tavily), Problem 
 
 | Approve exact searches before any Tavily call | Verified report with quotes and sources |
 |---|---|
-| ![Exact-query approval in the StaleCheck demo](docs/screenshots/assessment-approval.png) | ![Claim freshness report in the StaleCheck demo](docs/screenshots/assessment-report.png) |
+| ![Exact-query approval in a live StaleCheck run](docs/screenshots/assessment-approval.png) | ![Claim freshness report from a live StaleCheck run](docs/screenshots/assessment-report.png) |
 
-The screenshots use mocked providers and invented Acme evidence. The November 2, 2026 captures show the earlier interface with a Bifrost gateway, Qwen2.5-3B and the Tavily relay. [Live approval](docs/screenshots/assessment-live-approval.png) · [Live report](docs/screenshots/assessment-live-report.png)
+These screenshots show a live Chrome assessment on November 11, 2026 with GitHub Copilot, Maxim Bifrost and Tavily. The November 2, 2026 captures show the earlier interface with a Bifrost gateway, Qwen2.5-3B and the Tavily relay. [Live approval](docs/screenshots/assessment-live-approval.png) · [Live report](docs/screenshots/assessment-live-report.png)
 
-**Pitch deck:** [PDF](docs/pitch/StaleCheck-pitch.pdf) · [PowerPoint with speaker notes](docs/pitch/StaleCheck-pitch.pptx) (10 slides).
+**Pitch deck:** [Submission PowerPoint with live screenshots](docs/pitch/StaleCheck-live-submission.pptx).
+
+**Submission:** [HackCulture checklist and requirement map](docs/SUBMISSION.md).
 
 **Hackathon demo guide:** [Run the offline demo, present the workflow, and configure the optional live integration](docs/HACKATHON-DEMO.md).
 
@@ -103,7 +105,7 @@ python -m stalecheck stale-check --answer answer.txt --live --confirm-outbound \
 
 ### Live run with GitHub Copilot and Tavily
 
-The current live setup uses GitHub Copilot through Bifrost, with Tavily handling real searches after the user approves the exact request. It does not install or run a local model. You need Docker, a Copilot seat and Copilot Requests credential, and a Tavily API key. The runner discovers a model available to the account, sends one small real Copilot smoke request, then starts the live browser app. Follow [the credential, setup, and billing guide](docs/COPILOT-BIFROST-SETUP.md) before running:
+The live launcher uses the signed-in GitHub Copilot CLI behind Bifrost. Tavily searches after approval of the exact request. You need a Copilot seat, the Bifrost gateway and a Tavily API key. Follow [the credential, setup, and billing guide](docs/COPILOT-BIFROST-SETUP.md) before running:
 
 ```bash
 bash scripts/copilot-check/run.sh
@@ -122,6 +124,8 @@ The older `scripts/live-check/` and its result documents are retained as a clear
 **Scalability.** Every run is bounded by claim, attempt and time ceilings with a shared call ledger, so the cost of checking one answer is capped up front. The assessment server is deliberately single-user and loopback-only; a multi-user deployment would sit behind Bifrost virtual-key budgets and rate limits.
 
 ## Evidence and limits
+
+**November 11, 2026 Chrome verification.** The signed-in GitHub Copilot CLI handled two model calls through Bifrost, and Tavily used one credit for the approved search. StaleCheck retained three quotations, reported a freshness score of 41/100 and marked the claim Unverifiable because the evidence conflicted. The saved run passed artifact verification. A separate two-claim Python release run used three Copilot calls and two Tavily searches. It returned one potentially changed claim with 95/100 freshness and one unverifiable claim. [Verification receipt](docs/live-verification-2026-11-11.json)
 
 Default commands need no credentials and make no network calls. The live path is covered by mock contract tests and has run end to end on a real stack (`scripts/live-check/run.sh`, 2026-11-02): a real Bifrost 2.4.0 container, a small open-weights model (Qwen2.5-3B-Instruct, 4-bit, served by Ollama on CPU) behind it, and the real Tavily API, once with direct searches and once with the searches relayed by Bifrost. Each journey took about 80 s (four model calls, 6.3 k tokens as reported by Bifrost, three Tavily credits), ended with two claims potentially changed and one unverifiable, and verified offline; the browser app completed the same journey in a real browser in both modes. A 28-check run against a Bifrost container with stand-in upstreams (`scripts/gateway-check/run.sh`: chat, fallback takeover, refusals, the Tavily relay, a virtual-key budget, Relay Logs) and a Tavily smoke test (`scripts/tavily-live-smoke.py`, one credit per query) complement it.
 

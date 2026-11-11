@@ -308,16 +308,18 @@ def acquire(plan, *, allow_network=False, api_key=None, transport=None,
             for row in rows:
                 obj(row, "search result")
                 reject_reflected_credential(row)
-                url = safe_url(row.get("url"))
+                url = row.get("url")
+                plain_http = isinstance(url, str) and url.startswith("http://")
+                checked_url = safe_url("https" + url[4:] if plain_http else url)
                 require(url not in seen, "duplicate search URL")
                 seen.add(url)
                 # Search results are provider-chosen, unlike explicitly reviewed extract URLs.
                 # Ignore otherwise safe links our narrow provenance policy cannot retain.
-                parts = urlsplit(url)
+                parts = urlsplit(checked_url)
                 # Validate the authority and character policy even for skipped links.
                 require(url.isascii(), "acquisition URLs must be ASCII")
                 public_url(f"{parts.scheme}://{parts.netloc}/")
-                if parts.query or parts.fragment or "%" in url:
+                if plain_http or parts.query or parts.fragment or "%" in url:
                     failures.append({"endpoint": "/search", "query": query, "reason": "unsupported_result_url"})
                     continue
                 public_url(url)

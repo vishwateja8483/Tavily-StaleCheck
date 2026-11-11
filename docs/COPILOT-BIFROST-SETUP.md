@@ -1,44 +1,36 @@
-# Real Copilot + Tavily setup
+# Live assessment with GitHub Copilot
 
-This is the real-provider path for StaleCheck: GitHub Copilot supplies model responses through Bifrost, and Tavily supplies live search results through Bifrost's relay. The application still requires consent to process the answer and separate approval of the exact queries before Tavily is called.
+StaleCheck uses a signed-in GitHub Copilot CLI for inference. Maxim Bifrost is the API gateway for both model calls and Tavily Search. The launcher issues fresh keys for the two loopback connections. [Bifrost gateway](https://github.com/maximhq/bifrost) · [GitHub Copilot CLI](https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference)
 
-## Requirements
+## Start the workspace
 
-- Docker Desktop running.
-- A GitHub account with an active Copilot plan or assigned Copilot seat.
-- A fine-grained GitHub personal access token with the **Copilot Requests** account permission, or a token created by Bifrost's **Sign in with GitHub** flow.
-- A Tavily API key.
-- Python 3.12+ and the StaleCheck package installed.
-
-For an organization-assigned Copilot seat, the organization's Copilot policy must permit Copilot CLI usage. GitHub Copilot usage is billed against the seat's Copilot allowance; Bifrost currently may report `$0` for those requests, so do not treat its cost display as a billing estimate. Bifrost's Copilot provider also relies on Copilot token exchange behavior that GitHub does not publish as a stable API contract.
-
-## Configure credentials without committing them
-
-The runner reads secrets only from the current shell environment. Do not put them in the browser, source files, command-line arguments, or chat. Run these commands in Bash (on macOS, start `bash` first if your interactive shell is zsh):
+1. Install Python 3.12 or newer and sign in to GitHub Copilot CLI. A Copilot seat must have access to the model. The launcher defaults to `claude-sonnet-5.5`. Pass `--model` to select a different Copilot model explicitly.
+2. Set `TAVILY_API_KEY` in your shell or git-ignored project `.env`. [Tavily dashboard](https://app.tavily.com/home)
+3. Install Bifrost's native HTTP gateway or have Node.js and `npx` available for the official launcher. If you install the binary yourself, set `BIFROST_BINARY` to its path. [Official Bifrost setup](https://docs.getbifrost.ai/quickstart/gateway/setting-up)
+4. Run the launcher from the repository root.
 
 ```bash
-read -rs -p "GitHub Copilot token: " GITHUB_COPILOT_API_KEY; echo
-export GITHUB_COPILOT_API_KEY
-read -rs -p "Tavily API key: " TAVILY_API_KEY; echo
-export TAVILY_API_KEY
+bash scripts/copilot-check/run.sh --open-ui
 ```
 
-The GitHub CLI token returned by `gh auth token` is not guaranteed to be accepted by Copilot's API. The tested token in this environment was rejected, so use a token with the required permission or Bifrost's GitHub sign-in flow instead.
+Open the private URL printed by the launcher. Paste an answer, set the source domains, and consent to answer processing. Review the exact Tavily query and domain list before approving the search.
 
-## Run the live browser demo
+The bridge accepts authenticated text-only requests from Bifrost and sends the prompt on stdin to the Copilot CLI in an empty working directory. Each assessment uses the selected model. The run has a wall-clock deadline and an attempt limit. The Copilot CLI uses its own account quota and can count additional prompt tokens from its built-in instructions.
 
-From the repository root:
+## Verify a real run
 
 ```bash
-bash scripts/copilot-check/run.sh
+# Uses the sample Tavily pricing claim and approves a single Tavily search.
+bash scripts/copilot-check/run.sh --verify
 ```
 
-The script pulls Bifrost v2.5.1, starts it bound to loopback, discovers a model available to the authenticated Copilot seat, and sends one small real model request as a smoke test. It then starts StaleCheck in live mode and prints a private launch URL. Keep the terminal open, open that URL, enter an answer, and follow the two consent steps. The first request uses Copilot; no Tavily search occurs until you approve the exact query/domain request. A real assessment can use paid Copilot allowance and Tavily credits.
+The command writes the report, run artifacts and `verification.json` under `runs/`. For a different case, pass `--answer-file PATH --domain DOMAIN --max-claims N`. Repeat `--domain` for multiple approved domains. The verification command explicitly approves the generated public searches for the supplied case. Use `--verify-browser /absolute/path/to/playwright/index.mjs` for the same test through the browser. Set `PLAYWRIGHT_CHANNEL=chrome` to use an installed Chrome. The real test uses your Copilot allowance and Tavily credits.
 
-Choose another model available on your account with `LIVE_MODEL=github-copilot/<model>`. To use another local port, set `GATEWAY_PORT`; to change the Bifrost image, set `BIFROST_IMAGE`. The script removes its temporary Bifrost container and credentials when the assessment server exits.
+## Tavily MCP in Codex
 
-## Current validation status
+Codex can connect to Tavily for development research using OAuth. StaleCheck's assessment service uses Tavily Search through Bifrost and applies its exact-query and domain approval. [Tavily MCP setup](https://docs.tavily.com/documentation/mcp)
 
-The StaleCheck offline and mocked-provider suites pass, and the real browser mock flow was exercised. In this environment, Bifrost v2.5.1 was able to start, but the GitHub CLI's existing token was rejected by the Copilot provider with HTTP 403. The Copilot/Tavily end-to-end path is therefore **not yet verified here**. A valid Copilot Requests token (or Bifrost GitHub sign-in) and a Tavily key are required before the live runner can be completed.
-
-The older `scripts/live-check/` evaluation documents a historical run using a local Ollama model. It is retained as historical evidence, not used by this Copilot setup.
+```bash
+codex mcp add tavily --url https://mcp.tavily.com/mcp/
+codex mcp login tavily
+```

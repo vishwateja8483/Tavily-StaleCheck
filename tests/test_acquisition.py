@@ -160,21 +160,21 @@ def test_search_only_never_extracts_hits(plan):
 
 def test_search_skips_unretainable_links_without_losing_good_results(plan):
     plan["urls"] = []
-    unsupported = ["https://docs.python.org/3/?view=3.12", "https://docs.python.org/3/#intro",
+    unsupported = ["http://docs.python.org/3/", "https://docs.python.org/3/?view=3.12", "https://docs.python.org/3/#intro",
                    "https://docs.python.org/3/%2Fguide"]
     results = [row(url) for url in unsupported] + [row(URL)]
     result, transport = run(plan, fixtures(search={"results": results})[:1])
     assert len(transport.calls) == 1
     assert [item["url"] for item in result["candidates"]] == [URL]
     assert result["status"] == "partial"
-    assert result["failures"] == [{"endpoint": "/search", "query": plan["queries"][0], "reason": "unsupported_result_url"}] * 3
+    assert result["failures"] == [{"endpoint": "/search", "query": plan["queries"][0], "reason": "unsupported_result_url"}] * len(unsupported)
     assert all(url not in json.dumps(result["failures"]) for url in unsupported)
     assert len(acquisition_digest(result)) == 64
 
 
 def test_unsafe_authority_still_aborts_even_with_unsupported_url_parts(plan):
     plan["urls"] = []
-    for url in ("https://127.0.0.1/?x=1", "https://user:pass@python.org/?x=1",
+    for url in ("http://127.0.0.1/", "https://127.0.0.1/?x=1", "https://user:pass@python.org/?x=1",
                 "https://python.org:444/?x=1", "https://python.org/?q=é"):
         with pytest.raises(a.AcquisitionError):
             run(plan, fixtures(search={"results": [row(url)]})[:1])
