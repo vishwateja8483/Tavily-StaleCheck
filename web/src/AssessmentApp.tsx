@@ -3,6 +3,8 @@ import type { FormEvent } from 'react';
 import AssessmentForm from './AssessmentForm';
 import type { Draft } from './AssessmentForm';
 import AssessmentProgress from './AssessmentProgress';
+import AssessmentRoute from './AssessmentRoute';
+import { BrandMark, VerdictMark } from './marks';
 import { AssessmentInputError, AssessmentRequestError, configurationKeys, isActive, validateInput } from './assessment-api';
 import type { ArtifactName, AssessmentApi, AssessmentInput, Capabilities, InputErrors, Job } from './assessment-api';
 
@@ -15,7 +17,6 @@ function initialDraft(): Draft {
   };
 }
 const errorText = (error: unknown) => error instanceof Error ? error.message : 'Assessment request failed. No action was retried.';
-const textureLine = '+ · : ; { } [ ] / = ~ + · [ ] { } : = / ~ · ';
 const framePolicy = '<meta http-equiv="Content-Security-Policy" content="default-src \'none\'; style-src \'unsafe-inline\'; img-src data:; form-action \'none\'; base-uri \'none\'">';
 
 export default function AssessmentApp({ api }: { api: AssessmentApi | null }) {
@@ -187,35 +188,31 @@ export default function AssessmentApp({ api }: { api: AssessmentApi | null }) {
     }
   }
 
-  const step = job ? (isActive(job) && job.state !== 'researching' ? 1 : 2) : 0;
   const demo = capabilities?.mode === 'demo';
-  const steps = ['Answer', 'Search approval', 'Report'];
   return (
-    <>
-      <div className="ambience" aria-hidden="true">
-        <div className="texture">{Array.from({ length: 30 }, (_, line) =>
-          <span key={line}>{textureLine.slice(line % 13).repeat(9)}</span>
-        )}</div>
-      </div>
+    <div className="sheet">
       <a className="skip-link" href="#assessment-main">Skip to assessment</a>
       <header className="topbar">
-        <div className="topbar-inner">
-          <div className="brand"><span className="brand-mark" aria-hidden="true" />StaleCheck</div>
-          <span className="provider-indicator">{capabilities ? (demo ? 'Offline sample' : 'Bifrost + Tavily') : 'StaleCheck workspace'}</span>
+        <div className="brand">
+          <BrandMark />
+          <span className="brand-name">StaleCheck</span>
+          <span className="brand-tagline">Stale-answer detector</span>
         </div>
+        <p className="mode-cell" data-mode={capabilities?.mode}>{capabilities ? (demo ? 'Demo · mocked providers' : 'Live · Bifrost + Tavily') : 'Local workspace'}</p>
       </header>
       <main className="workspace" id="assessment-main" tabIndex={-1}>
-        <div className="workspace-header">
-          <h1>{job ? 'Assessment' : 'New assessment'}</h1>
-          {!job && <p>Check an AI answer against current sources.</p>}
+        <div className="title-row">
+          <div className="title-text">
+            <h1>{job ? 'Assessment' : 'New assessment'}</h1>
+            {!job && <p>Check an AI answer against current sources.</p>}
+          </div>
+          <ul className="legend" role="list" aria-label="Verdict marks">
+            <li><VerdictMark kind="supported" />Model-supported</li>
+            <li><VerdictMark kind="changed" />Potentially changed</li>
+            <li><VerdictMark kind="unverifiable" />Unverifiable</li>
+          </ul>
         </div>
-        <ol className="workflow" aria-label="Assessment progress">
-          {steps.map((title, index) => (
-            <li key={title} aria-current={step === index ? 'step' : undefined} data-complete={index < step}>
-              <span aria-hidden="true">{index < step ? '✓' : index + 1}</span>{title}
-            </li>
-          ))}
-        </ol>
+        <AssessmentRoute job={job} demo={demo} />
 
         {!api && (
           <div className="notice danger" role="alert">
@@ -287,6 +284,6 @@ export default function AssessmentApp({ api }: { api: AssessmentApi | null }) {
           <p>Answers and launch tokens stay out of browser storage.</p>
         </footer>
       </main>
-    </>
+    </div>
   );
 }

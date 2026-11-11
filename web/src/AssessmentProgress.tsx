@@ -47,7 +47,7 @@ export default function AssessmentProgress({
         <p className="state-badge" data-state={job.state} role="status">{stateLabels[job.state]}</p>
       </div>
 
-      <div className="panel-body progress-body">
+      <div className="drawing">
         <div className="run-content">
           {active && !approval && <p className="result-intro">{
             job.state === 'extracting' ? 'Identifying time-sensitive claims in the answer.' :
@@ -59,12 +59,12 @@ export default function AssessmentProgress({
               <h3 id="approval-heading" ref={approvalHeading} tabIndex={-1}>2. Review exact search request</h3>
               <p>Approve this exact set of queries and domains to start research. Review time counts toward the deadline.</p>
               <h4>Queries <span className="guidance">JSON strings</span></h4>
-              <ol className="query-list">
+              <ol className="query-list" role="list">
                 {approval.queries.map((query, index) => <li key={index}><pre>{JSON.stringify(query)}</pre></li>)}
               </ol>
               <h4>Primary domains</h4>
               {approval.primary_domains.length ? (
-                <ul className="domain-list">{approval.primary_domains.map(domain => <li key={domain}><code>{JSON.stringify(domain)}</code></li>)}</ul>
+                <ul className="domain-list" role="list">{approval.primary_domains.map(domain => <li key={domain}><code>{JSON.stringify(domain)}</code></li>)}</ul>
               ) : <p>No primary domain restrictions.</p>}
               {decisionRecorded ? (
                 <p className="approval-recorded" role="status">Decision recorded. Waiting for the service to continue.</p>
@@ -100,14 +100,16 @@ export default function AssessmentProgress({
             </section>
           )}
         </div>
-        <aside className="run-sidebar" aria-label="Run status">
-          <h3>Run status</h3>
-          <dl className="run-metrics">
-            {active && <div><dt>Time left at last update</dt><dd>{Math.ceil(job.remaining_seconds)} <span>sec</span></dd></div>}
-            <div><dt>Provider attempts</dt><dd>{job.attempts}</dd></div>
-          </dl>
+        <aside className="run-sidebar titleblock" aria-label="Run status">
+          <div className="tb-cell">
+            <h3>Run status</h3>
+            <dl className="run-metrics">
+              {active && <div><dt>Time left at last update</dt><dd>{Math.ceil(job.remaining_seconds)} <span>sec</span></dd></div>}
+              <div><dt>Provider attempts</dt><dd>{job.attempts}</dd></div>
+            </dl>
+          </div>
           {active && (
-            <div className="run-controls">
+            <div className="tb-cell run-controls">
               {pollPaused && <p className="guidance">Status updates paused. Refresh before making a search decision.</p>}
               <div className="actions">
                 <button className="button secondary" disabled={busy} onClick={onRefresh}>Refresh status</button>
@@ -116,14 +118,16 @@ export default function AssessmentProgress({
               <p className="guidance">Cancellation waits for the worker to exit.{job.mode === 'live' && ' Requests already sent may finish and incur charges.'}</p>
             </div>
           )}
-          <details className="run-details">
-            <summary>Run details</summary>
-            <dl className="metadata">
-              <dt>Job ID</dt><dd><code>{job.id}</code></dd>
-              <dt>State</dt><dd><code>{job.state}</code></dd>
-              {job.stop_reason && <><dt>Stop reason</dt><dd><code>{job.stop_reason}</code></dd></>}
-            </dl>
-          </details>
+          <div className="tb-cell">
+            <details className="run-details">
+              <summary>Run details</summary>
+              <dl className="metadata">
+                <dt>Job ID</dt><dd><code>{job.id}</code></dd>
+                <dt>State</dt><dd><code>{job.state}</code></dd>
+                {job.stop_reason && <><dt>Stop reason</dt><dd><code>{job.stop_reason}</code></dd></>}
+              </dl>
+            </details>
+          </div>
         </aside>
       </div>
       {!active && <div className="panel-footer"><button className="button secondary" disabled={busy} onClick={onReset}>Prepare another assessment</button></div>}
