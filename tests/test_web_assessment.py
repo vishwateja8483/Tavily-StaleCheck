@@ -1,14 +1,17 @@
 """Local HTTP and collector lifecycle checks; no live provider calls."""
 from copy import deepcopy
 import http.client
+from io import BytesIO
 import json
 import socket
 import threading
 import time
+from zipfile import ZipFile
 
 import pytest
 
 from stalecheck.contracts import decode
+from stalecheck.verify_artifacts import REQUIRED, verify_artifacts
 from stalecheck.web_jobs import DEMO_INPUT, Job, JobManager, ServiceError, demo_transports
 from stalecheck.web_service import AssessmentServer
 from test_gateway_relay import KEY as VIRTUAL_KEY, bifrost_stand_in, replies
@@ -294,7 +297,7 @@ def request(service, method='GET', path='/api/capabilities', body=None, headers=
     return result
 
 
-def test_http_create_approve_download(service):
+def test_http_create_approve_download(service, tmp_path):
     status, headers, raw = request(service)
     assert status == 200 and decode(raw)['mode'] == 'demo'
     assert headers['Cache-Control'] == 'no-store'
@@ -312,6 +315,18 @@ def test_http_create_approve_download(service):
         assert status == 200 and raw
         assert 'attachment' in headers['Content-Disposition']
         assert request(service, path=path + '/artifacts/' + name, headers={'X-Assessment-Token': ''})[0] == 401
+    archive_path = path + '/artifacts/verified-run.zip'
+    assert request(service, path=archive_path, headers={'X-Assessment-Token': ''})[0] == 401
+    status, headers, raw = request(service, path=archive_path)
+    assert status == 200 and headers['Content-Type'] == 'application/zip'
+    assert headers['Content-Disposition'] == 'attachment; filename="verified-run.zip"'
+    output = tmp_path / 'extracted'
+    with ZipFile(BytesIO(raw)) as archive:
+        assert set(archive.namelist()) == REQUIRED | {'manifest.json'}
+        archive.extractall(output)
+    assert verify_artifacts(output)['valid']
+    (service.manager.get(job['id']).directory / 'run' / 'report.json').write_bytes(b'{}')
+    assert request(service, path=archive_path)[0] == 400
     assert request(service, path=path + '/artifacts/session.json')[0] == 404
 
 

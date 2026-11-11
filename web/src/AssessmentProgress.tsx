@@ -57,7 +57,7 @@ export default function AssessmentProgress({
           {approval && (
             <section className="assessment-approval" aria-labelledby="approval-heading">
               <h3 id="approval-heading" ref={approvalHeading} tabIndex={-1}>2. Review exact search request</h3>
-              <p>Approve this exact set of queries and domains to start research. Review time counts toward the deadline.</p>
+              <p>Approve these exact queries and domains to start research. Each claim can trigger one search, so a query may run more than once. Review time counts toward the deadline.</p>
               <h4>Queries <span className="guidance">JSON strings</span></h4>
               <ol className="query-list" role="list">
                 {approval.queries.map((query, index) => <li key={index}><pre>{JSON.stringify(query)}</pre></li>)}
@@ -94,8 +94,14 @@ export default function AssessmentProgress({
               <h3 id="artifacts-heading">Verified artifacts</h3>
               <p className="guidance">The service checks artifact integrity before each download. Claim verdicts still require review.</p>
               {job.artifacts.includes('report.html') && <button className="button primary" disabled={busy} onClick={event => onShowReport(event.currentTarget)}>Open verified report <span aria-hidden="true">↓</span></button>}
+              {job.artifacts.includes('verified-run.zip') && (
+                <div>
+                  <button className="button secondary" disabled={busy} onClick={() => onDownload('verified-run.zip')}>Download verified run (.zip)</button>
+                  <p className="guidance">Includes the original answer and all files needed for offline verification.</p>
+                </div>
+              )}
               <div className="artifact-downloads">
-                {job.artifacts.map(name => <button className="button secondary" key={name} disabled={busy} onClick={() => onDownload(name)}>Download <code>{name}</code></button>)}
+                {job.artifacts.filter(name => name !== 'verified-run.zip').map(name => <button className="button secondary" key={name} disabled={busy} onClick={() => onDownload(name)}>Download <code>{name}</code></button>)}
               </div>
             </section>
           )}

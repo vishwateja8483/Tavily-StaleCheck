@@ -1,0 +1,1 @@
+Node.js 20 is still supported by the Node.js project. Node.js 24 remains a supported LTS release.

@@ -1,0 +1,24 @@
+{
+  "launchFragmentStripped": true,
+  "storage": 0,
+  "pageErrors": [],
+  "unexpectedRequests": [],
+  "configuration": [
+    "BIFROST_URL — Present",
+    "BIFROST_MODEL — Present",
+    "BIFROST_VIRTUAL_KEY — Present",
+    "TAVILY_API_KEY — Absent",
+    "BIFROST_SEARCH_RELAY — Present"
+  ],
+  "queries": [
+    "\"latest Python 3.14 maintenance release\"",
+    "\"Python 3.14.10 release date\""
+  ],
+  "state": "completed",
+  "seconds": 27,
+  "claimHeadings": [
+    "claim-1 · Potentially changed",
+    "claim-2 · Unverifiable"
+  ],
+  "glance": "Selected claims and freshness scores out of 100\nClaim\tExcerpt\tCategory\tVerdict\tFreshness\nclaim-1\tPython 3.14.8 is still the latest Python 3.14 maintenance release.\tversion\tPotentially changed\t95\nclaim-2\tPython 3.14.10 was released on October 25, 2026.\tversion\tUnverifiable\tnot scored"
+}

@@ -1,10 +1,10 @@
 # Hackathon demo: StaleCheck
 
-## What this demo shows
+## Show the saved live result first
 
-StaleCheck checks time-sensitive claims in an AI answer. Bifrost extracts claims and assesses retrieved excerpts; Tavily supplies search results. The live flow asks for consent to process the answer, then asks the user to approve the exact queries and domains before any search. The report keeps evidence separate from model inference, includes verbatim excerpts and source links, and never applies suggested edits.
+Open the [Python live case](LIVE-PROOF.md) and show the query approval screenshot. Then download and open its [HTML report](evidence/python-release/report.html). It was rendered from a recorded Chrome run with Copilot through Bifrost and Tavily Search. You can open and verify the saved result without keys.
 
-The demo below uses **mock providers and invented Acme data**. It demonstrates the workflow and safety boundaries, not live provider compatibility, factual accuracy, or real search results.
+The browser demo below uses scripted providers and invented Acme data. Use it if someone wants to try the full interaction without credentials.
 
 ## Run the browser demo
 
@@ -54,10 +54,10 @@ StaleCheck addresses **Problem Statement 06 · Tavily**, the stale-answer detect
 
 ## Three-minute presentation
 
-- **0:00–0:25 — Problem:** confident AI answers can contain claims that age at different rates; checking every sentence manually is slow.
-- **0:25–0:50 — Differentiator:** StaleCheck does not let a model silently browse or rewrite. It requires answer-processing consent and approval of the exact search request.
-- **0:50–1:45 — Demo:** load the supplied answer, consent, inspect the proposed query, approve it, and open the report.
-- **1:45–2:20 — Trust boundary:** show a verbatim quote, source, freshness metadata, and the model-generated suggestion. Explain why a quote match is not semantic proof and why unverifiable is a valid result.
-- **2:20–3:00 — Engineering and honesty:** show artifact verification and bounded/no-retry behavior. State clearly that the browser walkthrough uses invented mock evidence; live Bifrost/Tavily integration is a separate opt-in path.
+1. **0:00–0:25.** Show the original claim that Python 3.14.8 was still the latest release. Explain how a confident answer can become stale.
+2. **0:25–1:00.** Show the real approval screen. Bifrost routed claim extraction to Copilot. Tavily searched only after the two queries and `python.org` were approved.
+3. **1:00–2:00.** In the report, open both claims. Show the newer release, the source quote, and the proposed edit. Then show why the release date remained unverifiable in the retrieved material even though the publisher independently confirms it.
+4. **2:00–2:35.** Show the run ZIP or run `verify-artifacts` on the saved bundle. Explain that it checks integrity and reproduces the report from the recorded input.
+5. **2:35–3:00.** Describe how a docs or support team could check an answer before publishing it. Mention that the live spot checks cover a small number of claims.
 
-Do not claim benchmark accuracy from the current small evaluation: its labels were AI-written and not human-reviewed. See [the evaluation and its limitations](LIVE-EVALUATION.md).
+If the judges want to interact, use the live Copilot setup or explicitly switch to the mock demo. [Live setup](COPILOT-BIFROST-SETUP.md)

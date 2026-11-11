@@ -23,13 +23,13 @@ StaleCheck addresses one problem statement. Bifrost and Tavily each have a role 
 | Separate sources from model interpretation | The report links the source and shows verbatim evidence separately from the model's reasoning and edit proposal. |
 | Show a working prototype | Run the offline browser demo and download its report and manifest. Use the live guide for a credentialed run. |
 
-Start with [the browser demo guide](HACKATHON-DEMO.md) and [live Copilot setup](COPILOT-BIFROST-SETUP.md). Label mocked sample footage as offline. The November 11 live browser run used two Copilot calls through Bifrost and one Tavily search. The verified report kept three verbatim quotations and recorded a freshness score of 41/100. The claim was Unverifiable because the retained evidence conflicted.
+Lead with [the saved live proof and replay commands](LIVE-PROOF.md). Use the [presentation guide](HACKATHON-DEMO.md) for the walkthrough and [live Copilot setup](COPILOT-BIFROST-SETUP.md) for a credentialed run.
 
 ## Live proof for the presentation
 
 Use the two-claim Python release run to show the decision boundary. Copilot proposed two queries through Bifrost and the browser required separate approval before Tavily searched `python.org`. The older-version claim came back **Potentially changed**, with a **95/100** freshness score. The release-date claim came back **Unverifiable** because the retained quotation lacked the figures needed to support the release date. Python.org independently lists the release date as October 25, 2026. [Python 3.14.10 release record](https://www.python.org/downloads/release/python-31410/)
 
-The run made three Copilot calls through Bifrost and two Tavily searches. All five saved artifacts verified. The [live verification receipt](live-verification-2026-11-11.json) records the exact approval, verdicts, per-attempt accounting and source freshness. The pitch deck shows the separate live pricing run and illustrates how conflicting quotes produce an Unverifiable verdict.
+The run made three Copilot calls through Bifrost and two Tavily searches. All five saved artifacts verified. The [matching live verification receipt](evidence/python-release/verification.json) records the exact approval, verdicts, per-attempt accounting and source freshness. The pitch deck shows the separate live pricing run and illustrates how conflicting quotes produce an Unverifiable verdict.
 
 ```bash
 bash scripts/copilot-check/run.sh --verify \

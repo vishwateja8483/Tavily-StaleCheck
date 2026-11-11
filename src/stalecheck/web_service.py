@@ -6,7 +6,7 @@ import secrets
 import socket
 import threading
 
-from .contracts import MAX_FILE, ValidationError, decode, json_bytes, require, safe_path
+from .contracts import MAX_FILE, MAX_TOTAL, ValidationError, decode, json_bytes, require, safe_path
 from .web_jobs import ServiceError
 
 MAX_BODY = 100_000
@@ -199,7 +199,7 @@ class Handler(BaseHTTPRequestHandler):
                 with safe_path(self.server.static_root, relative).open('rb') as stream:
                     raw = stream.read(MAX_FILE + 1)
             else:
-                match = re.fullmatch(r'/api/jobs/([a-f0-9]{32})(?:/(report|artifacts/([a-z.]+)))?', path)
+                match = re.fullmatch(r'/api/jobs/([a-f0-9]{32})(?:/(report|artifacts/([a-z.-]+)))?', path)
                 if not match:
                     raise ServiceError(404, 'unknown route')
                 identifier, action, filename = match.groups()
@@ -209,7 +209,10 @@ class Handler(BaseHTTPRequestHandler):
                     raw = manager.artifact(identifier, filename or 'report.json')
                     if filename == 'report.html':
                         kind = 'text/html; charset=utf-8'
-            if len(raw) > MAX_FILE:
+                    elif filename == 'verified-run.zip':
+                        kind = 'application/zip'
+            limit = MAX_TOTAL + MAX_FILE + 65_536 if kind == 'application/zip' else MAX_FILE
+            if len(raw) > limit:
                 raise ServiceError(413, 'response exceeds bound')
             self._respond(code, raw, kind, filename)
         except ServiceError as exc:

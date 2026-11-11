@@ -65,9 +65,11 @@ try {
   await page.locator('iframe').scrollIntoViewIfNeeded();
   await page.waitForTimeout(300);
   await page.screenshot({ path: resolve(output, '3-live-report.png') });
-  const downloaded = page.waitForEvent('download');
-  await page.getByRole('button', { name: 'Download report.json', exact: true }).click();
-  await (await downloaded).saveAs(resolve(output, 'downloaded-report.json'));
+  const archiveButton = page.getByRole('button', { name: 'Download verified run (.zip)', exact: true });
+  await archiveButton.scrollIntoViewIfNeeded();
+  const archive = page.waitForEvent('download');
+  await archiveButton.click();
+  await (await archive).saveAs(resolve(output, 'verified-run.zip'));
   const storage = await page.evaluate(() => localStorage.length + sessionStorage.length);
   const summary = { launchFragmentStripped: !new URL(page.url()).hash, storage, pageErrors: errors, unexpectedRequests, configuration, queries, state, seconds, claimHeadings: headings, glance };
   await writeFile(resolve(output, 'summary.json'), JSON.stringify(summary, null, 2));

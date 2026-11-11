@@ -93,11 +93,11 @@ try {
   await frame.locator('article:target').waitFor({ timeout: 2000 });
   await frame.locator('main').evaluate(el => el.ownerDocument.defaultView.scrollTo(0, 0));
   await frame.getByText(/Category \(model-labelled\): pricing\. Freshness of the quoted evidence: current \(score \d+\/100/).waitFor();
-  const download = page.getByRole('button', { name: 'Download report.json', exact: true });
-  await download.scrollIntoViewIfNeeded();
-  const downloaded = page.waitForEvent('download');
-  await download.click();
-  await (await downloaded).saveAs(resolve(output, 'downloaded-report.json'));
+  const archiveButton = page.getByRole('button', { name: 'Download verified run (.zip)', exact: true });
+  await archiveButton.scrollIntoViewIfNeeded();
+  const archive = page.waitForEvent('download');
+  await archiveButton.click();
+  await (await archive).saveAs(resolve(output, 'verified-run.zip'));
   await page.locator('iframe').scrollIntoViewIfNeeded();
   await page.waitForTimeout(300);
   await page.screenshot({ animations: 'disabled', path: resolve(output, 'report-desktop-viewport.png') });
@@ -120,7 +120,7 @@ try {
   await page.getByRole('alert').filter({ hasText: 'Launch token missing' }).waitFor();
   if (errors.length || external.length) throw new Error(JSON.stringify({ errors, external }));
   await writeFile(resolve(output, 'browser-check.json'), JSON.stringify({ status: 'passed', mode: 'demo', live_calls: false,
-    checks: ['fixed demo fixture', 'fresh demo consent', 'fragment stripped', 'no persistent storage', 'exact approval gate', 'stage tracking', 'workflow focus', 'keyboard decline', 'demo completion', 'sandbox report rendered', 'per-claim freshness score shown', 'at-a-glance table shown', 'claim jump link', 'authenticated download', 'mobile overflow', 'cancel', 'reload loses token'],
+    checks: ['fixed demo fixture', 'fresh demo consent', 'fragment stripped', 'no persistent storage', 'exact approval gate', 'stage tracking', 'workflow focus', 'keyboard decline', 'demo completion', 'sandbox report rendered', 'per-claim freshness score shown', 'at-a-glance table shown', 'claim jump link', 'authenticated verified-run download', 'mobile overflow', 'cancel', 'reload loses token'],
     errors, external, job_ids: ids }, null, 2), { flag: 'wx' });
   console.log('Assessment browser journey passed (demo only).');
 } finally {

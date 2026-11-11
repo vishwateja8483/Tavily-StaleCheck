@@ -4,7 +4,7 @@ export type AssessmentInput = {
   primary_domains: string[]; max_claims: number; max_attempts: number; max_seconds: number; consent: true;
 };
 export type ApprovalRequest = { queries: string[]; primary_domains: string[]; sha256: string };
-export const artifactNames = ['report.html', 'report.json', 'input.json', 'manifest.json'] as const;
+export const artifactNames = ['report.html', 'report.json', 'input.json', 'manifest.json', 'verified-run.zip'] as const;
 export type ArtifactName = typeof artifactNames[number];
 export const configurationKeys = ['BIFROST_URL', 'BIFROST_MODEL', 'BIFROST_VIRTUAL_KEY', 'TAVILY_API_KEY', 'BIFROST_SEARCH_RELAY'] as const;
 export type Capabilities = {
@@ -153,8 +153,9 @@ export function createAssessmentApi(token: string) {
     artifact: async (id: string, name: ArtifactName) => {
       if (!artifactNames.includes(name)) return invalid();
       const response = await request(`${jobPath(id)}/artifacts/${name}`);
-      const expected = name === 'report.html' ? 'text/html' : 'application/json';
-      if (!response.headers.get('content-type')?.toLowerCase().includes(expected)) return invalid();
+      const expected = name === 'verified-run.zip' ? 'application/zip' : name === 'report.html' ? 'text/html' : 'application/json';
+      const mediaType = response.headers.get('content-type')?.split(';', 1)[0].trim().toLowerCase();
+      if (mediaType !== expected) return invalid();
       return response.blob();
     },
   };

@@ -1,0 +1,3 @@
+{"sequence": 1, "type": "run_started", "run_id": "fd-2588f92210b541f299723721b3087353", "timestamp": "2026-11-11T10:23:08.302580+00:00", "data": {"mode": "replay"}}
+{"sequence": 2, "type": "claims_verified", "run_id": "fd-2588f92210b541f299723721b3087353", "timestamp": "2026-11-11T10:23:08.302580+00:00", "data": {"count": 2}}
+{"sequence": 3, "type": "run_completed", "run_id": "fd-2588f92210b541f299723721b3087353", "timestamp": "2026-11-11T10:23:08.302580+00:00", "data": {}}

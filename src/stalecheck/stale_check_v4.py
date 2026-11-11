@@ -464,6 +464,7 @@ mark { color: inherit; background: none; }
   background: var(--wash); font-size: .75rem; line-height: 1.3; }
 .comparison-columns p { padding: 0 12px; white-space: pre-wrap; }
 [data-verdict="POTENTIALLY_CHANGED"] .comparison-columns > div + div { background: var(--red-wash); }
+.verdict-reason { margin-top: 10px; color: var(--ink-2); }
 .claim-metadata { max-width: 72ch; margin-top: 16px; color: var(--ink-2); font-size: .875rem; }
 .ruler { margin-top: 14px; }
 .ruler-cap { display: block; margin-bottom: 26px; color: var(--ink-3); font-size: .75rem; line-height: 1.3; }
@@ -537,6 +538,22 @@ ul { padding-inline-start: 1.25rem; margin: 8px 0 0; }
 
 
 _VERDICT_LABELS = {"MODEL_SUPPORTED": "Model-supported", "POTENTIALLY_CHANGED": "Potentially changed", "UNVERIFIABLE": "Unverifiable"}
+_VERDICT_REASONS = {
+    "MODEL_SUPPORT_WITH_VERBATIM_QUOTE": "The model found support in a retained quote that includes the figures in the claim.",
+    "MODEL_CONTRADICTION_WITH_VERBATIM_QUOTE": "The model found a contradiction in a retained source quote.",
+    "MODEL_ABSTAINED": "The model could not reach a verdict from the retrieved material.",
+    "CONFLICTING_EVIDENCE": "The retained evidence contains both supporting and contradicting quotes.",
+    "SUPPORT_QUOTE_LACKS_CLAIM_FIGURES": "The supporting quote did not include all the figures in the claim.",
+    "NO_VERBATIM_SUPPORTING_QUOTE": "No supporting quote could be matched to the retrieved excerpts.",
+    "NO_VERBATIM_CONTRADICTING_QUOTE": "No contradicting quote could be matched to the retrieved excerpts.",
+    "NO_SOURCES": "The search returned no usable results from the approved domains.",
+    "APPROVAL_DECLINED": "The searches were declined.",
+    "SEARCH_FAILED": "A search failed before this claim could be assessed.",
+    "GATEWAY_FAILED": "A model request failed before this claim could be assessed.",
+    "JOURNEY_LIMIT": "The run reached its limit before this claim could be assessed.",
+    "PREFLIGHT_FAILED": "A request failed validation before this claim could be assessed.",
+    "ASSESSMENT_INVALID_REPLY": "The model returned a response the service could not validate.",
+}
 _VERDICT_RANK = {"POTENTIALLY_CHANGED": 3, "UNVERIFIABLE": 2, "MODEL_SUPPORTED": 1}
 _UNDERLINES = {"MODEL_SUPPORTED": "u-supported", "POTENTIALLY_CHANGED": "u-changed", "UNVERIFIABLE": "u-unverifiable"}
 # Shape, not colour, carries the verdict: circle = model-supported, triangle = potentially changed, diamond = unverifiable.
@@ -669,11 +686,13 @@ def render_html(report):
         scored = (f'score {fresh["score"]}/100, newest quoted source {fresh["newest_source_date"]}, {fresh["age_days"]} day(s) before the assessment date'
                   if fresh["score"] is not None else "not scored")
         verdict = claim["verdict"]
+        reason = _VERDICT_REASONS.get(claim["reason_code"], "See the claim audit details for the reason.")
         score_block = (f'<strong>{fresh["score"]}</strong><span>/100</span><small>{e(fresh["state"])}</small>' if fresh["score"] is not None
                        else '<strong>–</strong><small>not scored</small>')
         parts += [
             f'<article class="claim-card" id="{e(claim["id"])}" data-verdict="{e(verdict)}"><header class="claim-head">'
             f'<h2>{_mark(verdict)}{e(claim["id"])} · {e(verdict_labels[verdict])}</h2><div class="score" aria-hidden="true">{score_block}</div></header>',
+            f'<p class="verdict-reason">{e(reason)}</p>',
             '<div class="claim-comparison"><h3>Original excerpt and proposed edit</h3><div class="comparison-columns">',
             f'<div><strong>Original</strong><p>{e(claim["text"])}</p></div>',
             f'<div><strong>Model-generated proposal · Requires review</strong><p>{e(inference["suggested_rewrite"] or "No supported proposal retained")}</p></div></div></div>',

@@ -338,7 +338,8 @@
             "description": "Verified artifact bytes; HTML is rendered from verified v4 report",
             "content": {
               "application/json": {},
-              "text/html": {}
+              "text/html": {},
+              "application/zip": {}
             }
           },
           "default": {
@@ -372,7 +373,8 @@
               "report.html",
               "report.json",
               "input.json",
-              "manifest.json"
+              "manifest.json",
+              "verified-run.zip"
             ]
           }
         }
@@ -553,7 +555,8 @@
                 "report.html",
                 "report.json",
                 "input.json",
-                "manifest.json"
+                "manifest.json",
+                "verified-run.zip"
               ]
             }
           }

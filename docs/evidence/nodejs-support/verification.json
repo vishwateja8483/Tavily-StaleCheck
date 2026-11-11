@@ -1,0 +1,146 @@
+{
+  "assessment": "completed",
+  "artifact_verification": {
+    "valid": true,
+    "project_id": "stalecheck",
+    "run_id": "fd-ac1c49b5810943cb859e4214db477c00",
+    "status": "completed",
+    "artifacts": 5,
+    "assurance": "Internal consistency only; unsigned hashes cannot authenticate sources or establish truth."
+  },
+  "approval": {
+    "queries": [
+      "Node.js 20 end of life date release schedule",
+      "Node.js 24 LTS status release schedule"
+    ],
+    "primary_domains": [
+      "nodejs.org"
+    ],
+    "sha256": "4ddeb6edbccba3cbe296387ebd30901941c82116663d1298cf4bfc7e8b2fd0c7",
+    "approved": true
+  },
+  "verdicts": {
+    "MODEL_SUPPORTED": 1,
+    "POTENTIALLY_CHANGED": 1,
+    "UNVERIFIABLE": 0
+  },
+  "usage": {
+    "attempts": 5,
+    "provenance": {
+      "gateway": "bifrost",
+      "search": "tavily"
+    },
+    "gateway_calls": 3,
+    "tokens": {
+      "known_subtotal": {
+        "prompt_tokens": 15490,
+        "completion_tokens": 838,
+        "total_tokens": 16328
+      },
+      "complete": true,
+      "scope": "provider_reported_not_invoice"
+    },
+    "search_calls": 2,
+    "credits": {
+      "known_subtotal": {
+        "credits": 2
+      },
+      "complete": true,
+      "scope": "provider_reported_not_invoice"
+    },
+    "routing": {
+      "observed_fallbacks": 0,
+      "unknown_calls": 0
+    }
+  },
+  "attempts": [
+    {
+      "service": "gateway",
+      "status": "ok",
+      "usage": {
+        "prompt_tokens": 4169,
+        "completion_tokens": 215,
+        "total_tokens": 4384
+      },
+      "routing": {
+        "provider": "copilot-cli",
+        "model": "claude-sonnet-5.5",
+        "is_fallback": false
+      }
+    },
+    {
+      "service": "search",
+      "status": "ok",
+      "usage": {
+        "credits": 1
+      },
+      "routing": null
+    },
+    {
+      "service": "gateway",
+      "status": "ok",
+      "usage": {
+        "prompt_tokens": 5647,
+        "completion_tokens": 337,
+        "total_tokens": 5984
+      },
+      "routing": {
+        "provider": "copilot-cli",
+        "model": "claude-sonnet-5.5",
+        "is_fallback": false
+      }
+    },
+    {
+      "service": "search",
+      "status": "ok",
+      "usage": {
+        "credits": 1
+      },
+      "routing": null
+    },
+    {
+      "service": "gateway",
+      "status": "ok",
+      "usage": {
+        "prompt_tokens": 5674,
+        "completion_tokens": 286,
+        "total_tokens": 5960
+      },
+      "routing": {
+        "provider": "copilot-cli",
+        "model": "claude-sonnet-5.5",
+        "is_fallback": false
+      }
+    }
+  ],
+  "claims": [
+    {
+      "text": "Node.js 20 is still supported by the Node.js project.",
+      "verdict": "POTENTIALLY_CHANGED",
+      "reason_code": "MODEL_CONTRADICTION_WITH_VERBATIM_QUOTE",
+      "freshness": {
+        "state": "dated",
+        "newest_source_date": "2025-06-06",
+        "age_days": 523,
+        "score": 0,
+        "maximum": 100,
+        "calibrated": false
+      },
+      "retained_quotes": 2
+    },
+    {
+      "text": "Node.js 24 remains a supported LTS release.",
+      "verdict": "MODEL_SUPPORTED",
+      "reason_code": "MODEL_SUPPORT_WITH_VERBATIM_QUOTE",
+      "freshness": {
+        "state": "current",
+        "newest_source_date": "2026-10-24",
+        "age_days": 18,
+        "score": 95,
+        "maximum": 100,
+        "calibrated": false
+      },
+      "retained_quotes": 2
+    }
+  ]
+}

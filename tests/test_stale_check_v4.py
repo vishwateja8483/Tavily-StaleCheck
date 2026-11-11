@@ -50,6 +50,8 @@ def test_every_claim_has_a_freshness_score_or_says_why_not():
     assert report['claims'][1]['freshness'] == {'state': 'none', 'newest_source_date': None, 'age_days': None,
                                                 'score': None, 'maximum': 100, 'calibrated': False}
     html = render_html(report)
+    assert 'The model found a contradiction in a retained source quote.' in html
+    assert 'The search returned no usable results from the approved domains.' in html
     assert 'Category (model-labelled): pricing' in html
     assert 'Freshness of the quoted evidence: current (score 97/100, newest quoted source 2026-10-20, 12 day(s)' in html
     assert 'Freshness of the quoted evidence: none (not scored)' in html

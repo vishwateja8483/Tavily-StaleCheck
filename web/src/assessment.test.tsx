@@ -61,9 +61,13 @@ describe('assessment boundary', () => {
     fetcher.mockResolvedValueOnce(new Response('<h1>Report</h1>', { headers: { 'Content-Type': 'text/html' } }));
     await api.artifact(job.id, 'report.html');
     expect(fetcher).toHaveBeenLastCalledWith('/api/jobs/job-1/artifacts/report.html', expect.objectContaining({ headers: { 'X-Assessment-Token': 'memory_token' } }));
+    fetcher.mockResolvedValueOnce(new Response(new Uint8Array([80, 75]), { headers: { 'Content-Type': 'application/zip' } }));
+    const archive = await api.artifact(job.id, 'verified-run.zip');
+    expect(archive.type).toBe('application/zip');
+    expect(fetcher).toHaveBeenLastCalledWith('/api/jobs/job-1/artifacts/verified-run.zip', expect.objectContaining({ headers: { 'X-Assessment-Token': 'memory_token' } }));
     fetcher.mockRejectedValueOnce(new Error('network failure with sensitive internals'));
     await expect(api.create('same-key', input)).rejects.toThrow('outcome may be unknown');
-    expect(fetcher).toHaveBeenCalledTimes(3);
+    expect(fetcher).toHaveBeenCalledTimes(4);
   });
   it('preserves HTTP rejection status without exposing response internals', async () => {
     vi.stubGlobal('fetch', vi.fn().mockResolvedValue(new Response(JSON.stringify({ error: 'invalid assessment input' }),

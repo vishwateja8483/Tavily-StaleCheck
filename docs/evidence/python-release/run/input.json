@@ -1,0 +1,248 @@
+{
+  "schema_version": "4.0",
+  "format": "stale_answer_transcript",
+  "answer_text": "Python 3.14.8 is still the latest Python 3.14 maintenance release. Python 3.14.10 was released on October 25, 2026.",
+  "answer_date": null,
+  "verification_date": "2026-11-11",
+  "primary_domains": [
+    "python.org"
+  ],
+  "limits": {
+    "max_claims": 2,
+    "max_attempts": 5,
+    "max_seconds": 180
+  },
+  "provenance": {
+    "gateway": "bifrost",
+    "search": "tavily"
+  },
+  "extraction": {
+    "status": "ok",
+    "reply": {
+      "text": "{\"claims\":[{\"quote\":\"Python 3.14.8 is still the latest Python 3.14 maintenance release.\",\"category\":\"version\",\"time_sensitivity\":\"high\",\"reason\":\"Latest maintenance release changes every ~2 months; the answer also contradicts itself by mentioning 3.14.10.\",\"query\":\"latest Python 3.14 maintenance release\"},{\"quote\":\"Python 3.14.10 was released on October 25, 2026.\",\"category\":\"version\",\"time_sensitivity\":\"high\",\"reason\":\"Release dates and version numbers for Python patch releases may be inaccurate or superseded by newer releases.\",\"query\":\"Python 3.14.10 release date\"}]}",
+      "finish_reason": "stop",
+      "model_requested": "copilot-cli/claude-sonnet-5.5",
+      "fallbacks_requested": [],
+      "usage": {
+        "prompt_tokens": 4187,
+        "completion_tokens": 220,
+        "total_tokens": 4407
+      },
+      "served_by": {
+        "provider": "copilot-cli",
+        "model": "claude-sonnet-5.5",
+        "is_fallback": false
+      },
+      "latency_seconds": 7.765,
+      "request_sha256": "123d0e7b10466a481eced7b1eb7559e8861936e8c5b95f35ce95560fcfda9289",
+      "response_sha256": "cba7ceec1c34ad8b6277703f0fa758e976836e67753c364709b8a1434d1acf0d",
+      "messages_sha256": "254e9cf5217760e5e30163ded2ce24d538f1e7f102772f62a6eac1c915dedea3"
+    }
+  },
+  "approval": {
+    "queries": [
+      "latest Python 3.14 maintenance release",
+      "Python 3.14.10 release date"
+    ],
+    "primary_domains": [
+      "python.org"
+    ],
+    "sha256": "d8aad9a6b4782535d85c828ed224dcbe94745bee12b41836fa0bb5fbbb8a8497",
+    "approved": true
+  },
+  "checks": [
+    {
+      "claim": "claim-1",
+      "search": {
+        "status": "ok",
+        "query": "latest Python 3.14 maintenance release",
+        "sources": [
+          {
+            "id": "claim-1-src-1",
+            "url": "https://discuss.python.org/t/python-3-14-3-and-3-13-12-are-now-available/105995",
+            "title": "Python 3.14.3 and 3.13.12 are now available! - Core Development - Discussions on Python.org",
+            "content": "# Python 3.14.3 and 3.13.12 are now available!\n\n# Python 3.14.3 is now available!\n\nTwo snakes enjoying a pie with 3.14 on the top and π crimping\n\nTwo snakes enjoying a pie with 3.14 on the top and π crimping538×507 110 KB\n\nTwo snakes enjoying a pie with 3.14 on the top and π crimping\n\n# This is third maintenance release of Python 3.14\n\nPython 3.14.3 is the third maintenance release of 3.14, containing around 299 bugfixes, build improvements and documentation changes since 3.14.2. [...] ### Python Release Python 3.14.3\n\nThe official home of the Python Programming Language\n\n# Major new features of the 3.14 series, compared to 3.13\n\nSome of the major new features and changes in Python 3.14 are:\n\n## New features\n\n`compression.zstd`\n`except`\n`except`\n`uuid`\n`return`\n`break`\n`continue`\n`finally`\n\nFor more details on the changes to Python 3.14, see What’s new in Python 3.14.\n\n## Build changes\n\n## Incompatible changes, removals and new deprecations\n\n# Python install manager [...] The installer we offer for Windows is being replaced by our new install manager, which can be installed from the Windows Store or from its download page. See our documentation for more information. The JSON file available for download contains the list of all the installable packages available as part of this release, including file URLs and hashes, but is not required to install the latest release. The traditional installer will remain available throughout the 3.14 and 3.15 releases.",
+            "content_sha256": "3e7868f6482291e0c0fb9a767e8a6957d839a329d7c33f6b0cfc70479d2607a2",
+            "retrieved_at": "2026-11-11T10:22:52.889324+00:00",
+            "published_at": "2026-02-03T21:51:46+00:00",
+            "published_at_raw": "Tue, 03 Feb 2026 21:51:46 GMT",
+            "relevance_score": 0.7122322
+          },
+          {
+            "id": "claim-1-src-2",
+            "url": "https://www.python.org/downloads/latest/python3.14",
+            "title": "Python Release Python 3.14.10 | Python.org",
+            "content": "Python 3.14.10 is an expedited security release and the tenth maintenance release of 3.14, containing around 120 bugfixes, build improvements and documentation changes from 63 contributors since 3.14.9. [...] Notice: This page displays a fallback because interactive scripts did not run. Possible causes include disabled JavaScript or failure to load scripts or stylesheets.\n\npython™\n\nDonate\n\n≡ Menu\n\n A A\n  + Smaller\n  + Larger\n  + Reset\n\n Socialize\n  + LinkedIn\n  + Mastodon\n  + Chat on IRC\n  + Twitter\n\n# Python 3.14.10\n\nRelease date: Oct. 25, 2026\n\n## This is the tenth maintenance release of Python 3.14",
+            "content_sha256": "0bd66f153c716d849c80feeec4f72e4231dbba4557bb80780ed138f624885939",
+            "retrieved_at": "2026-11-11T10:22:52.889324+00:00",
+            "published_at": "2026-10-25T00:00:00+00:00",
+            "published_at_raw": "Sun, 25 Oct 2026 00:00:00 GMT",
+            "relevance_score": 0.70639306
+          },
+          {
+            "id": "claim-1-src-3",
+            "url": "https://www.python.org/downloads/release/python-3148",
+            "title": "Python Release Python 3.14.8 | Python.org",
+            "content": "Python 3.14.8 is an expedited security release and the eighth maintenance release of 3.14, containing around 354 bugfixes, build improvements and documentation changes from 142 contributors since 3.14.7.\n\n## Security content in this release [...] For more details on the changes to Python 3.14, see What’s new in Python 3.14.\n\n### Build changes\n\n PEP 761: Python 3.14 and onwards no longer provides PGP signatures for release artifacts. Instead, Sigstore is recommended for verifiers.\n Official macOS and Windows release binaries include an experimental JIT compiler.\n Official Android binary releases are now available.\n\n### Incompatible changes, removals and new deprecations [...] Notice: This page displays a fallback because interactive scripts did not run. Possible causes include disabled JavaScript or failure to load scripts or stylesheets.\n\npython™\n\nDonate\n\n≡ Menu\n\n A A\n  + Smaller\n  + Larger\n  + Reset\n\n Socialize\n  + LinkedIn\n  + Mastodon\n  + Chat on IRC\n  + Twitter\n\n# Python 3.14.8\n\nNote: Python 3.14.8 has been superseded by Python 3.14.10.\n\nRelease date: Sept. 30, 2026\n\n## This is the eighth maintenance release of Python 3.14",
+            "content_sha256": "4976afb9194d9676e361f07ceaeaa04c8de84601cbb713934ba39c824b316bb3",
+            "retrieved_at": "2026-11-11T10:22:52.889324+00:00",
+            "published_at": "2026-09-30T00:00:00+00:00",
+            "published_at_raw": "Wed, 30 Sep 2026 00:00:00 GMT",
+            "relevance_score": 0.6955449
+          }
+        ],
+        "calls": 1
+      },
+      "assessment": {
+        "status": "ok",
+        "reply": {
+          "text": "{\"verdict\":\"CHANGED\",\"observed\":\"Python 3.14.10 (released Oct. 25, 2026) is the latest 3.14 maintenance release; the 3.14.8 page says it has been superseded by 3.14.10.\",\"evidence\":[{\"source_id\":\"claim-1-src-3\",\"relation\":\"contradicts\",\"quote\":\"Note: Python 3.14.8 has been superseded by Python 3.14.10.\"},{\"source_id\":\"claim-1-src-2\",\"relation\":\"contradicts\",\"quote\":\"Python 3.14.10 is an expedited security release and the tenth maintenance release of 3.14\"}],\"rationale\":\"The python.org 3.14.8 page states it was superseded by 3.14.10, and the latest-3.14 page lists 3.14.10 as the current release, so 3.14.8 is no longer the latest.\",\"rewrite\":\"Python 3.14.8 has been superseded by Python 3.14.10, the tenth maintenance release of 3.14, released Oct. 25, 2026.\"}",
+          "finish_reason": "stop",
+          "model_requested": "copilot-cli/claude-sonnet-5.5",
+          "fallbacks_requested": [],
+          "usage": {
+            "prompt_tokens": 5787,
+            "completion_tokens": 337,
+            "total_tokens": 6124
+          },
+          "served_by": {
+            "provider": "copilot-cli",
+            "model": "claude-sonnet-5.5",
+            "is_fallback": false
+          },
+          "latency_seconds": 7.671,
+          "request_sha256": "fd2cc4200a2295c36225cbc0c6b2ce51a902f7d035ff342624b1bae04b7ece77",
+          "response_sha256": "656fa2ee516c548df2071fc05671036297cfa9a3e2e12c243385db0a833d3729",
+          "messages_sha256": "ab09077969e433b54ed1a2343b088dad7dee87bd811ece6ca8c07bb8a76dd9f6"
+        }
+      }
+    },
+    {
+      "claim": "claim-2",
+      "search": {
+        "status": "ok",
+        "query": "Python 3.14.10 release date",
+        "sources": [
+          {
+            "id": "claim-2-src-1",
+            "url": "https://www.python.org/downloads/release/python-31410",
+            "title": "Python Release Python 3.14.10 | Python.org",
+            "content": "Notice: This page displays a fallback because interactive scripts did not run. Possible causes include disabled JavaScript or failure to load scripts or stylesheets.\n\npython™\n\nDonate\n\n≡ Menu\n\n A A\n  + Smaller\n  + Larger\n  + Reset\n\n Socialize\n  + LinkedIn\n  + Mastodon\n  + Chat on IRC\n  + Twitter\n\n# Python 3.14.10\n\nRelease date: Oct. 25, 2026\n\n## This is the tenth maintenance release of Python 3.14 [...] Python 3.14.10 is an expedited security release and the tenth maintenance release of 3.14, containing around 120 bugfixes, build improvements and documentation changes from 63 contributors since 3.14.9.",
+            "content_sha256": "f7d163c4c38e3a68aac45e3e26a0a0b5c93b3812e11445394948fe54be76c856",
+            "retrieved_at": "2026-11-11T10:23:00.887088+00:00",
+            "published_at": null,
+            "published_at_raw": null,
+            "relevance_score": 0.9408388
+          },
+          {
+            "id": "claim-2-src-2",
+            "url": "https://www.python.org/downloads/release/python-3140",
+            "title": "Python Release Python 3.14.0 | Python.org",
+            "content": "Notice: This page displays a fallback because interactive scripts did not run. Possible causes include disabled JavaScript or failure to load scripts or stylesheets.\n\npython™\n\nDonate\n\n≡ Menu\n\n A A\n  + Smaller\n  + Larger\n  + Reset\n\n Socialize\n  + LinkedIn\n  + Mastodon\n  + Chat on IRC\n  + Twitter\n\n# Python 3.14.0\n\nNote: Python 3.14.0 has been superseded by Python 3.14.10.\n\nRelease date: Oct. 7, 2025\n\n# This is the stable release of Python 3.14.0 [...] Python 3.14.0 is the newest major release of the Python programming language, and it contains many new features and optimisations compared to Python 3.13.\n\n# Major new features of the 3.14 series, compared to 3.13\n\nSome of the major new features and changes in Python 3.14 are:\n\n## New features [...] # More resources\n\n Online documentation\n PEP 745, 3.14 Release Schedule\n Report bugs at github.com/python/cpython/issues\n Help fund Python directly (or via GitHub Sponsors) and support the Python community\n\n# And now for something completely different\n\nEdgar Allen Poe died on 7th October 1849.",
+            "content_sha256": "eec2bc6ed3a72700a3288236e6b8416d5ee60a3550c1df6baffe214600b0a835",
+            "retrieved_at": "2026-11-11T10:23:00.887088+00:00",
+            "published_at": "2025-05-12T00:00:00+00:00",
+            "published_at_raw": "Mon, 12 May 2025 00:00:00 GMT",
+            "relevance_score": 0.9092728
+          },
+          {
+            "id": "claim-2-src-3",
+            "url": "https://peps.python.org/pep-0745",
+            "title": "PEP 745 – Python 3.14 Release Schedule | peps.python.org",
+            "content": "Expected:\n\n 3.14.8: Tuesday, 2026-10-06\n 3.14.9: Tuesday, 2026-12-01\n 3.14.10: Tuesday, 2027-02-02\n 3.14.11: Tuesday, 2027-04-06\n 3.14.12: Tuesday, 2027-06-01\n 3.14.13: Tuesday, 2027-08-03\n 3.14.14: Tuesday, 2027-10-05 (Final regular bugfix release with binary installers)\n\n### Source-only security fix releases\n\nProvided irregularly on an as-needed basis until October 2030.\n\n### 3.14 lifespan [...] 3.14 development begins: Wednesday, 2024-05-08\n 3.14.0 alpha 1: Tuesday, 2024-10-15\n 3.14.0 alpha 2: Tuesday, 2024-11-19\n 3.14.0 alpha 3: Tuesday, 2024-12-17\n 3.14.0 alpha 4: Tuesday, 2025-01-14\n 3.14.0 alpha 5: Tuesday, 2025-02-11\n 3.14.0 alpha 6: Friday, 2025-03-14\n 3.14.0 alpha 7: Tuesday, 2025-04-08\n 3.14.0 beta 1: Wednesday, 2025-05-07 (No new features beyond this point.)\n 3.14.0 beta 2: Monday, 2025-05-26\n 3.14.0 beta 3: Tuesday, 2025-06-17\n 3.14.0 beta 4: Tuesday, 2025-07-08 [...] 3.14.0 candidate 1: Tuesday, 2025-07-22\n 3.14.0 candidate 2: Thursday, 2025-08-14\n 3.14.0 candidate 3: Thursday, 2025-09-18\n 3.14.0 final: Tuesday, 2025-10-07",
+            "content_sha256": "04521a070f5d0bb0d7154e4b68f38e7838138ab65bf4b5743d85af8ee8811302",
+            "retrieved_at": "2026-11-11T10:23:00.887088+00:00",
+            "published_at": null,
+            "published_at_raw": null,
+            "relevance_score": 0.8958969
+          }
+        ],
+        "calls": 1
+      },
+      "assessment": {
+        "status": "ok",
+        "reply": {
+          "text": "{\"verdict\":\"SUPPORTED\",\"observed\":\"The python.org release page for Python 3.14.10 lists the release date as Oct. 25, 2026, and describes it as an expedited security release.\",\"evidence\":[{\"source_id\":\"claim-2-src-1\",\"relation\":\"supports\",\"quote\":\"Release date: Oct. 25, 2026\"}],\"rationale\":\"The official python.org page for 3.14.10 states the release date matches the claim. The PEP 745 schedule lists a different planned date, but that is an earlier expected schedule, and the release page describes an expedited release.\",\"rewrite\":\"\"}",
+          "finish_reason": "stop",
+          "model_requested": "copilot-cli/claude-sonnet-5.5",
+          "fallbacks_requested": [],
+          "usage": {
+            "prompt_tokens": 5860,
+            "completion_tokens": 197,
+            "total_tokens": 6057
+          },
+          "served_by": {
+            "provider": "copilot-cli",
+            "model": "claude-sonnet-5.5",
+            "is_fallback": false
+          },
+          "latency_seconds": 7.408,
+          "request_sha256": "4cb68c8523f782d1483464f2d3ad026fa799498616ef9b475749f77a2d67775d",
+          "response_sha256": "4afdedae890db9490c5709cf72ef6da1aa85818880c766c0508ebdb01324007c",
+          "messages_sha256": "56a0e3e5e3d00ef522bf6b90c90343e845101403167c5d9eb335bd8cd2a505e6"
+        }
+      }
+    }
+  ],
+  "attempts": [
+    {
+      "service": "gateway",
+      "status": "ok",
+      "usage": {
+        "prompt_tokens": 4187,
+        "completion_tokens": 220,
+        "total_tokens": 4407
+      },
+      "routing": {
+        "provider": "copilot-cli",
+        "model": "claude-sonnet-5.5",
+        "is_fallback": false
+      }
+    },
+    {
+      "service": "search",
+      "status": "ok",
+      "usage": {
+        "credits": 1
+      },
+      "routing": null
+    },
+    {
+      "service": "gateway",
+      "status": "ok",
+      "usage": {
+        "prompt_tokens": 5787,
+        "completion_tokens": 337,
+        "total_tokens": 6124
+      },
+      "routing": {
+        "provider": "copilot-cli",
+        "model": "claude-sonnet-5.5",
+        "is_fallback": false
+      }
+    },
+    {
+      "service": "search",
+      "status": "ok",
+      "usage": {
+        "credits": 1
+      },
+      "routing": null
+    },
+    {
+      "service": "gateway",
+      "status": "ok",
+      "usage": {
+        "prompt_tokens": 5860,
+        "completion_tokens": 197,
+        "total_tokens": 6057
+      },
+      "routing": {
+        "provider": "copilot-cli",
+        "model": "claude-sonnet-5.5",
+        "is_fallback": false
+      }
+    }
+  ],
+  "stop_reason": null
+}

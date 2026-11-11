@@ -1,0 +1,248 @@
+{
+  "schema_version": "4.0",
+  "format": "stale_answer_transcript",
+  "answer_text": "Node.js 20 is still supported by the Node.js project. Node.js 24 remains a supported LTS release.",
+  "answer_date": null,
+  "verification_date": "2026-11-11",
+  "primary_domains": [
+    "nodejs.org"
+  ],
+  "limits": {
+    "max_claims": 2,
+    "max_attempts": 5,
+    "max_seconds": 180
+  },
+  "provenance": {
+    "gateway": "bifrost",
+    "search": "tavily"
+  },
+  "extraction": {
+    "status": "ok",
+    "reply": {
+      "text": "{\"claims\":[{\"quote\":\"Node.js 20 is still supported by the Node.js project.\",\"category\":\"version\",\"time_sensitivity\":\"high\",\"reason\":\"Node.js 20 reaches end-of-life in April 2026, so its support status changes over time; the current date may be past that.\",\"query\":\"Node.js 20 end of life date release schedule\"},{\"quote\":\"Node.js 24 remains a supported LTS release.\",\"category\":\"version\",\"time_sensitivity\":\"medium\",\"reason\":\"LTS status and the maintenance/EOL phases of Node.js 24 change over time as new releases ship.\",\"query\":\"Node.js 24 LTS status release schedule\"}]}",
+      "finish_reason": "stop",
+      "model_requested": "copilot-cli/claude-sonnet-5.5",
+      "fallbacks_requested": [],
+      "usage": {
+        "prompt_tokens": 4169,
+        "completion_tokens": 215,
+        "total_tokens": 4384
+      },
+      "served_by": {
+        "provider": "copilot-cli",
+        "model": "claude-sonnet-5.5",
+        "is_fallback": false
+      },
+      "latency_seconds": 7.407,
+      "request_sha256": "f26bdac3cf12d210fd353c110d5a95085423295c60c437a971e3252fe6ffaafc",
+      "response_sha256": "75abaf2aaf463b86dd515d42e9282e41a4c0c658bdf5bd62ea918b0ef48cac63",
+      "messages_sha256": "8cdd341607f3d3995ba8afb5a12904aa174298c31ed6384225a2727d5bd77d65"
+    }
+  },
+  "approval": {
+    "queries": [
+      "Node.js 20 end of life date release schedule",
+      "Node.js 24 LTS status release schedule"
+    ],
+    "primary_domains": [
+      "nodejs.org"
+    ],
+    "sha256": "4ddeb6edbccba3cbe296387ebd30901941c82116663d1298cf4bfc7e8b2fd0c7",
+    "approved": true
+  },
+  "checks": [
+    {
+      "claim": "claim-1",
+      "search": {
+        "status": "ok",
+        "query": "Node.js 20 end of life date release schedule",
+        "sources": [
+          {
+            "id": "claim-1-src-1",
+            "url": "https://nodejs.org/en/blog/announcements/node-18-eol-support",
+            "title": "Node.js — Beware of End-of-Life Node.js Versions - Upgrade or Seek Post-EOL Support",
+            "content": "Node.js v20 LTS: October 2023 - April 2026 (1 year remaining)\n Node.js v22 LTS: October 2024 - April 2027 (2 years remaining)\n\nUpgrade Fatigue Prevention: Major Node.js upgrades require testing, dependency updates, and potential code changes. By going to v22 now, you avoid another upgrade cycle in 2026-2027.\n\n## Making the Jump [...] The security implications are immediate and serious. The May 2025 security releases revealed that Node.js 20 is vulnerable to 1 low severity issue, 1 high severity issue, and 1 medium severity issue. As the security advisory notes, \"End-of-Life versions are always affected when a security release occurs\", meaning Node.js 18 and all earlier versions have these same vulnerabilities but will never receive patches. Here is our release schedule: [...] Longer Support Window: Node.js 22 is in active LTS status and will be actively supported until April 2027—a full year longer than 20's support window.\n Future-Proofing: By upgrading to 22 now, you avoid another major upgrade cycle in just a couple of years. This saves significant engineering time and reduces upgrade fatigue.\n New Features: 22 offers all the latest features of Node.js, including native TypeScript support (behind a flag).",
+            "content_sha256": "0dd9e67d84f05d0b9b0de1a57ae4ce043f7f650c38fb0e4247a745cf5cf7df64",
+            "retrieved_at": "2026-11-11T10:36:21.206472+00:00",
+            "published_at": "2025-06-06T00:00:00+00:00",
+            "published_at_raw": "Fri, 06 Jun 2025 00:00:00 GMT",
+            "relevance_score": 0.77932185
+          },
+          {
+            "id": "claim-1-src-2",
+            "url": "https://nodejs.org/en/blog/release/v20.9.0",
+            "title": "Node.js — Node.js 20.9.0 (LTS)",
+            "content": "Skip to content\n\n# Node.js 20.9.0 (LTS)\n\nRL\n\nRichard Lau\n\nNode.js 20.9.0 (LTS)\n\n## 2023-10-24, Version 20.9.0 'Iron' (LTS), @richardlau\n\n### Notable Changes\n\nThis release marks the transition of Node.js 20.x into Long Term Support (LTS) with the codename 'Iron'. The 20.x release line now moves into \"Active LTS\" and will remain so until October 2024. After that time, it will move into \"Maintenance\" until end of life in April 2026.\n\n### Known issue",
+            "content_sha256": "50496efc7cb8715c541e7ac2b8715c912916231fe025b1b38267b8fda6d135ad",
+            "retrieved_at": "2026-11-11T10:36:21.206472+00:00",
+            "published_at": "2023-10-24T00:00:00+00:00",
+            "published_at_raw": "Tue, 24 Oct 2023 00:00:00 GMT",
+            "relevance_score": 0.6589664
+          },
+          {
+            "id": "claim-1-src-3",
+            "url": "https://nodejs.org/en/blog/announcements/v20-release-announce",
+            "title": "Node.js — Node.js 20 is now available!",
+            "content": "To download Node.js 20.0.0, visit:  You can find the release post at  which contains the full list of commits included in this release.\n\nAs a reminder, Node.js 20 will enter long-term support (LTS) in October, but until then, it will be the \"Current\" release for the next six months. We encourage you to explore the new features and benefits offered by this latest release and evaluate their potential impact on your applications.\n\n## Notable Changes\n\n### Permission Model [...] Also of note is that Node.js 14 will go End-of-Life in April 2023, so we advise you to start planning to upgrade to Node.js 18 (LTS) or Node.js 20 (soon to be LTS).\n\nPlease, consider that Node.js 16 (LTS) will go End-of-Life in September 2023, which was brought forward from April 2024 to coincide with the end of support of OpenSSL 1.1.1. You can read more details about that decision at [...] The project continues to make progress across a number of areas, with many new features and fixes flowing into existing LTS releases. For that reason, the changes outlined in the changelog for Node.js 20 only represent a small subset of the features and work since the last major release. This blog post will add some additional context on the larger body of work in relation to those changes.\n\nYou can read more about our release policy at .",
+            "content_sha256": "72170dbdfe5eee9e73918ab8ed3015f6061747ff94457c15c35bb2f6ad1dc804",
+            "retrieved_at": "2026-11-11T10:36:21.206472+00:00",
+            "published_at": "2023-04-18T00:00:00+00:00",
+            "published_at_raw": "Tue, 18 Apr 2023 00:00:00 GMT",
+            "relevance_score": 0.57385755
+          }
+        ],
+        "calls": 1
+      },
+      "assessment": {
+        "status": "ok",
+        "reply": {
+          "text": "{\"verdict\":\"CHANGED\",\"observed\":\"Sources say Node.js 20 LTS reaches end of life in April 2026. Today is 2026-11-11, which is past that date, so Node.js 20 is no longer supported.\",\"evidence\":[{\"source_id\":\"claim-1-src-2\",\"relation\":\"contradicts\",\"quote\":\"After that time, it will move into \\\"Maintenance\\\" until end of life in April 2026.\"},{\"source_id\":\"claim-1-src-1\",\"relation\":\"contradicts\",\"quote\":\"Node.js v20 LTS: October 2023 - April 2026 (1 year remaining)\"}],\"rationale\":\"Both sources give April 2026 as the end of Node.js 20 support. With the retrieval date of 2026-11-11, that date has passed, so the claim of ongoing support is contradicted. The sources do not report the EOL event itself.\",\"rewrite\":\"Node.js 20 was scheduled to reach end of life in April 2026, so it is no longer supported by the Node.js project as of November 2026.\"}",
+          "finish_reason": "stop",
+          "model_requested": "copilot-cli/claude-sonnet-5.5",
+          "fallbacks_requested": [],
+          "usage": {
+            "prompt_tokens": 5647,
+            "completion_tokens": 337,
+            "total_tokens": 5984
+          },
+          "served_by": {
+            "provider": "copilot-cli",
+            "model": "claude-sonnet-5.5",
+            "is_fallback": false
+          },
+          "latency_seconds": 7.569,
+          "request_sha256": "6dc064bdce4677e7079ba04da369d173ddb6a92ae42813d64c8890abe94d896b",
+          "response_sha256": "e8bbc6dce9ef149b43e613927ebb07f4971930651c5a2f45f80a9661e6960b3c",
+          "messages_sha256": "b357347fdf2facb21301a7a37f0e848d43e355e355ca793b0b356228892d5a3e"
+        }
+      }
+    },
+    {
+      "claim": "claim-2",
+      "search": {
+        "status": "ok",
+        "query": "Node.js 24 LTS status release schedule",
+        "sources": [
+          {
+            "id": "claim-2-src-1",
+            "url": "https://nodejs.org/en/blog/migrations/v22-to-v24",
+            "title": "Node.js — Node.js v22 to v24",
+            "content": "With the release of Node.js 24.11.0, the Node.js 24 release line has entered Long-Term Support (LTS) and will continue to receive updates through to the end of April 2028.\n\nIf you are migrating from Node.js 22 LTS, the following summarizes the breaking changes that came in Node.js 23.0.0 and Node.js 24.0.0.\n\n### Platform support\n\nNode.js no longer provides pre-built binaries for:\n\n 32-bit Windows (x86) as of Node.js 23.0.0.\n 32-bit Linux on armv7 as of Node.js 24.0.0.",
+            "content_sha256": "74d7eb598c9eccdc2a99fb1705b78633c3ae27d7cd2c7a0890f0329cec7aecdd",
+            "retrieved_at": "2026-11-11T10:36:29.105559+00:00",
+            "published_at": "2025-10-28T00:00:00+00:00",
+            "published_at_raw": "Tue, 28 Oct 2025 00:00:00 GMT",
+            "relevance_score": 0.6451199
+          },
+          {
+            "id": "claim-2-src-2",
+            "url": "https://nodejs.org/en/blog/release/v24.11.0",
+            "title": "Node.js — Node.js 24.11.0 (LTS)",
+            "content": "Skip to content\n\n# Node.js 24.11.0 (LTS)\n\nRL\n\nRichard Lau\n\nNode.js 24.11.0 (LTS)\n\n## 2025-10-28, Version 24.11.0 'Krypton' (LTS), @richardlau\n\n### Notable Changes\n\nThis release marks the transition of Node.js 24.x into Long Term Support (LTS) with the codename 'Krypton'. It will continue to receive updates through to the end of April 2028.\n\nOther than updating metadata, such as the `process.release` object, to reflect that the release is LTS, no further changes from Node.js 24.10.0 are included. [...] PreviousNode.js 22.21.1 (LTS)NextNode.js 22.21.0 (LTS) [...] ### Known issue\n\nAn issue has been identified in the Node.js 24.x line with `Buffer.allocUnsafe` unintentionally returning zero-filled buffers. This API is documented to return uninitialized memory. The documented behavior will be restored in the next Node.js 24.x LTS release to bring it back in line with previous releases. For more information, see #60423.",
+            "content_sha256": "26156f29e0e97667d4dffa891519d32471722d929304ad8f245d6c21fab93e4d",
+            "retrieved_at": "2026-11-11T10:36:29.105559+00:00",
+            "published_at": "2025-10-28T00:00:00+00:00",
+            "published_at_raw": "Tue, 28 Oct 2025 00:00:00 GMT",
+            "relevance_score": 0.6156079
+          },
+          {
+            "id": "claim-2-src-3",
+            "url": "https://nodejs.org/en/about/previous-releases",
+            "title": "Node.js — Node.js Releases",
+            "content": "| Node.js | Codename | First released | Last updated | Status |\n ---  --- \n| v27   |  | Alpha |  |\n| v26 | Lithium |  |  | LTS |  |\n| v25   |  | EOL |  |\n| v24 | Krypton |  |  | LTS |  |\n| v23   |  | EOL |  |\n| v22 | Jod |  |  | LTS |  |\n| v21   |  | EOL |  |\n| v20 | Iron |  |  | EOL |  |\n| v19   |  | EOL |  |\n| v18 | Hydrogen |  |  | EOL |  |\n| v17   |  | EOL |  |\n| v16 | Gallium |  |  | EOL |  |\n| v15   |  | EOL |  |\n| v14 | Fermium |  |  | EOL |  |\n| v13   |  | EOL |  | [...] Major Node.js versions enter Current release status for six months, which gives library authors time to add support for them. Historically (up to Node.js 26), odd-numbered releases (9, 11, etc.) become unsupported after six months, and even-numbered releases (10, 12, etc.) move to Active LTS status and are ready for general use. Starting with Node.js 27, the release cycle will be annual and every major version will move to LTS status after its six-month Current phase (and six additional months [...] additional months of Alpha phase). LTS release status is \"long-term support\", which typically guarantees that critical bugs will be fixed for a total of 30 months. Production applications should only use Active LTS or Maintenance LTS releases.",
+            "content_sha256": "561b416449a70d874d6724560756b29e6f734ee8311ee3559bb9b0f389715469",
+            "retrieved_at": "2026-11-11T10:36:29.105559+00:00",
+            "published_at": "2026-10-24T08:00:00+00:00",
+            "published_at_raw": "Sat, 24 Oct 2026 08:00:00 GMT",
+            "relevance_score": 0.5652388
+          }
+        ],
+        "calls": 1
+      },
+      "assessment": {
+        "status": "ok",
+        "reply": {
+          "text": "{\"verdict\":\"SUPPORTED\",\"observed\":\"Node.js 24 ('Krypton') entered LTS with 24.11.0 and receives updates through end of April 2028. The previous-releases table lists v24 Krypton with status LTS.\",\"evidence\":[{\"source_id\":\"claim-2-src-2\",\"relation\":\"supports\",\"quote\":\"This release marks the transition of Node.js 24.x into Long Term Support (LTS) with the codename 'Krypton'. It will continue to receive updates through to the end of April 2028.\"},{\"source_id\":\"claim-2-src-3\",\"relation\":\"supports\",\"quote\":\"| v24 | Krypton |  |  | LTS |  |\"}],\"rationale\":\"Sources state Node.js 24 is LTS with support through April 2028, and the most recent release table still lists v24 as LTS, not EOL.\",\"rewrite\":\"\"}",
+          "finish_reason": "stop",
+          "model_requested": "copilot-cli/claude-sonnet-5.5",
+          "fallbacks_requested": [],
+          "usage": {
+            "prompt_tokens": 5674,
+            "completion_tokens": 286,
+            "total_tokens": 5960
+          },
+          "served_by": {
+            "provider": "copilot-cli",
+            "model": "claude-sonnet-5.5",
+            "is_fallback": false
+          },
+          "latency_seconds": 7.671,
+          "request_sha256": "ee5ad59e2b4eaa97bb664826ba8eeb1f4189e7d20fd7d17653e1996e9cbde72c",
+          "response_sha256": "8cde84c6f811ad00caad073a6c8c51872efa6a21017334d82b5193d9be4747c7",
+          "messages_sha256": "5578e19e8c10dafbd0cc0e12de73238404cdbd1f21dc4fbeeceaf25dc1036aa5"
+        }
+      }
+    }
+  ],
+  "attempts": [
+    {
+      "service": "gateway",
+      "status": "ok",
+      "usage": {
+        "prompt_tokens": 4169,
+        "completion_tokens": 215,
+        "total_tokens": 4384
+      },
+      "routing": {
+        "provider": "copilot-cli",
+        "model": "claude-sonnet-5.5",
+        "is_fallback": false
+      }
+    },
+    {
+      "service": "search",
+      "status": "ok",
+      "usage": {
+        "credits": 1
+      },
+      "routing": null
+    },
+    {
+      "service": "gateway",
+      "status": "ok",
+      "usage": {
+        "prompt_tokens": 5647,
+        "completion_tokens": 337,
+        "total_tokens": 5984
+      },
+      "routing": {
+        "provider": "copilot-cli",
+        "model": "claude-sonnet-5.5",
+        "is_fallback": false
+      }
+    },
+    {
+      "service": "search",
+      "status": "ok",
+      "usage": {
+        "credits": 1
+      },
+      "routing": null
+    },
+    {
+      "service": "gateway",
+      "status": "ok",
+      "usage": {
+        "prompt_tokens": 5674,
+        "completion_tokens": 286,
+        "total_tokens": 5960
+      },
+      "routing": {
+        "provider": "copilot-cli",
+        "model": "claude-sonnet-5.5",
+        "is_fallback": false
+      }
+    }
+  ],
+  "stop_reason": null
+}

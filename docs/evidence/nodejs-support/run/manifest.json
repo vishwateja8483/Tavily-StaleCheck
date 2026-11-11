@@ -1,0 +1,45 @@
+{
+  "schema_version": "1.0",
+  "project_id": "stalecheck",
+  "run_id": "fd-ac1c49b5810943cb859e4214db477c00",
+  "mode": "replay",
+  "status": "completed",
+  "created_at": "2026-11-11T10:36:36.784028+00:00",
+  "artifacts": [
+    {
+      "path": "input.json",
+      "sha256": "638b85c3c69fccd2621f7e1081ab58387a29764073b79c886c2ab0a6f57afcc1",
+      "bytes": 16166
+    },
+    {
+      "path": "config.json",
+      "sha256": "526ac6a9a47750d1e65c8c48f3fed53085a2b59605414ea5109f4c9181094ba8",
+      "bytes": 226
+    },
+    {
+      "path": "report.json",
+      "sha256": "9e7a860ed384748375ccc134a14fe1fed3ebe5789cbc3eb03c08e2d305fba5e2",
+      "bytes": 17944
+    },
+    {
+      "path": "events.jsonl",
+      "sha256": "6c0635b1b1353eb871a5bb35706111a78d3142c66bd387d01e1f70bc973c3a89",
+      "bytes": 479
+    },
+    {
+      "path": "errors.jsonl",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    }
+  ],
+  "limitations": [
+    "All relations, observations, rationales and proposed edits are model-generated, not independently verified semantic entailment.",
+    "Verbatim quotation is checked against retained excerpts only. Domain preference does not authenticate a primary source; distinct URLs do not prove independence.",
+    "Current-source disagreement does not establish that an answer was once correct. Temporal change is not established by this pipeline.",
+    "Publication/update dates are provider estimates, not effective dates. Retrieval time and recent publication do not establish factual currency.",
+    "Evidence strength and freshness are uncalibrated metadata heuristics, not probabilities of correctness or currency: freshness only reflects how recent the newest quoted source is. Proposed edits are never automatically applied.",
+    "The journey deadline is cooperative. Socket timeouts do not impose a hard bound on DNS, response headers or a detached response socket.",
+    "Usage is a known subtotal plus completeness, not a monetary spending guarantee. Unknown routing means fallback behavior is unknown.",
+    "Unsigned transcripts and approval records establish internal consistency, not authenticated execution, consent, source truth or live provider compatibility."
+  ]
+}

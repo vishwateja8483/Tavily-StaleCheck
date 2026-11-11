@@ -19,7 +19,7 @@ def verify_artifacts(directory):
     return load_verified_run(directory)["verification"]
 
 
-def load_verified_run(directory):
+def load_verified_run(directory, *, include_bytes=False):
     """Return the exact byte snapshot verified, never a later unchecked reread."""
     root = Path(directory).absolute()
     require(root.is_dir(), "run directory missing")
@@ -96,4 +96,8 @@ def load_verified_run(directory):
     require(type(verified_data["count"]) is int and verified_data["count"] == len(expected["claims"]), "claims_verified count differs from derived report")
     require(not files["errors.jsonl"].strip(), "completed replay has unexpected recorded errors")
     verification = {"valid": True, "project_id": "stalecheck", "run_id": run_id, "status": "completed", "artifacts": len(files), "assurance": "Internal consistency only; unsigned hashes cannot authenticate sources or establish truth."}
-    return {"verification": verification, "manifest": manifest, "report": report, "events": events, "input": request, "config": config, "digests": {"manifest": sha(manifest_raw), **{name[:-5]: sha(files[name]) for name in ("input.json", "config.json", "report.json")}}}
+    snapshot = {"verification": verification, "manifest": manifest, "report": report, "events": events, "input": request, "config": config,
+                "digests": {"manifest": sha(manifest_raw), **{name[:-5]: sha(files[name]) for name in ("input.json", "config.json", "report.json")}}}
+    if include_bytes:
+        snapshot["artifact_bytes"] = {**files, "manifest.json": manifest_raw}
+    return snapshot

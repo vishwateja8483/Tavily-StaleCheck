@@ -1,10 +1,12 @@
 """Bounded launch-local jobs; one collector invocation survives human approval."""
 from copy import deepcopy
 from importlib.resources import files
+from io import BytesIO
 from pathlib import Path
 import re
 import secrets
 import threading
+from zipfile import ZIP_DEFLATED, ZipFile
 
 from .contracts import ValidationError, decode, json_bytes, require, safe_path
 from .export import write_exclusive_json
@@ -16,7 +18,7 @@ from .stale_check_v4 import collect_transcript, render_html, validate_inputs
 from .verify_artifacts import load_verified_run
 
 SETTINGS = ('BIFROST_URL', 'BIFROST_MODEL', 'BIFROST_VIRTUAL_KEY', 'TAVILY_API_KEY', 'BIFROST_SEARCH_RELAY')
-ARTIFACTS = ('report.html', 'report.json', 'input.json', 'manifest.json')
+ARTIFACTS = ('report.html', 'report.json', 'input.json', 'manifest.json', 'verified-run.zip')
 TERMINAL = {'completed', 'partial', 'declined', 'expired', 'cancelled', 'failed'}
 _DEMO = decode(files('stalecheck').joinpath('fixtures', 'stale-check-v4-demo.json').read_bytes())
 DEMO_INPUT = {key: _DEMO[key] for key in ('answer_text', 'verification_date', 'answer_date', 'primary_domains')}
@@ -284,12 +286,17 @@ class JobManager:
                 raise ServiceError(409, 'verified report not available')
             safe_path(self.root, job.id)
             run = safe_path(job.directory, 'run')
-            snapshot = load_verified_run(run)
+            snapshot = load_verified_run(run, include_bytes=True)
             if name == 'report.html':
                 return render_html(snapshot['report']).encode('utf-8')
-            if name in ('input.json', 'report.json'):
-                return json_bytes(snapshot[name[:-5]])
-            return safe_path(run, name).read_bytes()
+            artifacts = snapshot['artifact_bytes']
+            if name == 'verified-run.zip':
+                buffer = BytesIO()
+                with ZipFile(buffer, 'w', compression=ZIP_DEFLATED) as archive:
+                    for filename, contents in artifacts.items():
+                        archive.writestr(filename, contents)
+                return buffer.getvalue()
+            return artifacts[name]
 
     def close(self):
         with self.lock:

@@ -1,0 +1,301 @@
+{
+  "project_id": "stalecheck",
+  "run_id": "fd-2588f92210b541f299723721b3087353",
+  "mode": "replay",
+  "schema_version": "4.0",
+  "version": "0.4.0",
+  "title": "StaleCheck model-assisted stale-answer assessment",
+  "summary": "2 selected claim(s): 0 model-supported, 1 potentially changed, 1 unverifiable.",
+  "answer_text": "Python 3.14.8 is still the latest Python 3.14 maintenance release. Python 3.14.10 was released on October 25, 2026.",
+  "answer_date": null,
+  "verification_date": "2026-11-11",
+  "primary_domains": [
+    "python.org"
+  ],
+  "claims": [
+    {
+      "id": "claim-1",
+      "proposal": "proposal-1",
+      "text": "Python 3.14.8 is still the latest Python 3.14 maintenance release.",
+      "span": {
+        "start": 0,
+        "end": 66
+      },
+      "category": "version",
+      "time_sensitivity": {
+        "level": "high",
+        "reason": "Latest maintenance release changes every ~2 months; the answer also contradicts itself by mentioning 3.14.10.",
+        "model_generated": true
+      },
+      "query": "latest Python 3.14 maintenance release",
+      "verdict": "POTENTIALLY_CHANGED",
+      "reason_code": "MODEL_CONTRADICTION_WITH_VERBATIM_QUOTE",
+      "proposed_verdict": "CHANGED",
+      "temporal_change_established": false,
+      "evidence_strength": {
+        "heuristic_score": 3,
+        "maximum": 3,
+        "calibrated": false,
+        "components": {
+          "verbatim_quote": true,
+          "preferred_domain_match": true,
+          "distinct_urls": 2,
+          "dated_urls": 2,
+          "future_date_present": false
+        }
+      },
+      "freshness": {
+        "state": "current",
+        "newest_source_date": "2026-10-25",
+        "age_days": 17,
+        "score": 95,
+        "maximum": 100,
+        "calibrated": false
+      },
+      "evidence": [
+        {
+          "source_id": "claim-1-src-3",
+          "url": "https://www.python.org/downloads/release/python-3148",
+          "relation": "contradicts",
+          "quote": "Note: Python 3.14.8 has been superseded by Python 3.14.10.",
+          "quote_start": 998,
+          "quote_end": 1056,
+          "relation_model_generated": true
+        },
+        {
+          "source_id": "claim-1-src-2",
+          "url": "https://www.python.org/downloads/latest/python3.14",
+          "relation": "contradicts",
+          "quote": "Python 3.14.10 is an expedited security release and the tenth maintenance release of 3.14",
+          "quote_start": 0,
+          "quote_end": 89,
+          "relation_model_generated": true
+        }
+      ],
+      "inference": {
+        "model_generated": true,
+        "observed": "Python 3.14.10 (released Oct. 25, 2026) is the latest 3.14 maintenance release; the 3.14.8 page says it has been superseded by 3.14.10.",
+        "rationale": "The python.org 3.14.8 page states it was superseded by 3.14.10, and the latest-3.14 page lists 3.14.10 as the current release, so 3.14.8 is no longer the latest.",
+        "suggested_rewrite": "Python 3.14.8 has been superseded by Python 3.14.10, the tenth maintenance release of 3.14, released Oct. 25, 2026.",
+        "automatically_applied": false,
+        "human_review_required": true
+      }
+    },
+    {
+      "id": "claim-2",
+      "proposal": "proposal-2",
+      "text": "Python 3.14.10 was released on October 25, 2026.",
+      "span": {
+        "start": 67,
+        "end": 115
+      },
+      "category": "version",
+      "time_sensitivity": {
+        "level": "high",
+        "reason": "Release dates and version numbers for Python patch releases may be inaccurate or superseded by newer releases.",
+        "model_generated": true
+      },
+      "query": "Python 3.14.10 release date",
+      "verdict": "UNVERIFIABLE",
+      "reason_code": "SUPPORT_QUOTE_LACKS_CLAIM_FIGURES",
+      "proposed_verdict": "SUPPORTED",
+      "temporal_change_established": false,
+      "evidence_strength": {
+        "heuristic_score": 2,
+        "maximum": 3,
+        "calibrated": false,
+        "components": {
+          "verbatim_quote": true,
+          "preferred_domain_match": true,
+          "distinct_urls": 1,
+          "dated_urls": 0,
+          "future_date_present": false
+        }
+      },
+      "freshness": {
+        "state": "undated",
+        "newest_source_date": null,
+        "age_days": null,
+        "score": null,
+        "maximum": 100,
+        "calibrated": false
+      },
+      "evidence": [
+        {
+          "source_id": "claim-2-src-1",
+          "url": "https://www.python.org/downloads/release/python-31410",
+          "relation": "supports",
+          "quote": "Release date: Oct. 25, 2026",
+          "quote_start": 315,
+          "quote_end": 342,
+          "relation_model_generated": true
+        }
+      ],
+      "inference": {
+        "model_generated": true,
+        "observed": "The python.org release page for Python 3.14.10 lists the release date as Oct. 25, 2026, and describes it as an expedited security release.",
+        "rationale": "The official python.org page for 3.14.10 states the release date matches the claim. The PEP 745 schedule lists a different planned date, but that is an earlier expected schedule, and the release page describes an expedited release.",
+        "suggested_rewrite": null,
+        "automatically_applied": false,
+        "human_review_required": true
+      }
+    }
+  ],
+  "evidence": [
+    {
+      "id": "claim-1-src-1",
+      "url": "https://discuss.python.org/t/python-3-14-3-and-3-13-12-are-now-available/105995",
+      "title": "Python 3.14.3 and 3.13.12 are now available! - Core Development - Discussions on Python.org",
+      "content": "# Python 3.14.3 and 3.13.12 are now available!\n\n# Python 3.14.3 is now available!\n\nTwo snakes enjoying a pie with 3.14 on the top and π crimping\n\nTwo snakes enjoying a pie with 3.14 on the top and π crimping538×507 110 KB\n\nTwo snakes enjoying a pie with 3.14 on the top and π crimping\n\n# This is third maintenance release of Python 3.14\n\nPython 3.14.3 is the third maintenance release of 3.14, containing around 299 bugfixes, build improvements and documentation changes since 3.14.2. [...] ### Python Release Python 3.14.3\n\nThe official home of the Python Programming Language\n\n# Major new features of the 3.14 series, compared to 3.13\n\nSome of the major new features and changes in Python 3.14 are:\n\n## New features\n\n`compression.zstd`\n`except`\n`except`\n`uuid`\n`return`\n`break`\n`continue`\n`finally`\n\nFor more details on the changes to Python 3.14, see What’s new in Python 3.14.\n\n## Build changes\n\n## Incompatible changes, removals and new deprecations\n\n# Python install manager [...] The installer we offer for Windows is being replaced by our new install manager, which can be installed from the Windows Store or from its download page. See our documentation for more information. The JSON file available for download contains the list of all the installable packages available as part of this release, including file URLs and hashes, but is not required to install the latest release. The traditional installer will remain available throughout the 3.14 and 3.15 releases.",
+      "content_sha256": "3e7868f6482291e0c0fb9a767e8a6957d839a329d7c33f6b0cfc70479d2607a2",
+      "retrieved_at": "2026-11-11T10:22:52.889324+00:00",
+      "published_at": "2026-02-03T21:51:46+00:00",
+      "published_at_raw": "Tue, 03 Feb 2026 21:51:46 GMT",
+      "relevance_score": 0.7122322,
+      "claim_id": "claim-1",
+      "preferred_domain_match": true,
+      "publication_is_estimate": true,
+      "effective_from": null,
+      "effective_to": null
+    },
+    {
+      "id": "claim-1-src-2",
+      "url": "https://www.python.org/downloads/latest/python3.14",
+      "title": "Python Release Python 3.14.10 | Python.org",
+      "content": "Python 3.14.10 is an expedited security release and the tenth maintenance release of 3.14, containing around 120 bugfixes, build improvements and documentation changes from 63 contributors since 3.14.9. [...] Notice: This page displays a fallback because interactive scripts did not run. Possible causes include disabled JavaScript or failure to load scripts or stylesheets.\n\npython™\n\nDonate\n\n≡ Menu\n\n A A\n  + Smaller\n  + Larger\n  + Reset\n\n Socialize\n  + LinkedIn\n  + Mastodon\n  + Chat on IRC\n  + Twitter\n\n# Python 3.14.10\n\nRelease date: Oct. 25, 2026\n\n## This is the tenth maintenance release of Python 3.14",
+      "content_sha256": "0bd66f153c716d849c80feeec4f72e4231dbba4557bb80780ed138f624885939",
+      "retrieved_at": "2026-11-11T10:22:52.889324+00:00",
+      "published_at": "2026-10-25T00:00:00+00:00",
+      "published_at_raw": "Sun, 25 Oct 2026 00:00:00 GMT",
+      "relevance_score": 0.70639306,
+      "claim_id": "claim-1",
+      "preferred_domain_match": true,
+      "publication_is_estimate": true,
+      "effective_from": null,
+      "effective_to": null
+    },
+    {
+      "id": "claim-1-src-3",
+      "url": "https://www.python.org/downloads/release/python-3148",
+      "title": "Python Release Python 3.14.8 | Python.org",
+      "content": "Python 3.14.8 is an expedited security release and the eighth maintenance release of 3.14, containing around 354 bugfixes, build improvements and documentation changes from 142 contributors since 3.14.7.\n\n## Security content in this release [...] For more details on the changes to Python 3.14, see What’s new in Python 3.14.\n\n### Build changes\n\n PEP 761: Python 3.14 and onwards no longer provides PGP signatures for release artifacts. Instead, Sigstore is recommended for verifiers.\n Official macOS and Windows release binaries include an experimental JIT compiler.\n Official Android binary releases are now available.\n\n### Incompatible changes, removals and new deprecations [...] Notice: This page displays a fallback because interactive scripts did not run. Possible causes include disabled JavaScript or failure to load scripts or stylesheets.\n\npython™\n\nDonate\n\n≡ Menu\n\n A A\n  + Smaller\n  + Larger\n  + Reset\n\n Socialize\n  + LinkedIn\n  + Mastodon\n  + Chat on IRC\n  + Twitter\n\n# Python 3.14.8\n\nNote: Python 3.14.8 has been superseded by Python 3.14.10.\n\nRelease date: Sept. 30, 2026\n\n## This is the eighth maintenance release of Python 3.14",
+      "content_sha256": "4976afb9194d9676e361f07ceaeaa04c8de84601cbb713934ba39c824b316bb3",
+      "retrieved_at": "2026-11-11T10:22:52.889324+00:00",
+      "published_at": "2026-09-30T00:00:00+00:00",
+      "published_at_raw": "Wed, 30 Sep 2026 00:00:00 GMT",
+      "relevance_score": 0.6955449,
+      "claim_id": "claim-1",
+      "preferred_domain_match": true,
+      "publication_is_estimate": true,
+      "effective_from": null,
+      "effective_to": null
+    },
+    {
+      "id": "claim-2-src-1",
+      "url": "https://www.python.org/downloads/release/python-31410",
+      "title": "Python Release Python 3.14.10 | Python.org",
+      "content": "Notice: This page displays a fallback because interactive scripts did not run. Possible causes include disabled JavaScript or failure to load scripts or stylesheets.\n\npython™\n\nDonate\n\n≡ Menu\n\n A A\n  + Smaller\n  + Larger\n  + Reset\n\n Socialize\n  + LinkedIn\n  + Mastodon\n  + Chat on IRC\n  + Twitter\n\n# Python 3.14.10\n\nRelease date: Oct. 25, 2026\n\n## This is the tenth maintenance release of Python 3.14 [...] Python 3.14.10 is an expedited security release and the tenth maintenance release of 3.14, containing around 120 bugfixes, build improvements and documentation changes from 63 contributors since 3.14.9.",
+      "content_sha256": "f7d163c4c38e3a68aac45e3e26a0a0b5c93b3812e11445394948fe54be76c856",
+      "retrieved_at": "2026-11-11T10:23:00.887088+00:00",
+      "published_at": null,
+      "published_at_raw": null,
+      "relevance_score": 0.9408388,
+      "claim_id": "claim-2",
+      "preferred_domain_match": true,
+      "publication_is_estimate": true,
+      "effective_from": null,
+      "effective_to": null
+    },
+    {
+      "id": "claim-2-src-2",
+      "url": "https://www.python.org/downloads/release/python-3140",
+      "title": "Python Release Python 3.14.0 | Python.org",
+      "content": "Notice: This page displays a fallback because interactive scripts did not run. Possible causes include disabled JavaScript or failure to load scripts or stylesheets.\n\npython™\n\nDonate\n\n≡ Menu\n\n A A\n  + Smaller\n  + Larger\n  + Reset\n\n Socialize\n  + LinkedIn\n  + Mastodon\n  + Chat on IRC\n  + Twitter\n\n# Python 3.14.0\n\nNote: Python 3.14.0 has been superseded by Python 3.14.10.\n\nRelease date: Oct. 7, 2025\n\n# This is the stable release of Python 3.14.0 [...] Python 3.14.0 is the newest major release of the Python programming language, and it contains many new features and optimisations compared to Python 3.13.\n\n# Major new features of the 3.14 series, compared to 3.13\n\nSome of the major new features and changes in Python 3.14 are:\n\n## New features [...] # More resources\n\n Online documentation\n PEP 745, 3.14 Release Schedule\n Report bugs at github.com/python/cpython/issues\n Help fund Python directly (or via GitHub Sponsors) and support the Python community\n\n# And now for something completely different\n\nEdgar Allen Poe died on 7th October 1849.",
+      "content_sha256": "eec2bc6ed3a72700a3288236e6b8416d5ee60a3550c1df6baffe214600b0a835",
+      "retrieved_at": "2026-11-11T10:23:00.887088+00:00",
+      "published_at": "2025-05-12T00:00:00+00:00",
+      "published_at_raw": "Mon, 12 May 2025 00:00:00 GMT",
+      "relevance_score": 0.9092728,
+      "claim_id": "claim-2",
+      "preferred_domain_match": true,
+      "publication_is_estimate": true,
+      "effective_from": null,
+      "effective_to": null
+    },
+    {
+      "id": "claim-2-src-3",
+      "url": "https://peps.python.org/pep-0745",
+      "title": "PEP 745 – Python 3.14 Release Schedule | peps.python.org",
+      "content": "Expected:\n\n 3.14.8: Tuesday, 2026-10-06\n 3.14.9: Tuesday, 2026-12-01\n 3.14.10: Tuesday, 2027-02-02\n 3.14.11: Tuesday, 2027-04-06\n 3.14.12: Tuesday, 2027-06-01\n 3.14.13: Tuesday, 2027-08-03\n 3.14.14: Tuesday, 2027-10-05 (Final regular bugfix release with binary installers)\n\n### Source-only security fix releases\n\nProvided irregularly on an as-needed basis until October 2030.\n\n### 3.14 lifespan [...] 3.14 development begins: Wednesday, 2024-05-08\n 3.14.0 alpha 1: Tuesday, 2024-10-15\n 3.14.0 alpha 2: Tuesday, 2024-11-19\n 3.14.0 alpha 3: Tuesday, 2024-12-17\n 3.14.0 alpha 4: Tuesday, 2025-01-14\n 3.14.0 alpha 5: Tuesday, 2025-02-11\n 3.14.0 alpha 6: Friday, 2025-03-14\n 3.14.0 alpha 7: Tuesday, 2025-04-08\n 3.14.0 beta 1: Wednesday, 2025-05-07 (No new features beyond this point.)\n 3.14.0 beta 2: Monday, 2025-05-26\n 3.14.0 beta 3: Tuesday, 2025-06-17\n 3.14.0 beta 4: Tuesday, 2025-07-08 [...] 3.14.0 candidate 1: Tuesday, 2025-07-22\n 3.14.0 candidate 2: Thursday, 2025-08-14\n 3.14.0 candidate 3: Thursday, 2025-09-18\n 3.14.0 final: Tuesday, 2025-10-07",
+      "content_sha256": "04521a070f5d0bb0d7154e4b68f38e7838138ab65bf4b5743d85af8ee8811302",
+      "retrieved_at": "2026-11-11T10:23:00.887088+00:00",
+      "published_at": null,
+      "published_at_raw": null,
+      "relevance_score": 0.8958969,
+      "claim_id": "claim-2",
+      "preferred_domain_match": true,
+      "publication_is_estimate": true,
+      "effective_from": null,
+      "effective_to": null
+    }
+  ],
+  "counts": {
+    "MODEL_SUPPORTED": 0,
+    "POTENTIALLY_CHANGED": 1,
+    "UNVERIFIABLE": 1
+  },
+  "rejected_proposals": [],
+  "approval": {
+    "queries": [
+      "latest Python 3.14 maintenance release",
+      "Python 3.14.10 release date"
+    ],
+    "primary_domains": [
+      "python.org"
+    ],
+    "sha256": "d8aad9a6b4782535d85c828ed224dcbe94745bee12b41836fa0bb5fbbb8a8497",
+    "approved": true
+  },
+  "stop_reason": null,
+  "usage": {
+    "attempts": 5,
+    "provenance": {
+      "gateway": "bifrost",
+      "search": "tavily"
+    },
+    "gateway_calls": 3,
+    "tokens": {
+      "known_subtotal": {
+        "prompt_tokens": 15834,
+        "completion_tokens": 754,
+        "total_tokens": 16588
+      },
+      "complete": true,
+      "scope": "provider_reported_not_invoice"
+    },
+    "search_calls": 2,
+    "credits": {
+      "known_subtotal": {
+        "credits": 2
+      },
+      "complete": true,
+      "scope": "provider_reported_not_invoice"
+    },
+    "routing": {
+      "observed_fallbacks": 0,
+      "unknown_calls": 0
+    }
+  },
+  "limitations": [
+    "All relations, observations, rationales and proposed edits are model-generated, not independently verified semantic entailment.",
+    "Verbatim quotation is checked against retained excerpts only. Domain preference does not authenticate a primary source; distinct URLs do not prove independence.",
+    "Current-source disagreement does not establish that an answer was once correct. Temporal change is not established by this pipeline.",
+    "Publication/update dates are provider estimates, not effective dates. Retrieval time and recent publication do not establish factual currency.",
+    "Evidence strength and freshness are uncalibrated metadata heuristics, not probabilities of correctness or currency: freshness only reflects how recent the newest quoted source is. Proposed edits are never automatically applied.",
+    "The journey deadline is cooperative. Socket timeouts do not impose a hard bound on DNS, response headers or a detached response socket.",
+    "Usage is a known subtotal plus completeness, not a monetary spending guarantee. Unknown routing means fallback behavior is unknown.",
+    "Unsigned transcripts and approval records establish internal consistency, not authenticated execution, consent, source truth or live provider compatibility."
+  ],
+  "input_sha256": "c258c19165f2864707c65916e55c87ed965290404f93f8f3defd450a009d1564",
+  "config_sha256": "526ac6a9a47750d1e65c8c48f3fed53085a2b59605414ea5109f4c9181094ba8"
+}

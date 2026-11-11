@@ -1,0 +1,24 @@
+{
+  "launchFragmentStripped": true,
+  "storage": 0,
+  "pageErrors": [],
+  "unexpectedRequests": [],
+  "configuration": [
+    "BIFROST_URL — Present",
+    "BIFROST_MODEL — Present",
+    "BIFROST_VIRTUAL_KEY — Present",
+    "TAVILY_API_KEY — Absent",
+    "BIFROST_SEARCH_RELAY — Present"
+  ],
+  "queries": [
+    "\"Node.js 20 end of life date release schedule\"",
+    "\"Node.js 24 LTS status release schedule\""
+  ],
+  "state": "completed",
+  "seconds": 26,
+  "claimHeadings": [
+    "claim-1 · Potentially changed",
+    "claim-2 · Model-supported"
+  ],
+  "glance": "Selected claims and freshness scores out of 100\nClaim\tExcerpt\tCategory\tVerdict\tFreshness\nclaim-1\tNode.js 20 is still supported by the Node.js project.\tversion\tPotentially changed\t0\nclaim-2\tNode.js 24 remains a supported LTS release.\tversion\tModel-supported\t95"
+}
