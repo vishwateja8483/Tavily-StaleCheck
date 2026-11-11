@@ -1,6 +1,7 @@
 import { act, cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import AssessmentApp from './AssessmentApp';
+import AssessmentRoute from './AssessmentRoute';
 import { AssessmentInputError, AssessmentRequestError, consumeLaunchToken, createAssessmentApi, validateCapabilities, validateInput, validateJob } from './assessment-api';
 import type { AssessmentApi, AssessmentInput, Capabilities, Job } from './assessment-api';
 
@@ -122,6 +123,26 @@ describe('assessment boundary', () => {
     expect(() => validateJob({ ...job, approval: { ...job.approval, sha256: 'bad' } })).toThrow();
     expect(() => validateJob({ ...job, artifacts: ['../../secret'] })).toThrow();
     expect(() => validateJob({ ...job, unexpected: true })).toThrow();
+  });
+});
+
+describe('assessment progress', () => {
+  it('shows an interrupted stage without marking the report ready', () => {
+    const { rerender } = render(<AssessmentRoute job={job} demo={false} />);
+    const stages = screen.getAllByRole('listitem');
+    expect(stages[1]).toHaveAttribute('aria-current', 'step');
+    rerender(<AssessmentRoute job={{ ...job, state: 'researching' }} demo={false} />);
+    expect(stages[2]).toHaveAttribute('aria-current', 'step');
+    rerender(<AssessmentRoute job={{ ...job, state: 'cancelled' }} demo={false} />);
+    expect(stages[2]).toHaveTextContent('stopped here');
+    expect(stages[3]).toHaveTextContent('not started');
+  });
+  it('distinguishes skipped research from a report that is ready', () => {
+    render(<AssessmentRoute job={{ ...job, state: 'completed', approval: null, artifacts: ['report.html'] }} demo={false} />);
+    const stages = screen.getAllByRole('listitem');
+    expect(stages[1]).toHaveTextContent('skipped');
+    expect(stages[2]).toHaveTextContent('skipped');
+    expect(stages[3]).toHaveTextContent('complete');
   });
 });
 

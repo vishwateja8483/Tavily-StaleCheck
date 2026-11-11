@@ -212,7 +212,7 @@ export default function AssessmentApp({ api }: { api: AssessmentApi | null }) {
             <li><VerdictMark kind="unverifiable" />Unverifiable</li>
           </ul>
         </div>
-        <AssessmentRoute job={job} demo={demo} />
+        <AssessmentRoute key={job?.id ?? 'setup'} job={job} demo={demo} />
 
         {!api && (
           <div className="notice danger" role="alert">

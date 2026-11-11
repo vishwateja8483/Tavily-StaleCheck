@@ -42,6 +42,13 @@ try {
   await page.setViewportSize({ width: 390, height: 844 });
   if (await page.evaluate(() => document.documentElement.scrollWidth > innerWidth)) throw new Error('Mobile setup overflow');
   await page.setViewportSize({ width: 1440, height: 1050 });
+  const stages = page.getByRole('list', { name: 'Assessment progress' }).getByRole('listitem');
+  const expectStages = async (...states) => {
+    for (const [index, state] of states.entries()) {
+      await stages.nth(index).and(page.locator(`[data-state="${state}"]`)).waitFor({ timeout: 3000 });
+    }
+  };
+  await expectStages('ready', 'todo', 'todo', 'todo');
   const start = async () => {
     await page.getByRole('button', { name: 'Load Acme example' }).click();
     for (const label of ['Full answer', 'Verification date', 'Answer date (optional)', 'Primary domains']) {
@@ -53,6 +60,7 @@ try {
     await page.getByRole('button', { name: 'Start mocked assessment' }).click();
     const approval = page.getByRole('heading', { name: '2. Review exact search request' });
     await approval.waitFor();
+    await expectStages('done', 'current', 'todo', 'todo');
     if (!await approval.evaluate(el => el === document.activeElement)) throw new Error('Approval did not receive focus');
     await page.getByText('"Acme Cloud Starter plan price per month"', { exact: true }).waitFor();
   };
@@ -60,6 +68,7 @@ try {
   await page.getByRole('button', { name: 'Decline searches' }).focus();
   await page.keyboard.press('Enter');
   await page.getByRole('status').filter({ hasText: 'declined' }).waitFor();
+  await expectStages('done', 'stopped', 'todo', 'done');
   await page.getByRole('button', { name: 'Prepare another assessment' }).click();
   if (!await page.getByRole('heading', { name: 'Answer and scope' }).evaluate(el => el === document.activeElement)) throw new Error('New assessment did not return focus to setup');
   await start();
@@ -67,6 +76,7 @@ try {
   await page.locator('.assessment-progress').screenshot({ animations: 'disabled', path: resolve(output, 'approval-detail.png') });
   await page.getByRole('button', { name: 'Approve exact mocked searches' }).click();
   await page.getByRole('status').filter({ hasText: 'completed' }).waitFor();
+  await expectStages('done', 'done', 'done', 'done');
   await page.getByRole('button', { name: 'Open verified report' }).click();
   const reportHeading = page.getByRole('heading', { name: 'Server-verified report' });
   await reportHeading.waitFor();
@@ -83,8 +93,10 @@ try {
   await frame.locator('article:target').waitFor({ timeout: 2000 });
   await frame.locator('main').evaluate(el => el.ownerDocument.defaultView.scrollTo(0, 0));
   await frame.getByText(/Category \(model-labelled\): pricing\. Freshness of the quoted evidence: current \(score \d+\/100/).waitFor();
+  const download = page.getByRole('button', { name: 'Download report.json', exact: true });
+  await download.scrollIntoViewIfNeeded();
   const downloaded = page.waitForEvent('download');
-  await page.getByRole('button', { name: 'Download report.json', exact: true }).click();
+  await download.click();
   await (await downloaded).saveAs(resolve(output, 'downloaded-report.json'));
   await page.locator('iframe').scrollIntoViewIfNeeded();
   await page.waitForTimeout(300);
@@ -103,11 +115,12 @@ try {
   await start();
   await page.getByRole('button', { name: 'Cancel assessment', exact: true }).click();
   await page.getByRole('status').filter({ hasText: 'cancelled' }).waitFor();
+  await expectStages('done', 'stopped', 'todo', 'todo');
   await page.reload();
   await page.getByRole('alert').filter({ hasText: 'Launch token missing' }).waitFor();
   if (errors.length || external.length) throw new Error(JSON.stringify({ errors, external }));
   await writeFile(resolve(output, 'browser-check.json'), JSON.stringify({ status: 'passed', mode: 'demo', live_calls: false,
-    checks: ['fixed demo fixture', 'fresh demo consent', 'fragment stripped', 'no persistent storage', 'exact approval gate', 'workflow focus', 'keyboard decline', 'demo completion', 'sandbox report rendered', 'per-claim freshness score shown', 'at-a-glance table shown', 'claim jump link', 'authenticated download', 'mobile overflow', 'cancel', 'reload loses token'],
+    checks: ['fixed demo fixture', 'fresh demo consent', 'fragment stripped', 'no persistent storage', 'exact approval gate', 'stage tracking', 'workflow focus', 'keyboard decline', 'demo completion', 'sandbox report rendered', 'per-claim freshness score shown', 'at-a-glance table shown', 'claim jump link', 'authenticated download', 'mobile overflow', 'cancel', 'reload loses token'],
     errors, external, job_ids: ids }, null, 2), { flag: 'wx' });
   console.log('Assessment browser journey passed (demo only).');
 } finally {
