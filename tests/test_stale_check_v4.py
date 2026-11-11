@@ -54,7 +54,8 @@ def test_every_claim_has_a_freshness_score_or_says_why_not():
     assert 'Freshness of the quoted evidence: current (score 97/100, newest quoted source 2026-10-20, 12 day(s)' in html
     assert 'Freshness of the quoted evidence: none (not scored)' in html
     glance = html.split('<h2>At a glance</h2>')[1].split('</table>')[0]
-    assert '<td>claim-1</td>' in glance and '<td>POTENTIALLY_CHANGED</td>' in glance and '<td>97</td>' in glance and '<td>not scored</td>' in glance
+    assert '<a href="#claim-1">claim-1</a>' in glance and 'id="claim-1"' in html
+    assert '>POTENTIALLY_CHANGED</td>' in glance and '>97</td>' in glance and '>not scored</td>' in glance
     assert html.index('At a glance') < html.index('Full original answer')
 
 

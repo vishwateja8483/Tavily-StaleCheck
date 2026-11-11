@@ -23,14 +23,14 @@ try {
   });
   const origin = new URL(launch).origin;
   const { chromium } = await import(pathToFileURL(resolve(driver)).href);
-  browser = await chromium.launch({ channel: 'msedge', headless: true });
+  browser = await chromium.launch({ channel: process.env.PLAYWRIGHT_CHANNEL || undefined, headless: true });
   const page = await browser.newPage({ viewport: { width: 1280, height: 900 } });
   const errors = [];
   page.on('pageerror', error => errors.push(error.message));
   await page.route(/^https?:/, route => (new URL(route.request().url()).origin === origin ? route.continue() : route.abort()));
   await page.goto(launch);
   await page.getByRole('heading', { name: 'Live mode — external providers' }).waitFor();
-  const configuration = await page.locator('.assessment-config li').allInnerTexts();
+  const configuration = await page.locator('.configuration li').evaluateAll(items => items.map(item => Array.from(item.children, child => child.textContent).join(' — ')));
   await page.getByRole('textbox', { name: 'Full answer' }).fill(answer);
   await page.getByRole('textbox', { name: /^Primary domains/ }).fill(domain);
   await page.getByRole('spinbutton', { name: 'Maximum claims' }).fill(claims);
@@ -43,8 +43,9 @@ try {
   await page.locator('.assessment-approval').scrollIntoViewIfNeeded();
   await page.screenshot({ path: resolve(output, '2-live-approval.png') });
   await page.getByRole('button', { name: 'Approve exact searches' }).click();
-  await page.getByRole('status').filter({ hasText: /Service state: (completed|partial|failed|expired)/ }).waitFor({ timeout: 175000 });
-  const state = (await page.getByRole('status').filter({ hasText: 'Service state' }).innerText()).trim();
+  const terminal = page.locator('[role="status"]:is([data-state="completed"], [data-state="partial"], [data-state="failed"], [data-state="expired"])');
+  await terminal.waitFor({ timeout: 175000 });
+  const state = await terminal.getAttribute('data-state');
   const seconds = Math.round((Date.now() - started) / 1000);
   await page.getByRole('button', { name: 'Open verified report' }).click();
   const frame = page.frameLocator('iframe');

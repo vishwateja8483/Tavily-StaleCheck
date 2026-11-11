@@ -1,0 +1,54 @@
+{
+  "$schema": "https://www.getbifrost.ai/schema",
+  "client": {
+    "enforce_auth_on_inference": true,
+    "drop_excess_requests": false,
+    "enable_logging": true
+  },
+  "providers": {
+    "github-copilot": {
+      "network_config": {
+        "default_request_timeout_in_seconds": 55,
+        "max_retries": 0
+      },
+      "keys": [
+        {
+          "name": "github-copilot",
+          "value": "env.GITHUB_COPILOT_API_KEY",
+          "models": ["*"],
+          "weight": 1.0
+        }
+      ]
+    }
+  },
+  "relays": [
+    {
+      "name": "tavily",
+      "description": "Tavily Search for StaleCheck",
+      "base_url": "https://api.tavily.com",
+      "auth": { "type": "bearer" },
+      "credential": { "value": "env.TAVILY_API_KEY" },
+      "usage": { "units_path": "usage.credits", "cost_per_unit": 0.008 },
+      "routes": [{ "method": "POST", "path": "/search" }]
+    }
+  ],
+  "governance": {
+    "virtual_keys": [
+      {
+        "id": "vk-live",
+        "name": "stalecheck-copilot",
+        "value": "env.BIFROST_VIRTUAL_KEY",
+        "is_active": true,
+        "provider_configs": [
+          {
+            "provider": "github-copilot",
+            "allowed_models": ["*"],
+            "key_ids": ["*"],
+            "weight": 1
+          }
+        ],
+        "relay_grants": [{ "relay_name": "tavily" }]
+      }
+    ]
+  }
+}

@@ -88,7 +88,8 @@ class Job:
         self.condition = threading.Condition(threading.RLock())
         self.cancelled = threading.Event()
         self.state, self.reason = 'extracting', None
-        self.approval = self.decision = self.budget = None
+        self.approval = self.decision = None
+        self.budget = ServiceBudget(self.cancelled, max_attempts=value['max_attempts'], max_seconds=value['max_seconds'])
         self.sequence, self.attempts = 0, 0
         self.has_report = False
         self.final_seconds = None
@@ -96,7 +97,7 @@ class Job:
     def snapshot(self):
         with self.condition:
             return {'id': self.id, 'mode': self.mode, 'state': self.state,
-                    'remaining_seconds': self.final_seconds if self.final_seconds is not None else self.budget.remaining_seconds() if self.budget else 0,
+                    'remaining_seconds': self.final_seconds if self.final_seconds is not None else self.budget.remaining_seconds(),
                     'approval': deepcopy(self.approval), 'stop_reason': self.reason,
                     'attempts': self.attempts, 'artifacts': list(ARTIFACTS) if self.has_report else []}
 
@@ -211,8 +212,6 @@ class JobManager:
     def _run(self, job):
         try:
             value = {k: v for k, v in job.input.items() if k not in ('answer_text', 'consent')}
-            job.budget = ServiceBudget(job.cancelled, max_attempts=value['max_attempts'], max_seconds=value['max_seconds'])
-
             def checkpoint(transcript):
                 # Never check cancellation here: outer collector failure must preserve evidence.
                 with job.condition:

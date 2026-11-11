@@ -4,7 +4,7 @@ import AssessmentApp from './AssessmentApp';
 import { AssessmentInputError, AssessmentRequestError, consumeLaunchToken, createAssessmentApi, validateCapabilities, validateInput, validateJob } from './assessment-api';
 import type { AssessmentApi, AssessmentInput, Capabilities, Job } from './assessment-api';
 
-const input: AssessmentInput = { answer_text: 'Mock answer', verification_date: '2026-11-02', answer_date: null, primary_domains: ['example.org'], max_claims: 4, max_attempts: 8, max_seconds: 180, consent: true };
+const input: AssessmentInput = { answer_text: 'Mock answer', verification_date: '2026-11-02', answer_date: null, primary_domains: ['example.org'], max_claims: 4, max_attempts: 9, max_seconds: 180, consent: true };
 const capabilities: Capabilities = { mode: 'demo', configured: false, configuration: { BIFROST_URL: false, BIFROST_MODEL: false, BIFROST_VIRTUAL_KEY: false, TAVILY_API_KEY: false, BIFROST_SEARCH_RELAY: false }, max_sessions: 4, demo_input: input };
 const job: Job = { id: 'job-1', mode: 'demo', state: 'awaiting_approval', remaining_seconds: 120, approval: { queries: ['  literal "query"\n<script>hostile</script>'], primary_domains: ['example.org'], sha256: 'a'.repeat(64) }, stop_reason: null, attempts: 0, artifacts: [] };
 function mockApi(): AssessmentApi {
@@ -126,6 +126,12 @@ describe('assessment boundary', () => {
 });
 
 describe('local assessment experience', () => {
+  it('defaults to enough attempts for the maximum four-claim journey', async () => {
+    const api = mockApi();
+    await setupLive(api);
+    expect(screen.getByLabelText('Maximum claims')).toHaveValue(4);
+    expect(screen.getByLabelText('Maximum attempts')).toHaveValue(9);
+  });
   it('requires a launch token and never loads a demo bundle', () => {
     const fetcher = vi.fn(); vi.stubGlobal('fetch', fetcher);
     render(<AssessmentApp api={null} />);

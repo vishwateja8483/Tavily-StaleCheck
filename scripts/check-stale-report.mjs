@@ -4,7 +4,7 @@ import { resolve } from 'node:path';
 import { writeFile } from 'node:fs/promises';
 const [driver, html, output] = process.argv.slice(2);
 const { chromium } = await import(pathToFileURL(resolve(driver)).href);
-const browser = await chromium.launch({ channel: 'msedge', headless: true });
+const browser = await chromium.launch({ channel: process.env.PLAYWRIGHT_CHANNEL || undefined, headless: true });
 try {
   const page = await browser.newPage({ viewport: { width: 1280, height: 1000 } });
   const errors = [];

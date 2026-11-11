@@ -7,6 +7,8 @@ name = "stalecheck"
 version = "0.4.0"
 description = "Offline temporal verification and consent-gated stale-answer assessment"
 requires-python = ">=3.12"
+license = "MIT"
+license-files = ["LICENSE"]
 dependencies = []
 
 [project.optional-dependencies]

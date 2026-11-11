@@ -2,7 +2,7 @@
 
 ## Scope and project licensing
 
-This notice is based on **actual local dependency manifests and license files**. It does not select a license for StaleCheck or certify comprehensive legal clearance. Project `pyproject.toml` has no project-license declaration, and no project LICENSE file was found in the inspected project tree. The owner must choose project licensing separately; third-party notices do not grant a license to this project.
+This notice is based on **actual local dependency manifests and license files**. It does not certify comprehensive legal clearance of every transitive component. The project is licensed under the [MIT License](../LICENSE) (`pyproject.toml` declares `license = "MIT"` with `license-files = ["LICENSE"]`); third-party notices below describe additional components bundled into the packaged UI and do not relicense them.
 
 Project paths refer to the repository root. UI paths identify the `web/` directory. The packaged assessment UI in `src/stalecheck/assessment_static/` is a built bundle of React and the application code; redistributing it must keep the notices below.
 

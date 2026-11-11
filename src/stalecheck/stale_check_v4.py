@@ -367,48 +367,156 @@ def make_report_v4(request, run_id):
             "input_sha256": sha(json_bytes(request)), "config_sha256": sha(json_bytes(v4_config()))}
 
 
+
+_REPORT_STYLE = """
+:root { color-scheme: light; --ink: #162e2a; --muted: #4c635e; --accent: #075f4e;
+  --line: #dbe5e1; --surface: #fff; --canvas: #f3f6f5; }
+* { box-sizing: border-box; }
+body { margin: 0; color: var(--ink); background: var(--canvas); font: 15px/1.55 system-ui, sans-serif; }
+main { max-width: 64rem; margin: auto; padding: clamp(12px, 3vw, 30px); overflow-wrap: anywhere; }
+h1, h2, h3, p, pre, figure, blockquote { margin: 0; }
+h1, h2, h3 { line-height: 1.2; }
+h1 { font-size: clamp(1.8rem, 4vw, 2.65rem); letter-spacing: -.04em; }
+h2 { font-size: 1.25rem; letter-spacing: -.02em; }
+h3 { font-size: 1rem; }
+p + p { margin-top: .55rem; }
+a { color: var(--accent); text-underline-offset: .17em; }
+a:focus-visible, summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.report-header { padding: clamp(16px, 3vw, 28px); border-radius: 12px; background: #153c34; color: #f5fff9; }
+.report-header p { margin-top: .65rem; color: #d5ebe4; }
+.report-header .report-mode { display: block; margin-bottom: .5rem; color: #b8e8d5; font-weight: 650; font-size: .8125rem; }
+.report-card { padding: clamp(14px, 2.5vw, 23px); margin-top: 14px; border: 1px solid var(--line);
+  border-radius: 12px; background: var(--surface); }
+.report-card > h2 { margin-bottom: .65rem; }
+.verdict-counts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; padding: 0;
+  margin: 12px 0; list-style: none; }
+.verdict-counts li { padding: 9px 10px; border: 1px solid var(--line); border-radius: 8px; background: var(--canvas); font-size: .8125rem; }
+.verdict-counts strong { display: block; font-size: 1.25rem; }
+.verdict-counts .supported { background: #eaf5ef; }
+.verdict-counts .changed { background: #fff7e6; }
+table { border-collapse: collapse; width: 100%; }
+caption { text-align: left; color: var(--muted); padding: 0 0 8px; font-size: .875rem; }
+td, th { padding: .55rem; text-align: left; vertical-align: top; }
+th { background: var(--canvas); font-size: .8125rem; }
+td { border-bottom: 1px solid var(--line); font-size: .875rem; }
+.claims-overview td:nth-child(4) { font-weight: 650; font-size: .8125rem; }
+.claims-overview td:last-child { font-variant-numeric: tabular-nums; }
+.claim-card { scroll-margin-top: 12px; }
+.claim-card:target { outline: 2px solid var(--accent); outline-offset: -2px; }
+.claim-metadata, .claim-evidence, .claim-comparison { margin-top: 14px; }
+.claim-metadata, figcaption { color: var(--muted); font-size: .875rem; }
+.claim-evidence h3 { margin-bottom: .5rem; }
+figure { padding: 11px 13px; margin-top: 8px; border-inline-start: 3px solid #a4cdbd; background: #f0f7f3; }
+blockquote { white-space: pre-wrap; }
+figcaption { margin-top: .5rem; }
+figcaption a { font-weight: 650; }
+.comparison-columns { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin-top: 8px; }
+.comparison-columns > div { padding: 11px; border: 1px solid var(--line); border-radius: 8px; }
+.comparison-columns strong { display: block; margin-bottom: 4px; font-size: .8125rem; }
+.comparison-columns p { white-space: pre-wrap; }
+details { margin-top: 10px; padding-top: 9px; border-top: 1px solid var(--line); }
+summary { width: fit-content; cursor: pointer; color: var(--accent); font-weight: 650; font-size: .875rem; }
+details > :not(summary) { margin-top: .5rem; }
+pre { padding: 10px; border-radius: 8px; background: var(--canvas); white-space: pre-wrap;
+  font: .8125rem/1.5 ui-monospace, Consolas, monospace; }
+ul { padding-inline-start: 1.35rem; margin: .5rem 0 0; }
+@media (max-width: 540px) {
+  .claims-overview, .claims-overview caption, .claims-overview tbody { display: block; }
+  .claims-overview thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+  .claims-overview tbody tr { display: grid; grid-template-columns: minmax(0, 1fr) auto;
+    padding: 9px; margin-top: 6px; border: 1px solid var(--line); border-radius: 8px; }
+  .claims-overview td { padding: 2px 0; border: 0; }
+  .claims-overview td:nth-child(2) { grid-column: 1 / -1; }
+  .claims-overview td:nth-child(3) { color: var(--muted); }
+  .claims-overview td:nth-child(4) { justify-self: end; }
+  .claims-overview td:last-child { grid-column: 2; grid-row: 1; color: var(--muted); font-size: .8125rem; }
+  .claims-overview td:last-child::before { content: "Freshness "; }
+  .comparison-columns { grid-template-columns: 1fr; }
+}
+"""
+
+
 def render_html(report):
-    """Script-free, escaped document. Proposed edits remain separate from the answer."""
+    """Render a script-free report with linked claims and expandable audit details."""
     e = lambda value: escape(str(value))
-    glance = ''
+    mock = "mock" in report["usage"]["provenance"].values()
+    parts = [
+        '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">',
+        '<meta http-equiv="Content-Security-Policy" content="default-src \'none\'; style-src \'unsafe-inline\'; base-uri \'none\'; form-action \'none\'">',
+        f'<title>StaleCheck claim freshness report</title><style>{_REPORT_STYLE}</style></head><body><main>',
+        '<header class="report-header">',
+        f'<span class="report-mode">StaleCheck{" · Mocked demo evidence" if mock else ""}</span>',
+        '<h1>Claim freshness report</h1>',
+        f'<p>Verification date <time>{e(report["verification_date"])}</time> · Answer date {e(report["answer_date"] or "unknown")}</p>',
+        '<p>Verdicts and proposed edits require human review. Freshness measures the recency of quoted evidence.</p></header>',
+    ]
+
     if report["claims"]:
-        rows = ''.join(f'<tr><td>{e(c["id"])}</td><td>{e(c["text"])}</td><td>{e(c["category"])}</td><td>{e(c["verdict"])}</td>'
-                       f'<td>{e("not scored" if c["freshness"]["score"] is None else c["freshness"]["score"])}</td></tr>' for c in report["claims"])
-        glance = ('<section><h2>At a glance</h2><table><caption>One row per selected claim. Freshness (0-100) is the recency of the quoted evidence, not proof that the claim is current.</caption>'
-                  '<colgroup><col style="width:9%"><col style="width:35%"><col style="width:14%"><col style="width:28%"><col style="width:14%"></colgroup>'
-                  '<tr><th scope="col">Claim</th><th scope="col">Text</th><th scope="col">Category</th><th scope="col">Verdict</th><th scope="col">Freshness</th></tr>' + rows + '</table></section>')
-    parts = ['<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">',
-             '<meta http-equiv="Content-Security-Policy" content="default-src \'none\'; style-src \'unsafe-inline\'; base-uri \'none\'; form-action \'none\'">',
-             '<title>StaleCheck assessment</title><style>body{font:16px/1.6 system-ui,sans-serif;max-width:65rem;margin:2rem auto;padding:0 1rem;color:#202020}article,section{border:1px solid #aaa;padding:1rem;margin:1rem 0}pre,blockquote{white-space:pre-wrap;overflow-wrap:anywhere}a{overflow-wrap:anywhere}dt{font-weight:bold}dd{margin:0 0 .6rem}table{border-collapse:collapse;width:100%}td,th{border:1px solid #aaa;padding:.5rem;text-align:left;vertical-align:top;overflow-wrap:anywhere}table{table-layout:fixed}article,section,p,h2{overflow-wrap:anywhere}</style></head><body>',
-             f'<h1>{e(report["title"])}</h1><p>{e(report["summary"])}</p>',
-             f'<p>Assessment date: {e(report["verification_date"])}. Answer date: {e(report["answer_date"] or "unknown")}. Stop reason: {e(report["stop_reason"] or "none")}.</p>',
-             '<p>Model-assisted assessment, not proof of historical change or factual truth. All proposed edits require human review.</p>',
-             glance,
-             f'<section><h2>Full original answer</h2><pre>{e(report["answer_text"])}</pre></section>',
-             f'<section><h2>Exact research approval</h2><pre>{e(json_bytes(report["approval"]).decode())}</pre></section>']
-    sources = {s["id"]: s for s in report["evidence"]}
+        counts = report["counts"]
+        parts += [
+            '<section class="report-card"><h2>At a glance</h2><ul class="verdict-counts">',
+            f'<li class="supported"><strong>{e(counts["MODEL_SUPPORTED"])}</strong>Model-supported</li>',
+            f'<li class="changed"><strong>{e(counts["POTENTIALLY_CHANGED"])}</strong>Potentially changed</li>',
+            f'<li><strong>{e(counts["UNVERIFIABLE"])}</strong>Unverifiable</li></ul>',
+            '<table class="claims-overview" role="table"><caption>Selected claims and freshness scores out of 100</caption>',
+            '<thead role="rowgroup"><tr role="row"><th scope="col">Claim</th><th scope="col">Excerpt</th><th scope="col">Category</th><th scope="col">Verdict</th><th scope="col">Freshness</th></tr></thead><tbody role="rowgroup">',
+        ]
+        for claim in report["claims"]:
+            identifier = e(claim["id"])
+            score = claim["freshness"]["score"]
+            parts.append(
+                f'<tr role="row"><td role="cell"><a href="#{identifier}">{identifier}</a></td>'
+                f'<td role="cell">{e(claim["text"])}</td><td role="cell">{e(claim["category"])}</td>'
+                f'<td role="cell">{e(claim["verdict"])}</td><td role="cell">{e("not scored" if score is None else score)}</td></tr>'
+            )
+        parts.append('</tbody></table></section>')
+    else:
+        parts.append('<section class="report-card"><h2>No selected claims</h2><p>The assessment produced no claim verdicts. See the run details below.</p></section>')
+
+    sources = {source["id"]: source for source in report["evidence"]}
     for claim in report["claims"]:
         inference = claim["inference"]
         fresh = claim["freshness"]
         scored = (f'score {fresh["score"]}/100, newest quoted source {fresh["newest_source_date"]}, {fresh["age_days"]} day(s) before the assessment date'
                   if fresh["score"] is not None else "not scored")
-        parts += [f'<article><h2>{e(claim["id"])}: {e(claim["verdict"])}</h2><p>{e(claim["reason_code"])}. Answer span [{claim["span"]["start"]}, {claim["span"]["end"]}).</p>',
-                  f'<table><caption>Original excerpt and proposed edit (never auto-applied)</caption><tr><th scope="col">Original</th><th scope="col">Model-generated proposal</th></tr><tr><td>{e(claim["text"])}</td><td>{e(inference["suggested_rewrite"] or "No supported proposal retained")}</td></tr></table>',
-                  f'<p>Category (model-labelled): {e(claim["category"])}. Freshness of the quoted evidence: {e(fresh["state"])} ({e(scored)}). Evidence recency, not proof that the claim is current.</p>',
-                  f'<p>Query: {e(claim["query"])}. Time sensitivity (model-generated): {e(claim["time_sensitivity"]["level"])} — {e(claim["time_sensitivity"]["reason"])}</p>',
-                  f'<h3>Uncalibrated evidence-strength components</h3><pre>{e(json_bytes(claim["evidence_strength"]).decode())}</pre><h3>Verbatim source quotations</h3>']
+        parts += [
+            f'<article class="report-card claim-card" id="{e(claim["id"])}"><h2>{e(claim["id"])} · {e(claim["verdict"])}</h2>',
+            '<div class="claim-comparison"><h3>Original excerpt and proposed edit</h3><div class="comparison-columns">',
+            f'<div><strong>Original</strong><p>{e(claim["text"])}</p></div>',
+            f'<div><strong>Model-generated proposal · Requires review</strong><p>{e(inference["suggested_rewrite"] or "No supported proposal retained")}</p></div></div></div>',
+            f'<p class="claim-metadata">Category (model-labelled): {e(claim["category"])}. Freshness of the quoted evidence: {e(fresh["state"])} ({e(scored)}).</p>',
+            '<div class="claim-evidence"><h3>Verbatim source quotations</h3>',
+        ]
         for quote in claim["evidence"]:
             source = sources[quote["source_id"]]
-            parts.append(f'<blockquote>{e(quote["quote"])}<br><a href="{e(quote["url"])}" target="_blank" rel="noopener noreferrer">{e(source["title"])}</a><br>Model-labelled relation: {e(quote["relation"])}. Retrieved: {e(source["retrieved_at"])}. Estimated publication/update: {e(source["published_at"] or "unknown")}. Effective dates: unknown.</blockquote>')
+            parts.append(
+                f'<figure><blockquote>{e(quote["quote"])}</blockquote><figcaption>'
+                f'<a href="{e(quote["url"])}" target="_blank" rel="noopener noreferrer">{e(source["title"])}</a>'
+                f'<p>Model-labelled relation: {e(quote["relation"])}. Retrieved: {e(source["retrieved_at"])}. '
+                f'Estimated publication/update: {e(source["published_at"] or "unknown")}. Effective dates: unknown.</p></figcaption></figure>'
+            )
         if not claim["evidence"]:
             parts.append('<p>No retained verbatim quotation.</p>')
-        retrieved = [s for s in report["evidence"] if s["claim_id"] == claim["id"]]
+        parts.append('</div>')
+        retrieved = [source for source in report["evidence"] if source["claim_id"] == claim["id"]]
         if retrieved:
-            parts.append('<h3>Retrieved sources (not evidence unless quoted above)</h3><ul>' + ''.join(
-                f'<li><a href="{e(s["url"])}" target="_blank" rel="noopener noreferrer">{e(s["title"])}</a>. Estimated publication/update: {e(s["published_at"] or "unknown")}.</li>'
-                for s in retrieved) + '</ul>')
-        parts.append(f'<h3>Model-generated reasoning</h3><p>{e(inference["observed"] or "No observation")}<br>{e(inference["rationale"] or "No rationale")}</p></article>')
-    parts += [f'<section><h2>Rejected or unselected proposals</h2><pre>{e(json_bytes(report["rejected_proposals"]).decode())}</pre></section>',
-              f'<section><h2>Usage: known subtotals and completeness</h2><pre>{e(json_bytes(report["usage"]).decode())}</pre></section>',
-              '<h2>Limitations</h2><ul>' + ''.join(f'<li>{e(line)}</li>' for line in report['limitations']) + '</ul></body></html>']
+            parts.append('<details><summary>All retrieved sources</summary><p>Retrieved sources are not evidence unless quoted above.</p><ul>' + ''.join(
+                f'<li><a href="{e(source["url"])}" target="_blank" rel="noopener noreferrer">{e(source["title"])}</a>. Estimated publication/update: {e(source["published_at"] or "unknown")}.</li>'
+                for source in retrieved) + '</ul></details>')
+        parts += [
+            f'<details><summary>Model-generated reasoning</summary><p>{e(inference["observed"] or "No observation")}</p><p>{e(inference["rationale"] or "No rationale")}</p></details>',
+            f'<details><summary>Claim audit details</summary><p>{e(claim["reason_code"])}. Answer span [{claim["span"]["start"]}, {claim["span"]["end"]}).</p>',
+            f'<p>Query: {e(claim["query"])}. Time sensitivity (model-generated): {e(claim["time_sensitivity"]["level"])} · {e(claim["time_sensitivity"]["reason"])}</p>',
+            f'<h3>Uncalibrated evidence-strength components</h3><pre>{e(json_bytes(claim["evidence_strength"]).decode())}</pre></details></article>',
+        ]
+
+    parts += [
+        f'<section class="report-card"><h2>Full original answer</h2><details><summary>View answer text</summary><pre>{e(report["answer_text"])}</pre></details></section>',
+        f'<section class="report-card"><h2>Run details</h2><p>Stop reason: {e(report["stop_reason"] or "none")}.</p>',
+        f'<details><summary>Exact research approval</summary><pre>{e(json_bytes(report["approval"]).decode())}</pre></details>',
+        f'<details><summary>Rejected or unselected proposals</summary><pre>{e(json_bytes(report["rejected_proposals"]).decode())}</pre></details>',
+        f'<details><summary>Usage and completeness</summary><pre>{e(json_bytes(report["usage"]).decode())}</pre></details></section>',
+        '<section class="report-card"><h2>Limitations</h2><ul>' + ''.join(f'<li>{e(line)}</li>' for line in report['limitations']) + '</ul></section>',
+        '</main></body></html>',
+    ]
     return ''.join(parts)

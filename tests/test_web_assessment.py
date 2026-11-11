@@ -9,7 +9,7 @@ import time
 import pytest
 
 from stalecheck.contracts import decode
-from stalecheck.web_jobs import DEMO_INPUT, JobManager, ServiceError, demo_transports
+from stalecheck.web_jobs import DEMO_INPUT, Job, JobManager, ServiceError, demo_transports
 from stalecheck.web_service import AssessmentServer
 from test_gateway_relay import KEY as VIRTUAL_KEY, bifrost_stand_in, replies
 from test_stale_check import ANSWER, DOCS, PRICE, PRICE_PAGE, claims, hits, proposal, verdict
@@ -66,6 +66,12 @@ def test_approval_polling_and_idempotency_do_not_repeat_extraction(manager):
     assert report['claims'][0]['verdict'] == 'POTENTIALLY_CHANGED'
     assert report['usage']['credits']['scope'] == 'mock_observations_not_spending'
     assert b'Full original answer' in manager.artifact(first['id'], 'report.html')
+
+
+def test_initial_status_has_a_deadline_before_the_worker_starts(tmp_path):
+    job = Job('test-job', {**DEMO_INPUT, 'max_seconds': 30}, tmp_path, 'demo').snapshot()
+    assert job['state'] == 'extracting'
+    assert 0 < job['remaining_seconds'] <= 30
 
 
 def test_decline_has_no_search_and_preserves_verified_report(manager):

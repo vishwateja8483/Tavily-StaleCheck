@@ -1,7 +1,6 @@
 import ReactDOM from 'react-dom/client';
 import AssessmentApp from './AssessmentApp';
 import { consumeLaunchToken, createAssessmentApi } from './assessment-api';
-import './styles.css';
 import './assessment.css';
 
 // Consume synchronously, outside React rendering/effects, before any API request.
