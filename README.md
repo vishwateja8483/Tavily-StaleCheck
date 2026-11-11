@@ -8,7 +8,7 @@ Built for the **Geek Room Global AI Hackathon 2026**, Track B (Tavily), Problem 
 
 ## See a real assessment
 
-In a 27-second Chrome run, GitHub Copilot handled three model calls through Bifrost and Tavily ran two searches against `python.org`. StaleCheck flagged a superseded Python version and withheld a verdict on the release date because the retained quote lacked the date. The **95/100** score measures the recency of the first claim’s evidence.
+In a 27-second Chrome run, GitHub Copilot handled three model calls through Bifrost and Tavily ran two searches against `python.org`. StaleCheck flagged a superseded Python version and withheld a verdict on the release date because the retained quote gave the date but not the version number. The **95/100** score measures the recency of the first claim’s evidence.
 
 | Searches approved in Chrome | Verdicts rendered from the saved live run |
 |---|---|
