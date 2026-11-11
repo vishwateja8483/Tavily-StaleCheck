@@ -1,0 +1,24 @@
+{
+  "launchFragmentStripped": true,
+  "storage": 0,
+  "pageErrors": [],
+  "unexpectedRequests": [],
+  "configuration": [
+    "BIFROST_URL — Present",
+    "BIFROST_MODEL — Present",
+    "BIFROST_VIRTUAL_KEY — Present",
+    "TAVILY_API_KEY — Absent",
+    "BIFROST_SEARCH_RELAY — Present"
+  ],
+  "queries": [
+    "\"GitHub Free plan included GitHub Actions minutes per month private repositories\"",
+    "\"GitHub Pro plan included GitHub Actions minutes per month private repositories\""
+  ],
+  "state": "completed",
+  "seconds": 32,
+  "claimHeadings": [
+    "claim-1 · Unverifiable",
+    "claim-2 · Model-supported"
+  ],
+  "glance": "Selected claims and freshness scores out of 100\nClaim\tExcerpt\tCategory\tVerdict\tFreshness\nclaim-1\tGitHub Free includes 3,000 GitHub Actions minutes per month for private repositories.\tpricing\tUnverifiable\t29\nclaim-2\tGitHub Pro includes 3,000 GitHub Actions minutes per month for private repositories.\tpricing\tModel-supported\t50"
+}

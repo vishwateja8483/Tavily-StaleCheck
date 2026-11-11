@@ -1,0 +1,248 @@
+{
+  "schema_version": "4.0",
+  "format": "stale_answer_transcript",
+  "answer_text": "Thomas Bach is still the president of the International Olympic Committee. Kirsty Coventry is the current president of the International Olympic Committee.",
+  "answer_date": null,
+  "verification_date": "2026-11-11",
+  "primary_domains": [
+    "olympics.com"
+  ],
+  "limits": {
+    "max_claims": 2,
+    "max_attempts": 5,
+    "max_seconds": 180
+  },
+  "provenance": {
+    "gateway": "bifrost",
+    "search": "tavily"
+  },
+  "extraction": {
+    "status": "ok",
+    "reply": {
+      "text": "{\"claims\":[{\"quote\":\"Thomas Bach is still the president of the International Olympic Committee.\",\"category\":\"leadership\",\"time_sensitivity\":\"high\",\"reason\":\"IOC presidency changes; Bach's term ended in June 2025 when Kirsty Coventry succeeded him, so this claim is likely outdated and contradicts the other statement.\",\"query\":\"current president of the International Olympic Committee\"},{\"quote\":\"Kirsty Coventry is the current president of the International Olympic Committee.\",\"category\":\"leadership\",\"time_sensitivity\":\"high\",\"reason\":\"Office holders change; need to confirm Coventry is still IOC president and her term status.\",\"query\":\"Kirsty Coventry IOC president\"}]}",
+      "finish_reason": "stop",
+      "model_requested": "copilot-cli/claude-sonnet-5.5",
+      "fallbacks_requested": [],
+      "usage": {
+        "prompt_tokens": 4185,
+        "completion_tokens": 235,
+        "total_tokens": 4420
+      },
+      "served_by": {
+        "provider": "copilot-cli",
+        "model": "claude-sonnet-5.5",
+        "is_fallback": false
+      },
+      "latency_seconds": 7.922,
+      "request_sha256": "60782b40b1652c5c20c14f1fb75a3864f93b7196b93860a78cf904596895e7d6",
+      "response_sha256": "1c81c426a1ba39804502d3f03943887e2d189fa1d0e88d8ded0bebefa077cae2",
+      "messages_sha256": "e29ab81b35962a06ba54b0bf1186c802d5e007e7752f8f7ff02d2309dd68e593"
+    }
+  },
+  "approval": {
+    "queries": [
+      "current president of the International Olympic Committee",
+      "Kirsty Coventry IOC president"
+    ],
+    "primary_domains": [
+      "olympics.com"
+    ],
+    "sha256": "a9f598d550a04a3762e8453b6bfbc8999bfdac4079d17bae89b75eccc6d32378",
+    "approved": true
+  },
+  "checks": [
+    {
+      "claim": "claim-1",
+      "search": {
+        "status": "ok",
+        "query": "current president of the International Olympic Committee",
+        "sources": [
+          {
+            "id": "claim-1-src-1",
+            "url": "https://www.olympics.com/ioc/history",
+            "title": "History of the IOC",
+            "content": "IOC Presidents\n\nSince the creation of the IOC in 1894, there have been ten presidents. The president is elected by the Session in a secret ballot among the IOC Members. Today, the president is elected for a term of office of eight years, renewable once for a period of four years. The current President is Kirsty Coventry.\n\nPierre de Coubertin",
+            "content_sha256": "9771beb7b1568b6b0c330ddeac2c60211bcc2a9105cd6e2ef49cc925d8fcc489",
+            "retrieved_at": "2026-11-11T10:42:52.265590+00:00",
+            "published_at": null,
+            "published_at_raw": null,
+            "relevance_score": 0.8923472
+          },
+          {
+            "id": "claim-1-src-2",
+            "url": "https://www.olympics.com/ioc/faq/ioc-organisation/who-has-been-ioc-president-since-1894",
+            "title": "Who has been IOC President since 1894?",
+            "content": "Lord Killanin (Ireland), President from 1972 to 1980\n\nJuan Antonio Samaranch (Spain), President from 1980 to 2001\n\nJacques Rogge (Belgium), President from 2001 to 2013\n\nThomas Bach (Germany), President from 2013 to 2025\n\nKirsty Coventry (Zimbabwe), President from 2025\n\nThe tenth IOC President was elected on 20 March 2025 at the IOC Session held in Greece.\n\nLearn more:\n\nMrs Kirsty COVENTRY\n\nIOC News, 20.0.25: Kirsty Coventry elected IOC President, the first woman President in IOC history [...] # Frequently Asked Questions\n\n## IOC - The organisation\n\n#### Who has been IOC President since 1894?\n\nTo date, the IOC has had nine Presidents. In chronological order:\n\nDemetrius Vikelas (Greece), President from 1894 to 1896\n\nPierre de Coubertin (France), President from 1896 to 1925\n\nHenri de Baillet-Latour (Belgium), President from 1925 to 1942\n\nJ. Sigfrid Edström (Sweden), President from 1946 to 1952\n\nAvery Brundage (USA), President from 1952 to 1972 [...] Reference document: Elections of the Presidents of the International Olympic Committee - candidates and voting results\n\n\"The International Olympic Committee: its creation and its Presidents\" by Robert K. Barney\n\nIf you have not found the answer to your question in our Frequently Asked Questions you may contact us directly by visiting the page linked below. Please be as explicit as possible in order to help us deliver a relevant answer.",
+            "content_sha256": "a3a76c3183c9212df5340e34fd681c301ef4ec76d0a12c32be2bbd001359c132",
+            "retrieved_at": "2026-11-11T10:42:52.265590+00:00",
+            "published_at": null,
+            "published_at_raw": null,
+            "relevance_score": 0.87681407
+          },
+          {
+            "id": "claim-1-src-3",
+            "url": "https://www.olympics.com/ioc/1921-founding-of-the-ioc-executive-board",
+            "title": "1921: Founding of the IOC Executive Board",
+            "content": "IOC Presidents\n\nSince the creation of the IOC in 1894, there have been ten presidents. The president is elected by the Session in a secret ballot among the IOC Members. Today, the president is elected for a term of office of eight years, renewable once for a period of four years. The current President is Kirsty Coventry.\n\nLausanne, Olympic capital",
+            "content_sha256": "44eaaaac192bee2a19df1bb19e005b6f7bf62811275b013ba119a6ff7e59edaf",
+            "retrieved_at": "2026-11-11T10:42:52.265590+00:00",
+            "published_at": null,
+            "published_at_raw": null,
+            "relevance_score": 0.8763069
+          }
+        ],
+        "calls": 1
+      },
+      "assessment": {
+        "status": "ok",
+        "reply": {
+          "text": "{\"verdict\":\"CHANGED\",\"observed\":\"IOC sources say Kirsty Coventry is the current IOC President. Thomas Bach served from 2013 to 2025. Coventry was elected on 20 March 2025.\",\"evidence\":[{\"source_id\":\"claim-1-src-1\",\"relation\":\"contradicts\",\"quote\":\"The current President is Kirsty Coventry.\"},{\"source_id\":\"claim-1-src-2\",\"relation\":\"contradicts\",\"quote\":\"Thomas Bach (Germany), President from 2013 to 2025\"}],\"rationale\":\"Official IOC pages name Kirsty Coventry as current president and show Bach's term ended in 2025, contradicting the claim.\",\"rewrite\":\"Thomas Bach was IOC president from 2013 to 2025; the current president is Kirsty Coventry, elected on 20 March 2025.\"}",
+          "finish_reason": "stop",
+          "model_requested": "copilot-cli/claude-sonnet-5.5",
+          "fallbacks_requested": [],
+          "usage": {
+            "prompt_tokens": 5349,
+            "completion_tokens": 283,
+            "total_tokens": 5632
+          },
+          "served_by": {
+            "provider": "copilot-cli",
+            "model": "claude-sonnet-5.5",
+            "is_fallback": false
+          },
+          "latency_seconds": 8.045,
+          "request_sha256": "93b0e6ec29f214c5c21a562076723f145316c841c44f3a476ea15269f20f41d6",
+          "response_sha256": "480ff269d93a4a3dec21bf9655d5019efc87a960923a51c6cfee4acd4814ea12",
+          "messages_sha256": "74637a3db6999e0ca06e93e146973a415ffefe071f2c8c643c1536c8be00f9d8"
+        }
+      }
+    },
+    {
+      "claim": "claim-2",
+      "search": {
+        "status": "ok",
+        "query": "Kirsty Coventry IOC president",
+        "sources": [
+          {
+            "id": "claim-2-src-1",
+            "url": "https://www.olympics.com/ioc/news/kirsty-coventry-elected-ioc-president-the-first-female-president-in-ioc-history",
+            "title": "Kirsty Coventry elected IOC President, the first woman President in IOC history",
+            "content": "After the election, IOC President Thomas Bach said: “Congratulations to Kirsty Coventry on her election as the 10th IOC President. I warmly welcome the decision of the IOC Members and look forward to strong cooperation, particularly during the transition period. There is no doubt that the future for our Olympic Movement is bright and that the values we stand for will continue to guide us through the years to come.”\n\nRead President-elect Coventry’s biography and manifesto. [...] Coventry was chosen over fellow presidential candidates HRH Prince Feisal Al Hussein, David Lappartient, Johan Eliasch, Juan Antonio Samaranch, Lord Sebastian Coe and Morinari Watanabe.\\\n\n## Relive the announcement ceremony\n\nWatch\n\nPresident-elect Coventry said: \"I am incredibly honoured and excited to be elected as President of the International Olympic Committee! I want to sincerely thank my fellow members for their trust and support. [...] Kirsty Coventry will succeed the ninth IOC President, Thomas Bach, whose 12-year tenure will officially end after Monday 23 June 2025. The President is elected by the IOC Members by secret ballot for a term of eight years.\n\n## Kirsty Coventry's first press conference as President-elect\n\nWatch\n\n\\ In order of the draw\n\n###",
+            "content_sha256": "dabc94d9d8b09a103b10bb703e2e943aa46dfe270d022bbfe03cc416d5cee958",
+            "retrieved_at": "2026-11-11T10:43:02.790155+00:00",
+            "published_at": "2025-03-20T15:31:14+00:00",
+            "published_at_raw": "Thu, 20 Mar 2025 15:31:14 GMT",
+            "relevance_score": 0.8440237
+          },
+          {
+            "id": "claim-2-src-2",
+            "url": "https://www.olympics.com/en/athletes/kirsty-leigh-coventry",
+            "title": "Kirsty Leigh COVENTRY",
+            "content": "Olympic Channel\nKirsty Leigh\n\n# Kirsty Leigh COVENTRY\n\nZimbabwe\nSwimming\n\n## Biography\n\nKirsty Coventry is the first female and first African person to be elected President of the International Olympic Committee (IOC).\n\nShe is Zimbabwe’s most successful Olympian, having won seven of the country’s eight Olympic medals to date, and was appointed as the country’s Minister of Youth, Sport, Arts and Recreation in September 2018. [...] She won three long course world titles, winning the 100m and 200m backstroke in 2005, and her specialty event, the 200m backstroke, in 2009. She also won four short course gold medals at the 2008 FINA World Swimming Championships (25m).\n\nCoventry retired as a competitive swimmer after the Rio 2016 Olympic Games, which marked her fifth Olympic appearance.\n\n## Featured\n\n### Kirsty Coventry elected 10th IOC President at 144th IOC Session in Greece [...] Elected to the IOC in 2013 as a member of the Athletes’ Commission, Coventry was re-elected as an individual IOC Member in 2021.",
+            "content_sha256": "175c4d4f114274368d223622e18bbb0e9af455bef28fbe15be018f199d8eb175",
+            "retrieved_at": "2026-11-11T10:43:02.790155+00:00",
+            "published_at": null,
+            "published_at_raw": null,
+            "relevance_score": 0.82032555
+          },
+          {
+            "id": "claim-2-src-3",
+            "url": "https://www.olympics.com/ioc/mrs-kirsty-coventry",
+            "title": "Mrs Kirsty COVENTRY",
+            "content": "She was elected the IOC’s 10th president on 20 March 2025 at the 144th IOC Session in Costa Navarino, Greece – the first woman and first African to reach the Olympic Movement’s highest position.\n\nEducation\n\nBachelor of Human Science in Hotel and Restaurant Management with a minor in Business from Auburn University (United States of America)\n\nCareer\n\nProfessional athlete\n\nSports career [...] Olympics\n Olympic Museum\n Athlete365\n Olympic Studies Centre\n Olympic Refuge Foundation\n Dakar 2026\n LA28\n Shop\n\nOlympic Games\n\nOlympic Movement\n\nBeyond the Games\n\nIOC President\n\n# IOC President\n\n# Mrs Kirsty COVENTRY\n\nZIM\n\nEntry in the IOC\n\n2013\n\nBorn\n\n16 September 1983\n\nGames Participated\n\n2000, 2004, 2008, 2012, 2016\n\nAthlete Profile\n\nKirsty Leigh COVENTRY\n\n## News\n\nIOC News\n\nIOC President Kirsty Coventry calls for collective action to build sport’s future\n\n05 Oct 2026\n\nIOC News [...] Gender Equality\n\nIOC President Kirsty Coventry: “Sport can help women and girls shape their own futures”\n\n09 Jul 2026\n\nIOC President\n\nIOC President calls on the world to “take the first step” towards an active life on Olympic Day 2026\n\n22 Jun 2026\n\nIOC President\n\nIOC President: autonomy, universality and solidarity key to keeping sport a neutral ground for athletes\n\n12 Jun 2026\n\nIOC President Kirsty Coventry shares her vision for the Olympic Movement",
+            "content_sha256": "430e9532f33ca92c79b1f274318882fb12066fc388a6e8ebb8595deff894962d",
+            "retrieved_at": "2026-11-11T10:43:02.790155+00:00",
+            "published_at": null,
+            "published_at_raw": null,
+            "relevance_score": 0.81757444
+          }
+        ],
+        "calls": 1
+      },
+      "assessment": {
+        "status": "ok",
+        "reply": {
+          "text": "{\"verdict\":\"SUPPORTED\",\"observed\":\"The IOC's official page lists Kirsty Coventry as IOC President, elected 20 March 2025 as the 10th president. Its news items dated through October 2026 refer to her as IOC President.\",\"evidence\":[{\"source_id\":\"claim-2-src-3\",\"relation\":\"supports\",\"quote\":\"She was elected the IOC’s 10th president on 20 March 2025 at the 144th IOC Session in Costa Navarino, Greece\"},{\"source_id\":\"claim-2-src-3\",\"relation\":\"supports\",\"quote\":\"IOC President Kirsty Coventry calls for collective action to build sport’s future\"}],\"rationale\":\"The official IOC page presents Coventry as the sitting president, with news items from 2026 using that title. Her term is eight years, and nothing in the sources indicates a change.\",\"rewrite\":\"\"}",
+          "finish_reason": "stop",
+          "model_requested": "copilot-cli/claude-sonnet-5.5",
+          "fallbacks_requested": [],
+          "usage": {
+            "prompt_tokens": 5980,
+            "completion_tokens": 287,
+            "total_tokens": 6267
+          },
+          "served_by": {
+            "provider": "copilot-cli",
+            "model": "claude-sonnet-5.5",
+            "is_fallback": false
+          },
+          "latency_seconds": 8.157,
+          "request_sha256": "7ddadcc1fbe5066dd9f00c756a4abb4971a67702c873aa4d9eb8caa8ce76b284",
+          "response_sha256": "d3601d6d6e28c1d662b192c2ff6e5886d12d7642a911412fca9772aa62bf6246",
+          "messages_sha256": "dbbaba8e9c5a4488e971f96366f68105190bc7529214e57bf3776f104a5bdd93"
+        }
+      }
+    }
+  ],
+  "attempts": [
+    {
+      "service": "gateway",
+      "status": "ok",
+      "usage": {
+        "prompt_tokens": 4185,
+        "completion_tokens": 235,
+        "total_tokens": 4420
+      },
+      "routing": {
+        "provider": "copilot-cli",
+        "model": "claude-sonnet-5.5",
+        "is_fallback": false
+      }
+    },
+    {
+      "service": "search",
+      "status": "ok",
+      "usage": {
+        "credits": 1
+      },
+      "routing": null
+    },
+    {
+      "service": "gateway",
+      "status": "ok",
+      "usage": {
+        "prompt_tokens": 5349,
+        "completion_tokens": 283,
+        "total_tokens": 5632
+      },
+      "routing": {
+        "provider": "copilot-cli",
+        "model": "claude-sonnet-5.5",
+        "is_fallback": false
+      }
+    },
+    {
+      "service": "search",
+      "status": "ok",
+      "usage": {
+        "credits": 1
+      },
+      "routing": null
+    },
+    {
+      "service": "gateway",
+      "status": "ok",
+      "usage": {
+        "prompt_tokens": 5980,
+        "completion_tokens": 287,
+        "total_tokens": 6267
+      },
+      "routing": {
+        "provider": "copilot-cli",
+        "model": "claude-sonnet-5.5",
+        "is_fallback": false
+      }
+    }
+  ],
+  "stop_reason": null
+}

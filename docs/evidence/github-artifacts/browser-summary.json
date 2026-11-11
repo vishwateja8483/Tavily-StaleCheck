@@ -1,0 +1,24 @@
+{
+  "launchFragmentStripped": true,
+  "storage": 0,
+  "pageErrors": [],
+  "unexpectedRequests": [],
+  "configuration": [
+    "BIFROST_URL — Present",
+    "BIFROST_MODEL — Present",
+    "BIFROST_VIRTUAL_KEY — Present",
+    "TAVILY_API_KEY — Absent",
+    "BIFROST_SEARCH_RELAY — Present"
+  ],
+  "queries": [
+    "\"actions/upload-artifact v3 deprecation retired GitHub.com support status\"",
+    "\"GitHub Actions artifact v3 retirement date January 30 2025 upload-artifact download-artifact\""
+  ],
+  "state": "completed",
+  "seconds": 30,
+  "claimHeadings": [
+    "claim-1 · Potentially changed",
+    "claim-2 · Model-supported"
+  ],
+  "glance": "Selected claims and freshness scores out of 100\nClaim\tExcerpt\tCategory\tVerdict\tFreshness\nclaim-1\tGitHub.com still supports actions/upload-artifact v3.\tavailability\tPotentially changed\t0\nclaim-2\tGitHub.com retired v3 of the artifact actions on January 30, 2025.\tavailability\tModel-supported\t0"
+}

@@ -1,0 +1,24 @@
+{
+  "launchFragmentStripped": true,
+  "storage": 0,
+  "pageErrors": [],
+  "unexpectedRequests": [],
+  "configuration": [
+    "BIFROST_URL — Present",
+    "BIFROST_MODEL — Present",
+    "BIFROST_VIRTUAL_KEY — Present",
+    "TAVILY_API_KEY — Absent",
+    "BIFROST_SEARCH_RELAY — Present"
+  ],
+  "queries": [
+    "\"current president of the International Olympic Committee\"",
+    "\"Kirsty Coventry IOC president\""
+  ],
+  "state": "completed",
+  "seconds": 31,
+  "claimHeadings": [
+    "claim-1 · Potentially changed",
+    "claim-2 · Model-supported"
+  ],
+  "glance": "Selected claims and freshness scores out of 100\nClaim\tExcerpt\tCategory\tVerdict\tFreshness\nclaim-1\tThomas Bach is still the president of the International Olympic Committee.\tleadership\tPotentially changed\tnot scored\nclaim-2\tKirsty Coventry is the current president of the International Olympic Committee.\tleadership\tModel-supported\tnot scored"
+}

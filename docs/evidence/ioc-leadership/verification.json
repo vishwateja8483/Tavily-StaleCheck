@@ -1,0 +1,146 @@
+{
+  "assessment": "completed",
+  "artifact_verification": {
+    "valid": true,
+    "project_id": "stalecheck",
+    "run_id": "fd-a9f493befc9b4602865823b660a60763",
+    "status": "completed",
+    "artifacts": 5,
+    "assurance": "Internal consistency only; unsigned hashes cannot authenticate sources or establish truth."
+  },
+  "approval": {
+    "queries": [
+      "current president of the International Olympic Committee",
+      "Kirsty Coventry IOC president"
+    ],
+    "primary_domains": [
+      "olympics.com"
+    ],
+    "sha256": "a9f598d550a04a3762e8453b6bfbc8999bfdac4079d17bae89b75eccc6d32378",
+    "approved": true
+  },
+  "verdicts": {
+    "MODEL_SUPPORTED": 1,
+    "POTENTIALLY_CHANGED": 1,
+    "UNVERIFIABLE": 0
+  },
+  "usage": {
+    "attempts": 5,
+    "provenance": {
+      "gateway": "bifrost",
+      "search": "tavily"
+    },
+    "gateway_calls": 3,
+    "tokens": {
+      "known_subtotal": {
+        "prompt_tokens": 15514,
+        "completion_tokens": 805,
+        "total_tokens": 16319
+      },
+      "complete": true,
+      "scope": "provider_reported_not_invoice"
+    },
+    "search_calls": 2,
+    "credits": {
+      "known_subtotal": {
+        "credits": 2
+      },
+      "complete": true,
+      "scope": "provider_reported_not_invoice"
+    },
+    "routing": {
+      "observed_fallbacks": 0,
+      "unknown_calls": 0
+    }
+  },
+  "attempts": [
+    {
+      "service": "gateway",
+      "status": "ok",
+      "usage": {
+        "prompt_tokens": 4185,
+        "completion_tokens": 235,
+        "total_tokens": 4420
+      },
+      "routing": {
+        "provider": "copilot-cli",
+        "model": "claude-sonnet-5.5",
+        "is_fallback": false
+      }
+    },
+    {
+      "service": "search",
+      "status": "ok",
+      "usage": {
+        "credits": 1
+      },
+      "routing": null
+    },
+    {
+      "service": "gateway",
+      "status": "ok",
+      "usage": {
+        "prompt_tokens": 5349,
+        "completion_tokens": 283,
+        "total_tokens": 5632
+      },
+      "routing": {
+        "provider": "copilot-cli",
+        "model": "claude-sonnet-5.5",
+        "is_fallback": false
+      }
+    },
+    {
+      "service": "search",
+      "status": "ok",
+      "usage": {
+        "credits": 1
+      },
+      "routing": null
+    },
+    {
+      "service": "gateway",
+      "status": "ok",
+      "usage": {
+        "prompt_tokens": 5980,
+        "completion_tokens": 287,
+        "total_tokens": 6267
+      },
+      "routing": {
+        "provider": "copilot-cli",
+        "model": "claude-sonnet-5.5",
+        "is_fallback": false
+      }
+    }
+  ],
+  "claims": [
+    {
+      "text": "Thomas Bach is still the president of the International Olympic Committee.",
+      "verdict": "POTENTIALLY_CHANGED",
+      "reason_code": "MODEL_CONTRADICTION_WITH_VERBATIM_QUOTE",
+      "freshness": {
+        "state": "undated",
+        "newest_source_date": null,
+        "age_days": null,
+        "score": null,
+        "maximum": 100,
+        "calibrated": false
+      },
+      "retained_quotes": 2
+    },
+    {
+      "text": "Kirsty Coventry is the current president of the International Olympic Committee.",
+      "verdict": "MODEL_SUPPORTED",
+      "reason_code": "MODEL_SUPPORT_WITH_VERBATIM_QUOTE",
+      "freshness": {
+        "state": "undated",
+        "newest_source_date": null,
+        "age_days": null,
+        "score": null,
+        "maximum": 100,
+        "calibrated": false
+      },
+      "retained_quotes": 2
+    }
+  ]
+}

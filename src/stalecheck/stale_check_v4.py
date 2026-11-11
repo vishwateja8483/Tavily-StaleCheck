@@ -487,6 +487,8 @@ mark { color: inherit; background: none; }
 .ruler-ticks .k4::before { left: auto; right: 0; }
 .claim-evidence { margin-top: 20px; }
 .claim-evidence h3 { margin-bottom: 8px; }
+.evidence-comparison { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 14px; }
+.evidence-comparison h4 { margin: 0; font-size: .875rem; color: var(--ink-2); }
 figure { margin-top: 10px; border: 1px solid var(--ink); background: var(--wash); }
 blockquote { padding: 12px 14px; font-size: .9375rem; line-height: 1.6; white-space: pre-wrap; }
 figcaption { padding: 9px 14px 10px; border-top: 1px solid var(--ink); background: var(--sheet); color: var(--ink-3); font-size: .8125rem; }
@@ -509,7 +511,7 @@ ul { padding-inline-start: 1.25rem; margin: 8px 0 0; }
   .title-block { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .verdict-counts { grid-template-columns: 1fr; }
   .verdict-counts li + li { border-top: 1px solid var(--ink); border-left: 0; }
-  .comparison-columns { grid-template-columns: 1fr; }
+  .comparison-columns, .evidence-comparison { grid-template-columns: 1fr; }
   .comparison-columns > div + div { border-top: 1px solid var(--ink); border-left: 0; }
 }
 @media (max-width: 540px) {
@@ -542,7 +544,7 @@ _VERDICT_REASONS = {
     "MODEL_SUPPORT_WITH_VERBATIM_QUOTE": "The model found support in a retained quote that includes the figures in the claim.",
     "MODEL_CONTRADICTION_WITH_VERBATIM_QUOTE": "The model found a contradiction in a retained source quote.",
     "MODEL_ABSTAINED": "The model could not reach a verdict from the retrieved material.",
-    "CONFLICTING_EVIDENCE": "The retained evidence contains both supporting and contradicting quotes.",
+    "CONFLICTING_EVIDENCE": "The model labelled some retained quotes as supporting the claim and others as contradicting it.",
     "SUPPORT_QUOTE_LACKS_CLAIM_FIGURES": "The supporting quote did not include all the figures in the claim.",
     "NO_VERBATIM_SUPPORTING_QUOTE": "No supporting quote could be matched to the retrieved excerpts.",
     "NO_VERBATIM_CONTRADICTING_QUOTE": "No contradicting quote could be matched to the retrieved excerpts.",
@@ -629,6 +631,29 @@ def _title_block(report):
     )) + '</dl>'
 
 
+def _claim_quotes(claim, sources):
+    def figure(quote):
+        source = sources[quote["source_id"]]
+        return (
+            f'<figure><blockquote>{escape(quote["quote"])}</blockquote><figcaption>'
+            f'<a href="{escape(quote["url"])}" target="_blank" rel="noopener noreferrer">{escape(source["title"])}</a>'
+            f'<p>Model-labelled relation: {escape(quote["relation"])}. Retrieved: {escape(source["retrieved_at"])}. '
+            f'Estimated publication/update: {escape(source["published_at"] or "unknown")}. Effective dates: unknown.</p></figcaption></figure>'
+        )
+
+    quotes = claim["evidence"]
+    if not quotes:
+        return '<p>No retained verbatim quotation.</p>'
+    if claim["reason_code"] != "CONFLICTING_EVIDENCE":
+        return ''.join(map(figure, quotes))
+
+    groups = []
+    for relation, title in (("supports", "Labelled as supporting"), ("contradicts", "Labelled as contradicting")):
+        figures = ''.join(figure(quote) for quote in quotes if quote["relation"] == relation)
+        groups.append(f'<div><h4>{title}</h4>{figures}</div>')
+    return '<div class="evidence-comparison">' + ''.join(groups) + '</div>'
+
+
 def render_html(report):
     """Render a script-free report with linked claims and expandable audit details."""
     e = lambda value: escape(str(value))
@@ -700,16 +725,7 @@ def render_html(report):
             _ruler(fresh),
             '<div class="claim-evidence"><h3>Verbatim source quotations</h3>',
         ]
-        for quote in claim["evidence"]:
-            source = sources[quote["source_id"]]
-            parts.append(
-                f'<figure><blockquote>{e(quote["quote"])}</blockquote><figcaption>'
-                f'<a href="{e(quote["url"])}" target="_blank" rel="noopener noreferrer">{e(source["title"])}</a>'
-                f'<p>Model-labelled relation: {e(quote["relation"])}. Retrieved: {e(source["retrieved_at"])}. '
-                f'Estimated publication/update: {e(source["published_at"] or "unknown")}. Effective dates: unknown.</p></figcaption></figure>'
-            )
-        if not claim["evidence"]:
-            parts.append('<p>No retained verbatim quotation.</p>')
+        parts.append(_claim_quotes(claim, sources))
         parts.append('</div>')
         retrieved = [source for source in report["evidence"] if source["claim_id"] == claim["id"]]
         if retrieved:

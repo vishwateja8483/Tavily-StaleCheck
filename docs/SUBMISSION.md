@@ -8,7 +8,7 @@
 
 1. Sign in to HackCulture. Open **Manage → Submissions → Problem Statements & Prototype Submission** and select the stale-answer detector theme. The public event page lists prototype submission through **November 15, 2026 at 11:59 p.m.** and judging on November 29. [Official event and FAQ](https://hackculture.io/hackathons/ai-global-hackathon)
 2. Enter **StaleCheck** and add the public GitHub repository URL. Check it from a signed-out browser. Include the README, install instructions and bundled browser app.
-3. Upload [the PowerPoint pitch deck](pitch/StaleCheck-live-submission.pptx). It covers the problem, architecture, Bifrost and Tavily, and screenshots from the working prototype.
+3. Upload [the PowerPoint pitch deck](pitch/StaleCheck-PS06.pptx). It covers the problem, architecture, Bifrost and Tavily, and screenshots from the working prototype.
 4. Optionally add a shareable demo video URL. Test the link while signed out. A deployed app is optional. Join the event Discord for organizer updates. [HackCulture FAQ](https://hackculture.io/hackathons/ai-global-hackathon) · [Official Discord](https://discord.gg/STHG8YQdd)
 
 StaleCheck addresses one problem statement. Bifrost and Tavily each have a role in that solution. The event's instructions for selecting a Bifrost primary theme apply to entries that combine a separate Bifrost challenge with a Tavily challenge.
@@ -29,7 +29,7 @@ Lead with [the saved live proof and replay commands](LIVE-PROOF.md). Use the [pr
 
 Use the two-claim Python release run to show the decision boundary. Copilot proposed two queries through Bifrost and the browser required separate approval before Tavily searched `python.org`. The older-version claim came back **Potentially changed**, with a **95/100** freshness score. The release-date claim came back **Unverifiable** because the retained quotation lacked the figures needed to support the release date. Python.org independently lists the release date as October 25, 2026. [Python 3.14.10 release record](https://www.python.org/downloads/release/python-31410/)
 
-The run made three Copilot calls through Bifrost and two Tavily searches. All five saved artifacts verified. The [matching live verification receipt](evidence/python-release/verification.json) records the exact approval, verdicts, per-attempt accounting and source freshness. The pitch deck shows the separate live pricing run and illustrates how conflicting quotes produce an Unverifiable verdict.
+The run made three Copilot calls through Bifrost and two Tavily searches. All five saved artifacts verified. The [matching live verification receipt](evidence/python-release/verification.json) records the exact approval, verdicts, per-attempt accounting and source freshness. The pitch deck leads with the Python run and includes results from the five live cases. The GitHub Free quota case shows how conflicting excerpts can leave a stale claim unverifiable.
 
 ```bash
 bash scripts/copilot-check/run.sh --verify \

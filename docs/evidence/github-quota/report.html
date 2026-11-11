@@ -1,0 +1,237 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'"><title>StaleCheck claim freshness report</title><style>
+:root { color-scheme: light; --ink: #12161a; --ink-2: #3a444d; --ink-3: #56616b; --hair: #c9d1d8; --faint: #e3e8ec;
+  --wash: #f4f6f8; --desk: #e8ecef; --sheet: #fff; --red: #c4231a; --red-wash: #fdf0ee; --blue: #1f4fa3; --grey: #5b656e;
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace; }
+* { box-sizing: border-box; }
+html, body { margin: 0; background: var(--desk); }
+body { color: var(--ink); font: 15px/1.55 var(--sans); -webkit-text-size-adjust: 100%; }
+main { position: relative; max-width: 62rem; margin: clamp(0px, 2.4vw, 24px) auto; padding: clamp(24px, 4.2vw, 46px);
+  overflow-wrap: anywhere; background: var(--sheet); box-shadow: 0 1px 2px #12161a1f, 0 16px 38px -16px #12161a59; }
+main::before { content: ""; position: absolute; inset: 9px; border: 1.5px solid var(--ink); pointer-events: none; }
+h1, h2, h3, p, pre, figure, blockquote, dl, dd { margin: 0; }
+h1 { font: 800 clamp(1.75rem, 4.4vw, 2.6rem)/1.04 var(--sans); letter-spacing: -.04em; }
+h2 { font: 800 1.1875rem/1.2 var(--sans); letter-spacing: -.02em; }
+h3 { font: 700 .9375rem/1.3 var(--sans); }
+p + p { margin-top: .55rem; }
+a { color: var(--blue); text-underline-offset: .18em; }
+a:focus-visible, summary:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; }
+.report-mode { display: flex; align-items: center; gap: 8px; margin-bottom: 14px; color: var(--ink-3); font-size: .8125rem; font-weight: 650; }
+.brand { width: 18px; height: 18px; flex: none; fill: none; stroke: currentColor; stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
+.report-review { max-width: 62ch; margin-top: 10px; color: var(--ink-2); }
+.title-block { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); margin-top: 22px;
+  border-top: 1px solid var(--ink); border-left: 1px solid var(--ink); }
+.title-block > div { min-width: 0; padding: 8px 11px 10px; border-right: 1px solid var(--ink); border-bottom: 1px solid var(--ink); }
+.title-block dt { color: var(--ink-3); font-size: .75rem; line-height: 1.3; }
+.title-block dd { margin-top: 3px; font: 650 .875rem/1.3 var(--mono); font-variant-numeric: tabular-nums; }
+.title-block .note { display: block; margin-top: 3px; color: var(--ink-3); font: 400 .6875rem/1.35 var(--sans); }
+.notice { margin-top: 22px; padding: 10px 14px; border: 1px dashed var(--ink-3); background: var(--wash); }
+.sheet-section { margin-top: 32px; }
+.sheet-section > h2 { padding-bottom: 7px; margin-bottom: 14px; border-bottom: 1px solid var(--ink); }
+.section-note { max-width: 68ch; margin: -4px 0 14px; color: var(--ink-3); font-size: .875rem; }
+.shape { display: inline-block; width: 1.05em; height: 1.05em; flex: none; vertical-align: -.17em; }
+.s-supported { fill: var(--ink); }
+.s-changed { fill: var(--red); }
+.s-unverifiable { fill: var(--grey); }
+.shape text { fill: #fff; font-family: var(--mono); font-weight: 700; }
+.verdict-counts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); padding: 0; margin: 0 0 20px;
+  list-style: none; border: 1px solid var(--ink); }
+.verdict-counts li { display: grid; grid-template-columns: auto 1fr; align-items: center; column-gap: 12px;
+  padding: 12px 14px; color: var(--ink-2); font-size: .875rem; line-height: 1.25; }
+.verdict-counts li + li { border-left: 1px solid var(--ink); }
+.verdict-counts .shape { grid-row: span 2; width: 28px; height: 28px; }
+.verdict-counts strong { color: var(--ink); font: 800 1.75rem/1 var(--sans); font-variant-numeric: tabular-nums; }
+table { border-collapse: collapse; width: 100%; }
+caption { padding: 0 0 8px; color: var(--ink-3); font-size: .8125rem; text-align: left; }
+td, th { padding: 9px 10px; text-align: left; vertical-align: top; }
+th { border-bottom: 1px solid var(--ink); color: var(--ink-3); font-size: .75rem; font-weight: 650; }
+td { border-bottom: 1px solid var(--hair); font-size: .875rem; }
+.claims-overview td:first-child { font: 700 .8125rem/1.6 var(--mono); }
+.claims-overview td:nth-child(4) { font-weight: 650; }
+.claims-overview td:nth-child(4) .shape { margin-right: 7px; }
+.claims-overview td:last-child { position: relative; padding-bottom: 19px; font: 700 .875rem/1.5 var(--mono); font-variant-numeric: tabular-nums; }
+.claims-overview td:last-child::after { content: ""; position: absolute; left: 10px; bottom: 9px; width: 72px; height: 3px;
+  background: linear-gradient(var(--ink), var(--ink)) 0 0 / calc((365 - var(--age, 365)) / 365 * 100%) 100% no-repeat, var(--faint); }
+.answer-markup { padding: 16px 20px; border: 1px solid var(--ink); font-size: 1rem; line-height: 2.1; white-space: pre-wrap; }
+mark { color: inherit; background: none; }
+.u-changed { background: var(--red-wash); text-decoration: underline wavy var(--red) 1.5px; text-underline-offset: 5px; text-decoration-skip-ink: none; }
+.u-unverifiable { text-decoration: underline dotted var(--grey) 2px; text-underline-offset: 5px; }
+.u-supported { text-decoration: underline solid var(--ink) 1px; text-underline-offset: 5px; }
+.callout { display: inline-block; width: 26px; height: 26px; margin: 0 3px; vertical-align: middle; }
+.callout .shape { display: block; width: 100%; height: 100%; }
+.claim-card { position: relative; margin-top: 28px; padding: clamp(18px, 3vw, 26px); scroll-margin-top: 16px;
+  border: 1px solid var(--ink); background: var(--sheet); }
+.claim-card[data-verdict="UNVERIFIABLE"] { border-style: dashed; border-color: var(--ink-2); }
+.claim-card:target { box-shadow: 0 0 0 3px var(--sheet), 0 0 0 5px var(--blue); }
+.claim-card[data-verdict="POTENTIALLY_CHANGED"] { --r: 10px; --w: 2.2px; padding: calc(var(--r) + 20px); border: 0; }
+.claim-card[data-verdict="POTENTIALLY_CHANGED"]::before { content: ""; position: absolute; inset: 0; pointer-events: none;
+  background-image:
+    radial-gradient(ellipse 50% 100% at 50% 100%, transparent calc(100% - var(--w) - .5px), var(--red) calc(100% - var(--w)), var(--red) calc(100% - .5px), transparent 100%),
+    radial-gradient(ellipse 50% 100% at 50% 0, transparent calc(100% - var(--w) - .5px), var(--red) calc(100% - var(--w)), var(--red) calc(100% - .5px), transparent 100%),
+    radial-gradient(ellipse 100% 50% at 100% 50%, transparent calc(100% - var(--w) - .5px), var(--red) calc(100% - var(--w)), var(--red) calc(100% - .5px), transparent 100%),
+    radial-gradient(ellipse 100% 50% at 0 50%, transparent calc(100% - var(--w) - .5px), var(--red) calc(100% - var(--w)), var(--red) calc(100% - .5px), transparent 100%);
+  background-size: calc(var(--r) * 2) var(--r), calc(var(--r) * 2) var(--r), var(--r) calc(var(--r) * 2), var(--r) calc(var(--r) * 2);
+  background-position: 0 0, 0 100%, 0 0, 100% 0;
+  background-repeat: round no-repeat, round no-repeat, no-repeat round, no-repeat round; }
+@keyframes cloud-in { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
+@media (prefers-reduced-motion: no-preference) {
+  .claim-card[data-verdict="POTENTIALLY_CHANGED"]:target::before { animation: cloud-in 800ms cubic-bezier(.2, .7, .2, 1) both; }
+}
+.claims > .claim-card:first-of-type { margin-top: 0; }
+.claim-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; }
+.claim-head h2 { display: flex; align-items: center; gap: 10px; font-size: 1.25rem; }
+.claim-head h2 .shape { width: 26px; height: 26px; }
+.score { flex: none; font-family: var(--mono); line-height: 1; text-align: right; }
+.score strong { font-size: 2rem; font-weight: 800; letter-spacing: -.04em; font-variant-numeric: tabular-nums; }
+.score span { color: var(--ink-3); font-size: .875rem; }
+.score small { display: block; margin-top: 5px; color: var(--ink-3); font: 400 .75rem/1.2 var(--sans); }
+.claim-comparison { margin-top: 18px; }
+.claim-comparison h3 { margin-bottom: 8px; }
+.comparison-columns { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border: 1px solid var(--ink); }
+.comparison-columns > div { min-width: 0; padding-bottom: 12px; }
+.comparison-columns > div + div { border-left: 1px solid var(--ink); }
+.comparison-columns strong { display: block; margin-bottom: 10px; padding: 7px 12px; border-bottom: 1px solid var(--ink);
+  background: var(--wash); font-size: .75rem; line-height: 1.3; }
+.comparison-columns p { padding: 0 12px; white-space: pre-wrap; }
+[data-verdict="POTENTIALLY_CHANGED"] .comparison-columns > div + div { background: var(--red-wash); }
+.verdict-reason { margin-top: 10px; color: var(--ink-2); }
+.claim-metadata { max-width: 72ch; margin-top: 16px; color: var(--ink-2); font-size: .875rem; }
+.ruler { margin-top: 14px; }
+.ruler-cap { display: block; margin-bottom: 26px; color: var(--ink-3); font-size: .75rem; line-height: 1.3; }
+.ruler-track { position: relative; height: 18px; border-bottom: 1px solid var(--ink); }
+.ruler-dim { position: absolute; right: 0; bottom: 0; width: min(100%, calc(var(--age, 365) / 365 * 100%)); min-width: 3px; height: 18px;
+  border-inline: 1px solid var(--ink); background: linear-gradient(var(--ink), var(--ink)) 0 50% / 100% 1px no-repeat; }
+.ruler-dim::before, .ruler-dim::after { content: ""; position: absolute; top: 50%; width: 7px; height: 7px; margin-top: -3.5px; background: var(--ink); }
+.ruler-dim::before { left: 0; clip-path: polygon(0 50%, 100% 0, 100% 100%); }
+.ruler-dim::after { right: 0; clip-path: polygon(100% 50%, 0 0, 0 100%); }
+.ruler-dim b { position: absolute; right: 0; bottom: calc(100% + 4px); color: var(--ink); font: 700 .75rem/1 var(--mono); white-space: nowrap; }
+.ruler[data-scored="false"] .ruler-dim { width: 100%; border-color: var(--ink-3);
+  background: repeating-linear-gradient(to right, var(--ink-3) 0 6px, transparent 6px 11px) 0 50% / 100% 1px no-repeat; }
+.ruler[data-scored="false"] .ruler-dim::before, .ruler[data-scored="false"] .ruler-dim::after { display: none; }
+.ruler-ticks { position: relative; height: 24px; color: var(--ink-3); font: .6875rem/1 var(--mono); }
+.ruler-ticks i { position: absolute; top: 0; padding-top: 9px; font-style: normal; white-space: nowrap; transform: translateX(-50%); }
+.ruler-ticks i::before { content: ""; position: absolute; top: 0; left: 50%; width: 1px; height: 6px; background: var(--ink); }
+.ruler-ticks .k0 { transform: none; }
+.ruler-ticks .k0::before { left: 0; }
+.ruler-ticks .k4 { transform: translateX(-100%); }
+.ruler-ticks .k4::before { left: auto; right: 0; }
+.claim-evidence { margin-top: 20px; }
+.claim-evidence h3 { margin-bottom: 8px; }
+.evidence-comparison { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 14px; }
+.evidence-comparison h4 { margin: 0; font-size: .875rem; color: var(--ink-2); }
+figure { margin-top: 10px; border: 1px solid var(--ink); background: var(--wash); }
+blockquote { padding: 12px 14px; font-size: .9375rem; line-height: 1.6; white-space: pre-wrap; }
+figcaption { padding: 9px 14px 10px; border-top: 1px solid var(--ink); background: var(--sheet); color: var(--ink-3); font-size: .8125rem; }
+figcaption a { font-weight: 650; }
+figcaption p { margin-top: 3px; }
+details { margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--hair); }
+summary { display: flex; align-items: center; gap: 8px; width: fit-content; list-style: none; cursor: pointer;
+  color: var(--blue); font-size: .875rem; font-weight: 650; }
+summary::-webkit-details-marker { display: none; }
+summary::before { content: ""; width: 6px; height: 6px; border: solid currentColor; border-width: 0 1.5px 1.5px 0; transform: rotate(-45deg); }
+details[open] > summary::before { transform: rotate(45deg); }
+details > :not(summary) { margin-top: 8px; }
+pre { padding: 10px 12px; border: 1px solid var(--hair); background: var(--wash); white-space: pre-wrap; font: .8125rem/1.5 var(--mono); }
+ul { padding-inline-start: 1.25rem; margin: 8px 0 0; }
+.notes { padding: 0; margin: 0; list-style: none; counter-reset: note; }
+.notes li { position: relative; padding: 9px 0 9px 36px; border-bottom: 1px solid var(--hair); color: var(--ink-2); font-size: .875rem; counter-increment: note; }
+.notes li::before { content: counter(note); position: absolute; left: 0; top: 9px; display: grid; place-items: center; width: 22px; height: 22px;
+  border: 1px solid var(--ink); border-radius: 50%; color: var(--ink); font: 700 .6875rem/1 var(--mono); }
+@media (max-width: 720px) {
+  .title-block { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .verdict-counts { grid-template-columns: 1fr; }
+  .verdict-counts li + li { border-top: 1px solid var(--ink); border-left: 0; }
+  .comparison-columns, .evidence-comparison { grid-template-columns: 1fr; }
+  .comparison-columns > div + div { border-top: 1px solid var(--ink); border-left: 0; }
+}
+@media (max-width: 540px) {
+  main { margin: 0; padding: 24px 16px 30px; box-shadow: none; }
+  main::before { inset: 6px; }
+  .claim-card { margin-top: 22px; }
+  .claim-card[data-verdict="POTENTIALLY_CHANGED"] { --r: 8px; padding: calc(var(--r) + 12px); }
+  .answer-markup { padding: 12px 12px; }
+  .claims-overview, .claims-overview caption, .claims-overview tbody { display: block; }
+  .claims-overview thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+  .claims-overview tbody tr { display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: 10px;
+    padding: 9px 11px; margin-top: 8px; border: 1px solid var(--ink); }
+  .claims-overview td { padding: 2px 0; border: 0; }
+  .claims-overview td:nth-child(2) { grid-column: 1 / -1; }
+  .claims-overview td:nth-child(3) { color: var(--ink-3); }
+  .claims-overview td:nth-child(4) { justify-self: end; }
+  .claims-overview td:last-child { grid-column: 2; grid-row: 1; padding-bottom: 14px; color: var(--ink-3); font-size: .8125rem; }
+  .claims-overview td:last-child::before { content: "Freshness "; }
+  .claims-overview td:last-child::after { right: 0; left: auto; bottom: 2px; }
+}
+@media print {
+  html, body { background: #fff; }
+  main { margin: 0; box-shadow: none; }
+}
+</style></head><body><main><header class="report-header"><span class="report-mode"><svg class="brand" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 3 21.5 20h-19Z"/><path d="m8.8 15.4 2.4 2.2 4-4.4"/></svg>StaleCheck</span><h1>Claim freshness report</h1><p class="report-review">Verdicts and proposed edits require human review. Freshness measures the recency of quoted evidence.</p><dl class="title-block"><div><dt>Verification date</dt><dd><time>2026-11-11</time></dd></div><div><dt>Answer date</dt><dd>unknown</dd></div><div><dt>Gateway</dt><dd>Bifrost</dd></div><div><dt>Search</dt><dd>Tavily</dd></div><div><dt>Review</dt><dd>Human review required</dd></div><div><dt>Model calls</dt><dd>3</dd></div><div><dt>Search calls</dt><dd>2</dd></div><div><dt>Tokens</dt><dd>16763<span class="note">complete · provider-reported, not an invoice</span></dd></div><div><dt>Search credits</dt><dd>2<span class="note">complete · provider-reported, not an invoice</span></dd></div><div><dt>Schema</dt><dd>4.0</dd></div></dl></header><section class="sheet-section"><h2>At a glance</h2><ul class="verdict-counts"><li><svg class="shape s-supported" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10.5"/></svg><strong>1</strong>Model-supported</li><li><svg class="shape s-changed" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 2 23 21.5H1Z"/></svg><strong>0</strong>Potentially changed</li><li><svg class="shape s-unverifiable" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 1 23 12 12 23 1 12Z"/></svg><strong>1</strong>Unverifiable</li></ul><table class="claims-overview" role="table"><caption>Selected claims and freshness scores out of 100</caption><thead role="rowgroup"><tr role="row"><th scope="col">Claim</th><th scope="col">Excerpt</th><th scope="col">Category</th><th scope="col">Verdict</th><th scope="col">Freshness</th></tr></thead><tbody role="rowgroup"><tr role="row" data-verdict="UNVERIFIABLE" style="--age:260"><td role="cell"><a href="#claim-1">claim-1</a></td><td role="cell">GitHub Free includes 3,000 GitHub Actions minutes per month for private repositories.</td><td role="cell">pricing</td><td role="cell"><svg class="shape s-unverifiable" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 1 23 12 12 23 1 12Z"/></svg>Unverifiable</td><td role="cell">29</td></tr><tr role="row" data-verdict="MODEL_SUPPORTED" style="--age:183"><td role="cell"><a href="#claim-2">claim-2</a></td><td role="cell">GitHub Pro includes 3,000 GitHub Actions minutes per month for private repositories.</td><td role="cell">pricing</td><td role="cell"><svg class="shape s-supported" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10.5"/></svg>Model-supported</td><td role="cell">50</td></tr></tbody></table></section><section class="sheet-section"><h2>Marked-up answer</h2><p class="section-note">Each selected claim is marked where it appears in the answer: wavy red underline for potentially changed, dotted for unverifiable, solid for model-supported. A numbered mark follows each claim; select it to jump to the claim.</p><div class="answer-markup"><mark class="u-unverifiable">GitHub Free includes 3,000 GitHub Actions minutes per month for private repositories.</mark><a class="callout" href="#claim-1" aria-label="claim-1: Unverifiable"><svg class="shape s-unverifiable" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 1 23 12 12 23 1 12Z"/><text x="12" y="16.2" text-anchor="middle" font-size="11">1</text></svg></a> <mark class="u-supported">GitHub Pro includes 3,000 GitHub Actions minutes per month for private repositories.</mark><a class="callout" href="#claim-2" aria-label="claim-2: Model-supported"><svg class="shape s-supported" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10.5"/><text x="12" y="16.2" text-anchor="middle" font-size="11">2</text></svg></a></div></section><section class="sheet-section claims"><h2>Claims in detail</h2><article class="claim-card" id="claim-1" data-verdict="UNVERIFIABLE"><header class="claim-head"><h2><svg class="shape s-unverifiable" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 1 23 12 12 23 1 12Z"/></svg>claim-1 · Unverifiable</h2><div class="score" aria-hidden="true"><strong>29</strong><span>/100</span><small>recent</small></div></header><p class="verdict-reason">The model labelled some retained quotes as supporting the claim and others as contradicting it.</p><div class="claim-comparison"><h3>Original excerpt and proposed edit</h3><div class="comparison-columns"><div><strong>Original</strong><p>GitHub Free includes 3,000 GitHub Actions minutes per month for private repositories.</p></div><div><strong>Model-generated proposal · Requires review</strong><p>No supported proposal retained</p></div></div></div><p class="claim-metadata">Category (model-labelled): pricing. Freshness of the quoted evidence: recent (score 29/100, newest quoted source 2026-02-24, 260 day(s) before the assessment date).</p><div class="ruler" data-scored="true" style="--age:260" aria-hidden="true"><span class="ruler-cap">Age of the newest quoted source, in days before the verification date</span><div class="ruler-track"><div class="ruler-dim"><b>260 d</b></div></div><div class="ruler-ticks"><i class="k0" style="left:0.00%">365 d</i><i class="k1" style="left:26.03%">270</i><i class="k2" style="left:50.68%">180</i><i class="k3" style="left:75.34%">90</i><i class="k4" style="left:100.00%">0 d</i></div></div><div class="claim-evidence"><h3>Verbatim source quotations</h3><div class="evidence-comparison"><div><h4>Labelled as supporting</h4><figure><blockquote>GitHub Team includes:
+
+ GitHub Support via email
+ 3,000 GitHub Actions minutes per month</blockquote><figcaption><a href="https://docs.github.com/en/enterprise-server@3.20/get-started/learning-about-github/githubs-plans" target="_blank" rel="noopener noreferrer">GitHub&#x27;s plans - GitHub Enterprise Server 3.20 Docs</a><p>Model-labelled relation: supports. Retrieved: 2026-11-11T10:41:26.129605+00:00. Estimated publication/update: 2026-02-24T00:00:00+00:00. Effective dates: unknown.</p></figcaption></figure></div><div><h4>Labelled as contradicting</h4><figure><blockquote>GitHub Free, which includes private repositories with unlimited collaborators, 2,000 Actions minutes for private repositories</blockquote><figcaption><a href="https://docs.github.com/en/get-started/learning-about-github/faq-about-changes-to-githubs-plans" target="_blank" rel="noopener noreferrer">FAQ about changes to GitHub&#x27;s plans - GitHub Docs</a><p>Model-labelled relation: contradicts. Retrieved: 2026-11-11T10:41:26.129605+00:00. Estimated publication/update: 2020-04-14T00:00:00+00:00. Effective dates: unknown.</p></figcaption></figure><figure><blockquote>2,000 GitHub Actions minutes per month</blockquote><figcaption><a href="https://docs.github.com/en/enterprise-server@3.20/get-started/learning-about-github/githubs-plans" target="_blank" rel="noopener noreferrer">GitHub&#x27;s plans - GitHub Enterprise Server 3.20 Docs</a><p>Model-labelled relation: contradicts. Retrieved: 2026-11-11T10:41:26.129605+00:00. Estimated publication/update: 2026-02-24T00:00:00+00:00. Effective dates: unknown.</p></figcaption></figure></div></div></div><details><summary>All retrieved sources</summary><p>Retrieved sources are not evidence unless quoted above.</p><ul><li><a href="https://docs.github.com/en/get-started/learning-about-github/faq-about-changes-to-githubs-plans" target="_blank" rel="noopener noreferrer">FAQ about changes to GitHub&#x27;s plans - GitHub Docs</a>. Estimated publication/update: 2020-04-14T00:00:00+00:00.</li><li><a href="https://docs.github.com/en/enterprise-server@3.20/get-started/learning-about-github/githubs-plans" target="_blank" rel="noopener noreferrer">GitHub&#x27;s plans - GitHub Enterprise Server 3.20 Docs</a>. Estimated publication/update: 2026-02-24T00:00:00+00:00.</li><li><a href="https://docs.github.com/get-started/learning-about-github/githubs-products" target="_blank" rel="noopener noreferrer">GitHub&#x27;s plans - GitHub Docs</a>. Estimated publication/update: 2020-07-01T00:00:00+00:00.</li></ul></details><details><summary>Model-generated reasoning</summary><p>Sources say GitHub Free for organizations includes 2,000 Actions minutes per month for private repositories; 3,000 minutes is the GitHub Team allowance. A newer page lists $12 USD of included compute usage for Free.</p><p>The 3,000-minute figure belongs to GitHub Team. GitHub Free is documented at 2,000 minutes per month, and the newest page switched to a dollar-based included compute amount.</p></details><details><summary>Claim audit details</summary><p>CONFLICTING_EVIDENCE. Answer span [0, 85).</p><p>Query: GitHub Free plan included GitHub Actions minutes per month private repositories. Time sensitivity (model-generated): high · GitHub Free&#x27;s Actions minutes quota is commonly 2,000/month; plan allowances and pricing change over time.</p><h3>Uncalibrated evidence-strength components</h3><pre>{
+  &quot;heuristic_score&quot;: 3,
+  &quot;maximum&quot;: 3,
+  &quot;calibrated&quot;: false,
+  &quot;components&quot;: {
+    &quot;verbatim_quote&quot;: true,
+    &quot;preferred_domain_match&quot;: true,
+    &quot;distinct_urls&quot;: 2,
+    &quot;dated_urls&quot;: 2,
+    &quot;future_date_present&quot;: false
+  }
+}
+</pre></details></article><article class="claim-card" id="claim-2" data-verdict="MODEL_SUPPORTED"><header class="claim-head"><h2><svg class="shape s-supported" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10.5"/></svg>claim-2 · Model-supported</h2><div class="score" aria-hidden="true"><strong>50</strong><span>/100</span><small>recent</small></div></header><p class="verdict-reason">The model found support in a retained quote that includes the figures in the claim.</p><div class="claim-comparison"><h3>Original excerpt and proposed edit</h3><div class="comparison-columns"><div><strong>Original</strong><p>GitHub Pro includes 3,000 GitHub Actions minutes per month for private repositories.</p></div><div><strong>Model-generated proposal · Requires review</strong><p>No supported proposal retained</p></div></div></div><p class="claim-metadata">Category (model-labelled): pricing. Freshness of the quoted evidence: recent (score 50/100, newest quoted source 2026-05-12, 183 day(s) before the assessment date).</p><div class="ruler" data-scored="true" style="--age:183" aria-hidden="true"><span class="ruler-cap">Age of the newest quoted source, in days before the verification date</span><div class="ruler-track"><div class="ruler-dim"><b>183 d</b></div></div><div class="ruler-ticks"><i class="k0" style="left:0.00%">365 d</i><i class="k1" style="left:26.03%">270</i><i class="k2" style="left:50.68%">180</i><i class="k3" style="left:75.34%">90</i><i class="k4" style="left:100.00%">0 d</i></div></div><div class="claim-evidence"><h3>Verbatim source quotations</h3><figure><blockquote>| Minutes (per month) | 2,000 | 3,000 | 2,000 | 3,000 | 50,000 |</blockquote><figcaption><a href="https://docs.github.com/en/billing/reference/product-usage-included" target="_blank" rel="noopener noreferrer">Product usage included with each plan - GitHub Docs</a><p>Model-labelled relation: supports. Retrieved: 2026-11-11T10:41:36.488534+00:00. Estimated publication/update: unknown. Effective dates: unknown.</p></figcaption></figure><figure><blockquote>3,000 GitHub Actions minutes per month</blockquote><figcaption><a href="https://docs.github.com/en/enterprise-server@3.21/get-started/learning-about-github/githubs-plans" target="_blank" rel="noopener noreferrer">GitHub&#x27;s plans - GitHub Enterprise Server 3.21 Docs</a><p>Model-labelled relation: supports. Retrieved: 2026-11-11T10:41:36.488534+00:00. Estimated publication/update: 2026-05-12T00:00:00+00:00. Effective dates: unknown.</p></figcaption></figure><figure><blockquote>For private repositories, each GitHub account receives a quota of free minutes and storage for use with GitHub-hosted runners, depending on the account&#x27;s plan.</blockquote><figcaption><a href="https://docs.github.com/en/enterprise-server@3.21/get-started/learning-about-github/githubs-plans" target="_blank" rel="noopener noreferrer">GitHub&#x27;s plans - GitHub Enterprise Server 3.21 Docs</a><p>Model-labelled relation: supports. Retrieved: 2026-11-11T10:41:36.488534+00:00. Estimated publication/update: 2026-05-12T00:00:00+00:00. Effective dates: unknown.</p></figcaption></figure></div><details><summary>All retrieved sources</summary><p>Retrieved sources are not evidence unless quoted above.</p><ul><li><a href="https://docs.github.com/en/enterprise-server@3.21/get-started/learning-about-github/githubs-plans" target="_blank" rel="noopener noreferrer">GitHub&#x27;s plans - GitHub Enterprise Server 3.21 Docs</a>. Estimated publication/update: 2026-05-12T00:00:00+00:00.</li><li><a href="https://docs.github.com/en/billing/reference/product-usage-included" target="_blank" rel="noopener noreferrer">Product usage included with each plan - GitHub Docs</a>. Estimated publication/update: unknown.</li><li><a href="https://docs.github.com/en/get-started/learning-about-github/faq-about-changes-to-githubs-plans" target="_blank" rel="noopener noreferrer">FAQ about changes to GitHub&#x27;s plans - GitHub Docs</a>. Estimated publication/update: 2020-04-14T00:00:00+00:00.</li></ul></details><details><summary>Model-generated reasoning</summary><p>The billing reference table lists GitHub Pro with 3,000 Actions minutes per month. The plans page lists 3,000 minutes per month under GitHub Pro features and says the quota applies to private repositories.</p><p>The billing reference table shows 3,000 minutes per month for GitHub Pro, and the plans page agrees. The quota applies to private repositories.</p></details><details><summary>Claim audit details</summary><p>MODEL_SUPPORT_WITH_VERBATIM_QUOTE. Answer span [86, 170).</p><p>Query: GitHub Pro plan included GitHub Actions minutes per month private repositories. Time sensitivity (model-generated): high · GitHub Pro&#x27;s allowance is commonly 3,000 minutes, but GitHub has changed plan quotas and Actions pricing.</p><h3>Uncalibrated evidence-strength components</h3><pre>{
+  &quot;heuristic_score&quot;: 3,
+  &quot;maximum&quot;: 3,
+  &quot;calibrated&quot;: false,
+  &quot;components&quot;: {
+    &quot;verbatim_quote&quot;: true,
+    &quot;preferred_domain_match&quot;: true,
+    &quot;distinct_urls&quot;: 2,
+    &quot;dated_urls&quot;: 1,
+    &quot;future_date_present&quot;: false
+  }
+}
+</pre></details></article></section><section class="sheet-section"><h2>Full original answer</h2><details><summary>View answer text</summary><pre>GitHub Free includes 3,000 GitHub Actions minutes per month for private repositories. GitHub Pro includes 3,000 GitHub Actions minutes per month for private repositories.</pre></details></section><section class="sheet-section"><h2>Run details</h2><p>Stop reason: none.</p><details><summary>Exact research approval</summary><pre>{
+  &quot;queries&quot;: [
+    &quot;GitHub Free plan included GitHub Actions minutes per month private repositories&quot;,
+    &quot;GitHub Pro plan included GitHub Actions minutes per month private repositories&quot;
+  ],
+  &quot;primary_domains&quot;: [
+    &quot;docs.github.com&quot;
+  ],
+  &quot;sha256&quot;: &quot;eefe5c3fd7d86c6a53532e71b075597c77951979b63e4ae497ed0ea0fff7447e&quot;,
+  &quot;approved&quot;: true
+}
+</pre></details><details><summary>Rejected or unselected proposals</summary><pre>[]
+</pre></details><details><summary>Usage and completeness</summary><pre>{
+  &quot;attempts&quot;: 5,
+  &quot;provenance&quot;: {
+    &quot;gateway&quot;: &quot;bifrost&quot;,
+    &quot;search&quot;: &quot;tavily&quot;
+  },
+  &quot;gateway_calls&quot;: 3,
+  &quot;tokens&quot;: {
+    &quot;known_subtotal&quot;: {
+      &quot;prompt_tokens&quot;: 15720,
+      &quot;completion_tokens&quot;: 1043,
+      &quot;total_tokens&quot;: 16763
+    },
+    &quot;complete&quot;: true,
+    &quot;scope&quot;: &quot;provider_reported_not_invoice&quot;
+  },
+  &quot;search_calls&quot;: 2,
+  &quot;credits&quot;: {
+    &quot;known_subtotal&quot;: {
+      &quot;credits&quot;: 2
+    },
+    &quot;complete&quot;: true,
+    &quot;scope&quot;: &quot;provider_reported_not_invoice&quot;
+  },
+  &quot;routing&quot;: {
+    &quot;observed_fallbacks&quot;: 0,
+    &quot;unknown_calls&quot;: 0
+  }
+}
+</pre></details></section><section class="sheet-section"><h2>Limitations</h2><ol class="notes"><li>All relations, observations, rationales and proposed edits are model-generated, not independently verified semantic entailment.</li><li>Verbatim quotation is checked against retained excerpts only. Domain preference does not authenticate a primary source; distinct URLs do not prove independence.</li><li>Current-source disagreement does not establish that an answer was once correct. Temporal change is not established by this pipeline.</li><li>Publication/update dates are provider estimates, not effective dates. Retrieval time and recent publication do not establish factual currency.</li><li>Evidence strength and freshness are uncalibrated metadata heuristics, not probabilities of correctness or currency: freshness only reflects how recent the newest quoted source is. Proposed edits are never automatically applied.</li><li>The journey deadline is cooperative. Socket timeouts do not impose a hard bound on DNS, response headers or a detached response socket.</li><li>Usage is a known subtotal plus completeness, not a monetary spending guarantee. Unknown routing means fallback behavior is unknown.</li><li>Unsigned transcripts and approval records establish internal consistency, not authenticated execution, consent, source truth or live provider compatibility.</li></ol></section></main></body></html>

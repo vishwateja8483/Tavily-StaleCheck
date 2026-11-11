@@ -1,0 +1,146 @@
+{
+  "assessment": "completed",
+  "artifact_verification": {
+    "valid": true,
+    "project_id": "stalecheck",
+    "run_id": "fd-1bbfc585f39740058bdfa7838d587002",
+    "status": "completed",
+    "artifacts": 5,
+    "assurance": "Internal consistency only; unsigned hashes cannot authenticate sources or establish truth."
+  },
+  "approval": {
+    "queries": [
+      "actions/upload-artifact v3 deprecation retired GitHub.com support status",
+      "GitHub Actions artifact v3 retirement date January 30 2025 upload-artifact download-artifact"
+    ],
+    "primary_domains": [
+      "github.blog"
+    ],
+    "sha256": "d734459b6883b74b30e210108e58bff9acbc8d6f9714c3f3468090b1e350df1b",
+    "approved": true
+  },
+  "verdicts": {
+    "MODEL_SUPPORTED": 1,
+    "POTENTIALLY_CHANGED": 1,
+    "UNVERIFIABLE": 0
+  },
+  "usage": {
+    "attempts": 5,
+    "provenance": {
+      "gateway": "bifrost",
+      "search": "tavily"
+    },
+    "gateway_calls": 3,
+    "tokens": {
+      "known_subtotal": {
+        "prompt_tokens": 15745,
+        "completion_tokens": 889,
+        "total_tokens": 16634
+      },
+      "complete": true,
+      "scope": "provider_reported_not_invoice"
+    },
+    "search_calls": 2,
+    "credits": {
+      "known_subtotal": {
+        "credits": 2
+      },
+      "complete": true,
+      "scope": "provider_reported_not_invoice"
+    },
+    "routing": {
+      "observed_fallbacks": 0,
+      "unknown_calls": 0
+    }
+  },
+  "attempts": [
+    {
+      "service": "gateway",
+      "status": "ok",
+      "usage": {
+        "prompt_tokens": 4190,
+        "completion_tokens": 242,
+        "total_tokens": 4432
+      },
+      "routing": {
+        "provider": "copilot-cli",
+        "model": "claude-sonnet-5.5",
+        "is_fallback": false
+      }
+    },
+    {
+      "service": "search",
+      "status": "ok",
+      "usage": {
+        "credits": 1
+      },
+      "routing": null
+    },
+    {
+      "service": "gateway",
+      "status": "ok",
+      "usage": {
+        "prompt_tokens": 5897,
+        "completion_tokens": 355,
+        "total_tokens": 6252
+      },
+      "routing": {
+        "provider": "copilot-cli",
+        "model": "claude-sonnet-5.5",
+        "is_fallback": false
+      }
+    },
+    {
+      "service": "search",
+      "status": "ok",
+      "usage": {
+        "credits": 1
+      },
+      "routing": null
+    },
+    {
+      "service": "gateway",
+      "status": "ok",
+      "usage": {
+        "prompt_tokens": 5658,
+        "completion_tokens": 292,
+        "total_tokens": 5950
+      },
+      "routing": {
+        "provider": "copilot-cli",
+        "model": "claude-sonnet-5.5",
+        "is_fallback": false
+      }
+    }
+  ],
+  "claims": [
+    {
+      "text": "GitHub.com still supports actions/upload-artifact v3.",
+      "verdict": "POTENTIALLY_CHANGED",
+      "reason_code": "MODEL_CONTRADICTION_WITH_VERBATIM_QUOTE",
+      "freshness": {
+        "state": "dated",
+        "newest_source_date": "2025-01-15",
+        "age_days": 665,
+        "score": 0,
+        "maximum": 100,
+        "calibrated": false
+      },
+      "retained_quotes": 2
+    },
+    {
+      "text": "GitHub.com retired v3 of the artifact actions on January 30, 2025.",
+      "verdict": "MODEL_SUPPORTED",
+      "reason_code": "MODEL_SUPPORT_WITH_VERBATIM_QUOTE",
+      "freshness": {
+        "state": "dated",
+        "newest_source_date": "2024-11-05",
+        "age_days": 736,
+        "score": 0,
+        "maximum": 100,
+        "calibrated": false
+      },
+      "retained_quotes": 2
+    }
+  ]
+}

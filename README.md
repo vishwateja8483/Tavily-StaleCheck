@@ -14,7 +14,7 @@ In a 27-second Chrome run, GitHub Copilot handled three model calls through Bifr
 |---|---|
 | ![Two queries and python.org awaiting approval](docs/screenshots/python-live-approval.png) | ![Potentially changed and Unverifiable, with per-claim freshness](docs/screenshots/python-live-report.png) |
 
-[Review the live results and verify them offline](docs/LIVE-PROOF.md) · [Pitch deck](docs/pitch/StaleCheck-live-submission.pptx) · [Submission checklist](docs/SUBMISSION.md)
+[Review the live results and verify them offline](docs/LIVE-PROOF.md) · [Pitch deck](docs/pitch/StaleCheck-PS06.pptx) · [Submission checklist](docs/SUBMISSION.md)
 
 [Run the live Copilot demo](docs/COPILOT-BIFROST-SETUP.md) · [Run the credential-free mock demo](docs/HACKATHON-DEMO.md#run-the-browser-demo)
 
@@ -121,7 +121,7 @@ The older `scripts/live-check/` and its result documents are retained as a clear
 
 ## Evidence and limits
 
-**November 11, 2026 live checks.** The [live proof and replay guide](docs/LIVE-PROOF.md) pairs the recorded results with primary-source checks, the exact approval, provider accounting and the original run artifacts.
+**November 11, 2026 live checks.** Eight of ten verdicts aligned with primary sources and two abstained. The cases cover release versions, service allowances, an API retirement and a leadership change. The [live proof and replay guide](docs/LIVE-PROOF.md) includes the original artifacts and provider accounting.
 
 Default commands need no credentials and make no network calls. The live path is covered by mock contract tests and has run end to end on a real stack (`scripts/live-check/run.sh`, 2026-11-02): a real Bifrost 2.4.0 container, a small open-weights model (Qwen2.5-3B-Instruct, 4-bit, served by Ollama on CPU) behind it, and the real Tavily API, once with direct searches and once with the searches relayed by Bifrost. Each journey took about 80 s (four model calls, 6.3 k tokens as reported by Bifrost, three Tavily credits), ended with two claims potentially changed and one unverifiable, and verified offline; the browser app completed the same journey in a real browser in both modes. A 28-check run against a Bifrost container with stand-in upstreams (`scripts/gateway-check/run.sh`: chat, fallback takeover, refusals, the Tavily relay, a virtual-key budget, Relay Logs) and a Tavily smoke test (`scripts/tavily-live-smoke.py`, one credit per query) complement it.
 

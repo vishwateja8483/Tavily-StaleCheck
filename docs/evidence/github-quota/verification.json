@@ -1,0 +1,146 @@
+{
+  "assessment": "completed",
+  "artifact_verification": {
+    "valid": true,
+    "project_id": "stalecheck",
+    "run_id": "fd-1a8adc7d9d0549daad988b5a7755cb6c",
+    "status": "completed",
+    "artifacts": 5,
+    "assurance": "Internal consistency only; unsigned hashes cannot authenticate sources or establish truth."
+  },
+  "approval": {
+    "queries": [
+      "GitHub Free plan included GitHub Actions minutes per month private repositories",
+      "GitHub Pro plan included GitHub Actions minutes per month private repositories"
+    ],
+    "primary_domains": [
+      "docs.github.com"
+    ],
+    "sha256": "eefe5c3fd7d86c6a53532e71b075597c77951979b63e4ae497ed0ea0fff7447e",
+    "approved": true
+  },
+  "verdicts": {
+    "MODEL_SUPPORTED": 1,
+    "POTENTIALLY_CHANGED": 0,
+    "UNVERIFIABLE": 1
+  },
+  "usage": {
+    "attempts": 5,
+    "provenance": {
+      "gateway": "bifrost",
+      "search": "tavily"
+    },
+    "gateway_calls": 3,
+    "tokens": {
+      "known_subtotal": {
+        "prompt_tokens": 15720,
+        "completion_tokens": 1043,
+        "total_tokens": 16763
+      },
+      "complete": true,
+      "scope": "provider_reported_not_invoice"
+    },
+    "search_calls": 2,
+    "credits": {
+      "known_subtotal": {
+        "credits": 2
+      },
+      "complete": true,
+      "scope": "provider_reported_not_invoice"
+    },
+    "routing": {
+      "observed_fallbacks": 0,
+      "unknown_calls": 0
+    }
+  },
+  "attempts": [
+    {
+      "service": "gateway",
+      "status": "ok",
+      "usage": {
+        "prompt_tokens": 4201,
+        "completion_tokens": 278,
+        "total_tokens": 4479
+      },
+      "routing": {
+        "provider": "copilot-cli",
+        "model": "claude-sonnet-5.5",
+        "is_fallback": false
+      }
+    },
+    {
+      "service": "search",
+      "status": "ok",
+      "usage": {
+        "credits": 1
+      },
+      "routing": null
+    },
+    {
+      "service": "gateway",
+      "status": "ok",
+      "usage": {
+        "prompt_tokens": 5888,
+        "completion_tokens": 418,
+        "total_tokens": 6306
+      },
+      "routing": {
+        "provider": "copilot-cli",
+        "model": "claude-sonnet-5.5",
+        "is_fallback": false
+      }
+    },
+    {
+      "service": "search",
+      "status": "ok",
+      "usage": {
+        "credits": 1
+      },
+      "routing": null
+    },
+    {
+      "service": "gateway",
+      "status": "ok",
+      "usage": {
+        "prompt_tokens": 5631,
+        "completion_tokens": 347,
+        "total_tokens": 5978
+      },
+      "routing": {
+        "provider": "copilot-cli",
+        "model": "claude-sonnet-5.5",
+        "is_fallback": false
+      }
+    }
+  ],
+  "claims": [
+    {
+      "text": "GitHub Free includes 3,000 GitHub Actions minutes per month for private repositories.",
+      "verdict": "UNVERIFIABLE",
+      "reason_code": "CONFLICTING_EVIDENCE",
+      "freshness": {
+        "state": "recent",
+        "newest_source_date": "2026-02-24",
+        "age_days": 260,
+        "score": 29,
+        "maximum": 100,
+        "calibrated": false
+      },
+      "retained_quotes": 3
+    },
+    {
+      "text": "GitHub Pro includes 3,000 GitHub Actions minutes per month for private repositories.",
+      "verdict": "MODEL_SUPPORTED",
+      "reason_code": "MODEL_SUPPORT_WITH_VERBATIM_QUOTE",
+      "freshness": {
+        "state": "recent",
+        "newest_source_date": "2026-05-12",
+        "age_days": 183,
+        "score": 50,
+        "maximum": 100,
+        "calibrated": false
+      },
+      "retained_quotes": 3
+    }
+  ]
+}

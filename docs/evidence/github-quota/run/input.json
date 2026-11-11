@@ -1,0 +1,248 @@
+{
+  "schema_version": "4.0",
+  "format": "stale_answer_transcript",
+  "answer_text": "GitHub Free includes 3,000 GitHub Actions minutes per month for private repositories. GitHub Pro includes 3,000 GitHub Actions minutes per month for private repositories.",
+  "answer_date": null,
+  "verification_date": "2026-11-11",
+  "primary_domains": [
+    "docs.github.com"
+  ],
+  "limits": {
+    "max_claims": 2,
+    "max_attempts": 5,
+    "max_seconds": 180
+  },
+  "provenance": {
+    "gateway": "bifrost",
+    "search": "tavily"
+  },
+  "extraction": {
+    "status": "ok",
+    "reply": {
+      "text": "{\"claims\":[{\"quote\":\"GitHub Free includes 3,000 GitHub Actions minutes per month for private repositories.\",\"category\":\"pricing\",\"time_sensitivity\":\"high\",\"reason\":\"GitHub Free's Actions minutes quota is commonly 2,000/month; plan allowances and pricing change over time.\",\"query\":\"GitHub Free plan included GitHub Actions minutes per month private repositories\"},{\"quote\":\"GitHub Pro includes 3,000 GitHub Actions minutes per month for private repositories.\",\"category\":\"pricing\",\"time_sensitivity\":\"high\",\"reason\":\"GitHub Pro's allowance is commonly 3,000 minutes, but GitHub has changed plan quotas and Actions pricing.\",\"query\":\"GitHub Pro plan included GitHub Actions minutes per month private repositories\"}]}",
+      "finish_reason": "stop",
+      "model_requested": "copilot-cli/claude-sonnet-5.5",
+      "fallbacks_requested": [],
+      "usage": {
+        "prompt_tokens": 4201,
+        "completion_tokens": 278,
+        "total_tokens": 4479
+      },
+      "served_by": {
+        "provider": "copilot-cli",
+        "model": "claude-sonnet-5.5",
+        "is_fallback": false
+      },
+      "latency_seconds": 8.115,
+      "request_sha256": "a3120f47328e93e4ed734f5ad43a4b995cd175f334f335c5c2cd26727d337dc4",
+      "response_sha256": "39737589e969376679db40b045040eccfa940512a892e27b0867ca5b51e44864",
+      "messages_sha256": "8fa7fbd9cb17717205c5bfb02817d78b0896ca16a8bde97d9075878b56fa62d7"
+    }
+  },
+  "approval": {
+    "queries": [
+      "GitHub Free plan included GitHub Actions minutes per month private repositories",
+      "GitHub Pro plan included GitHub Actions minutes per month private repositories"
+    ],
+    "primary_domains": [
+      "docs.github.com"
+    ],
+    "sha256": "eefe5c3fd7d86c6a53532e71b075597c77951979b63e4ae497ed0ea0fff7447e",
+    "approved": true
+  },
+  "checks": [
+    {
+      "claim": "claim-1",
+      "search": {
+        "status": "ok",
+        "query": "GitHub Free plan included GitHub Actions minutes per month private repositories",
+        "sources": [
+          {
+            "id": "claim-1-src-1",
+            "url": "https://docs.github.com/en/get-started/learning-about-github/faq-about-changes-to-githubs-plans",
+            "title": "FAQ about changes to GitHub's plans - GitHub Docs",
+            "content": "If your organization account currently uses the GitHub Team for Open Source plan, you’ve been automatically moved to GitHub Free, which includes private repositories with unlimited collaborators, 2,000 Actions minutes for private repositories, and GitHub Community on Discussions. Actions minutes and Packages storage are still free for your public repositories.\n\n## What is GitHub Community on Discussions? [...] Most small teams use fewer than 3,000 Actions minutes/month, but some teams might use more. If your team needs additional minutes for private repositories, you can increase your spending limit for GitHub Actions. Actions minutes and Packages storage are still free for your public repositories. For more information, see Setting up budgets to control spending on metered products.\n\n## How do the seat limit changes affect me? [...] GitHub Team now has a reduced monthly price of $4 per user\n GitHub Team no longer has a required five-seat minimum\n GitHub Team includes 3,000 Actions minutes per month for private repositories",
+            "content_sha256": "b5dfea6a6fb421b1015708604a80b04509d96652a54fac80370865141d4c440c",
+            "retrieved_at": "2026-11-11T10:41:26.129605+00:00",
+            "published_at": "2020-04-14T00:00:00+00:00",
+            "published_at_raw": "Tue, 14 Apr 2020 00:00:00 GMT",
+            "relevance_score": 0.8044059
+          },
+          {
+            "id": "claim-1-src-2",
+            "url": "https://docs.github.com/en/enterprise-server@3.20/get-started/learning-about-github/githubs-plans",
+            "title": "GitHub's plans - GitHub Enterprise Server 3.20 Docs",
+            "content": "With GitHub Free for organizations, you can work with unlimited collaborators on unlimited public repositories with a full feature set, or unlimited private repositories with a limited feature set.\n\nIn addition to the features available with GitHub Free for personal accounts, GitHub Free for organizations includes:\n\n GitHub Community Support\n Team access controls for managing groups\n 2,000 GitHub Actions minutes per month\n\n### GitHub Team [...] ### GitHub Team\n\nIn addition to the features available with GitHub Free for organizations, GitHub Team includes:\n\n GitHub Support via email\n 3,000 GitHub Actions minutes per month\n 2 GB GitHub Packages storage\n The option to purchase GitHub Advanced Security products:\n\n  + GitHub Code Security\n  + GitHub Secret Protection\n\n  For more information, see About GitHub Advanced Security.\n Advanced tools and insights in private repositories: [...] GitHub Support via email\n 3,000 GitHub Actions minutes per month\n 2 GB GitHub Packages storage\n Advanced tools and insights in private repositories:\n  + Required pull request reviewers\n  + Multiple pull request reviewers\n  + Protected branches\n  + Code owners\n  + Auto-linked references\n  + GitHub Pages\n\n    Note",
+            "content_sha256": "07f912cd2862086c1940858233fe3675d39f6b6ba5565bd7a42740a3e89f7c80",
+            "retrieved_at": "2026-11-11T10:41:26.129605+00:00",
+            "published_at": "2026-02-24T00:00:00+00:00",
+            "published_at_raw": "Tue, 24 Feb 2026 00:00:00 GMT",
+            "relevance_score": 0.7725307
+          },
+          {
+            "id": "claim-1-src-3",
+            "url": "https://docs.github.com/get-started/learning-about-github/githubs-products",
+            "title": "GitHub's plans - GitHub Docs",
+            "content": "GitHub Actions usage is free for standard GitHub-hosted runners in public repositories, and for self-hosted runners. See Choosing the runner for a job.\n\nFor private repositories, each GitHub account receives storage and a monthly included compute usage, depending on the account's plan. The cost of eligible runner usage draws from the included compute usage, which is also available for cloud sandbox compute and memory. Additional usage is billed to your account.\n\n### GitHub Enterprise [...] With GitHub Free for organizations, you can work with unlimited collaborators on unlimited public repositories with a full feature set, or unlimited private repositories with a limited feature set.\n\nIn addition to the features available with GitHub Free for personal accounts, GitHub Free for organizations includes:\n\n GitHub Community Support\n Team access controls for managing groups\n $12 USD of included compute usage per month for eligible GitHub Actions and cloud sandbox usage [...] GitHub Support via email\n $18 USD of included compute usage per month for eligible GitHub Actions and cloud sandbox usage\n 2 GB GitHub Packages storage\n 180 GitHub Codespaces core hours per month\n 20 GB GitHub Codespaces storage per month\n Advanced tools and insights in private repositories:\n  + Required pull request reviewers\n  + Multiple pull request reviewers\n  + Protected branches\n  + Code owners\n  + Auto-linked references\n  + GitHub Pages\n\n    Note",
+            "content_sha256": "f3fd8467296ef50141ceb217b07894e1bfe990a04ab0561fa24b5e8ce1a7948f",
+            "retrieved_at": "2026-11-11T10:41:26.129605+00:00",
+            "published_at": "2020-07-01T00:00:00+00:00",
+            "published_at_raw": "Wed, 01 Jul 2020 00:00:00 GMT",
+            "relevance_score": 0.7312505
+          }
+        ],
+        "calls": 1
+      },
+      "assessment": {
+        "status": "ok",
+        "reply": {
+          "text": "{\"verdict\":\"CHANGED\",\"observed\":\"Sources say GitHub Free for organizations includes 2,000 Actions minutes per month for private repositories; 3,000 minutes is the GitHub Team allowance. A newer page lists $12 USD of included compute usage for Free.\",\"evidence\":[{\"source_id\":\"claim-1-src-1\",\"relation\":\"contradicts\",\"quote\":\"GitHub Free, which includes private repositories with unlimited collaborators, 2,000 Actions minutes for private repositories\"},{\"source_id\":\"claim-1-src-2\",\"relation\":\"contradicts\",\"quote\":\"2,000 GitHub Actions minutes per month\"},{\"source_id\":\"claim-1-src-2\",\"relation\":\"supports\",\"quote\":\"GitHub Team includes:\\n\\n GitHub Support via email\\n 3,000 GitHub Actions minutes per month\"}],\"rationale\":\"The 3,000-minute figure belongs to GitHub Team. GitHub Free is documented at 2,000 minutes per month, and the newest page switched to a dollar-based included compute amount.\",\"rewrite\":\"GitHub Free for organizations includes 2,000 GitHub Actions minutes per month for private repositories; 3,000 minutes is included with GitHub Team.\"}",
+          "finish_reason": "stop",
+          "model_requested": "copilot-cli/claude-sonnet-5.5",
+          "fallbacks_requested": [],
+          "usage": {
+            "prompt_tokens": 5888,
+            "completion_tokens": 418,
+            "total_tokens": 6306
+          },
+          "served_by": {
+            "provider": "copilot-cli",
+            "model": "claude-sonnet-5.5",
+            "is_fallback": false
+          },
+          "latency_seconds": 8.504,
+          "request_sha256": "707de457e69ebbc5d2c0d99c71882e16d8081441361a693817fd7bc2f48abbfb",
+          "response_sha256": "55593c0b95e7a0338b8897238964f28d8185d3dd4762b93a8a73b655d6ba25fe",
+          "messages_sha256": "ae0aa41058165d7071a27f9982328fe51df5a9bc36ba45fc469e84194d9358f6"
+        }
+      }
+    },
+    {
+      "claim": "claim-2",
+      "search": {
+        "status": "ok",
+        "query": "GitHub Pro plan included GitHub Actions minutes per month private repositories",
+        "sources": [
+          {
+            "id": "claim-2-src-1",
+            "url": "https://docs.github.com/en/enterprise-server@3.21/get-started/learning-about-github/githubs-plans",
+            "title": "GitHub's plans - GitHub Enterprise Server 3.21 Docs",
+            "content": "GitHub Support via email\n 3,000 GitHub Actions minutes per month\n 2 GB GitHub Packages storage\n Advanced tools and insights in private repositories:\n  + Required pull request reviewers\n  + Multiple pull request reviewers\n  + Protected branches\n  + Code owners\n  + Auto-linked references\n  + GitHub Pages\n\n    Note [...] GitHub Actions usage is free for standard GitHub-hosted runners in public repositories, and for self-hosted runners. See Choosing the runner for a job. For private repositories, each GitHub account receives a quota of free minutes and storage for use with GitHub-hosted runners, depending on the account's plan. Any usage beyond the included amounts is billed to your account.\n\n### GitHub Enterprise [...] GitHub Community Support\n Dependabot alerts\n Deployment protection rules for public repositories\n Two-factor authentication enforcement\n 500 MB GitHub Packages storage\n GitHub Actions features:\n  + 2,000 minutes per month\n  + Deployment protection rules for public repositories\n GitHub Pages in public repositories\n\n### GitHub Pro\n\nIn addition to the features available with GitHub Free for personal accounts, GitHub Pro includes:",
+            "content_sha256": "6ba81e87832466b66d29f3303f23eb20f0df40ea0db706c9f7cb9f38c4efa33a",
+            "retrieved_at": "2026-11-11T10:41:36.488534+00:00",
+            "published_at": "2026-05-12T00:00:00+00:00",
+            "published_at_raw": "Tue, 12 May 2026 00:00:00 GMT",
+            "relevance_score": 0.7312505
+          },
+          {
+            "id": "claim-2-src-2",
+            "url": "https://docs.github.com/en/billing/reference/product-usage-included",
+            "title": "Product usage included with each plan - GitHub Docs",
+            "content": "| Product | Usage type | GitHub Free | GitHub Pro | GitHub Free for organizations | GitHub Team | GitHub Enterprise Cloud |\n ---  ---  --- \n| GitHub Actions | Storage | 500 MB | 1 GB | 500 MB | 2 GB | 50 GB |\n| Minutes (per month) | 2,000 | 3,000 | 2,000 | 3,000 | 50,000 |\n| GitHub Codespaces | Storage (per month) | 15 GB | 20 GB | None | None | None |\n| Core hours (per month) | 120 | 180 | None | None | None |\n| GitHub Packages | Storage | 500 MB | 2 GB | 500 MB | 2 GB | 50 GB |",
+            "content_sha256": "29904bd0b56c13c10eb554d7f6a0bcae781895ad6e2e8819fe291ef15e5fc29f",
+            "retrieved_at": "2026-11-11T10:41:36.488534+00:00",
+            "published_at": null,
+            "published_at_raw": null,
+            "relevance_score": 0.69118476
+          },
+          {
+            "id": "claim-2-src-3",
+            "url": "https://docs.github.com/en/get-started/learning-about-github/faq-about-changes-to-githubs-plans",
+            "title": "FAQ about changes to GitHub's plans - GitHub Docs",
+            "content": "Most small teams use fewer than 3,000 Actions minutes/month, but some teams might use more. If your team needs additional minutes for private repositories, you can increase your spending limit for GitHub Actions. Actions minutes and Packages storage are still free for your public repositories. For more information, see Setting up budgets to control spending on metered products.\n\n## How do the seat limit changes affect me? [...] If your organization account currently uses the GitHub Team for Open Source plan, you’ve been automatically moved to GitHub Free, which includes private repositories with unlimited collaborators, 2,000 Actions minutes for private repositories, and GitHub Community on Discussions. Actions minutes and Packages storage are still free for your public repositories.\n\n## What is GitHub Community on Discussions? [...] GitHub Team now has a reduced monthly price of $4 per user\n GitHub Team no longer has a required five-seat minimum\n GitHub Team includes 3,000 Actions minutes per month for private repositories",
+            "content_sha256": "1e428749ce5ce163ff391e038e1c9a0643ffa4746b1aa775b2ace99bc4ddb754",
+            "retrieved_at": "2026-11-11T10:41:36.488534+00:00",
+            "published_at": "2020-04-14T00:00:00+00:00",
+            "published_at_raw": "Tue, 14 Apr 2020 00:00:00 GMT",
+            "relevance_score": 0.67458665
+          }
+        ],
+        "calls": 1
+      },
+      "assessment": {
+        "status": "ok",
+        "reply": {
+          "text": "{\"verdict\":\"SUPPORTED\",\"observed\":\"The billing reference table lists GitHub Pro with 3,000 Actions minutes per month. The plans page lists 3,000 minutes per month under GitHub Pro features and says the quota applies to private repositories.\",\"evidence\":[{\"source_id\":\"claim-2-src-2\",\"relation\":\"supports\",\"quote\":\"| Minutes (per month) | 2,000 | 3,000 | 2,000 | 3,000 | 50,000 |\"},{\"source_id\":\"claim-2-src-1\",\"relation\":\"supports\",\"quote\":\"3,000 GitHub Actions minutes per month\"},{\"source_id\":\"claim-2-src-1\",\"relation\":\"supports\",\"quote\":\"For private repositories, each GitHub account receives a quota of free minutes and storage for use with GitHub-hosted runners, depending on the account's plan.\"}],\"rationale\":\"The billing reference table shows 3,000 minutes per month for GitHub Pro, and the plans page agrees. The quota applies to private repositories.\",\"rewrite\":\"\"}",
+          "finish_reason": "stop",
+          "model_requested": "copilot-cli/claude-sonnet-5.5",
+          "fallbacks_requested": [],
+          "usage": {
+            "prompt_tokens": 5631,
+            "completion_tokens": 347,
+            "total_tokens": 5978
+          },
+          "served_by": {
+            "provider": "copilot-cli",
+            "model": "claude-sonnet-5.5",
+            "is_fallback": false
+          },
+          "latency_seconds": 7.595,
+          "request_sha256": "89374045ee83292cdac94e703ed4b0c4ade0e81c0979fcca679bebb2fde3bcb7",
+          "response_sha256": "3154cc0a9af5714bc4aeb048947464a17de3c97636f0cdc3cd9b4ea58cbd5abd",
+          "messages_sha256": "ddc15a9da46e1fa46b5f1550d804222c86132cd757c85f71790e2e680a5ed4bd"
+        }
+      }
+    }
+  ],
+  "attempts": [
+    {
+      "service": "gateway",
+      "status": "ok",
+      "usage": {
+        "prompt_tokens": 4201,
+        "completion_tokens": 278,
+        "total_tokens": 4479
+      },
+      "routing": {
+        "provider": "copilot-cli",
+        "model": "claude-sonnet-5.5",
+        "is_fallback": false
+      }
+    },
+    {
+      "service": "search",
+      "status": "ok",
+      "usage": {
+        "credits": 1
+      },
+      "routing": null
+    },
+    {
+      "service": "gateway",
+      "status": "ok",
+      "usage": {
+        "prompt_tokens": 5888,
+        "completion_tokens": 418,
+        "total_tokens": 6306
+      },
+      "routing": {
+        "provider": "copilot-cli",
+        "model": "claude-sonnet-5.5",
+        "is_fallback": false
+      }
+    },
+    {
+      "service": "search",
+      "status": "ok",
+      "usage": {
+        "credits": 1
+      },
+      "routing": null
+    },
+    {
+      "service": "gateway",
+      "status": "ok",
+      "usage": {
+        "prompt_tokens": 5631,
+        "completion_tokens": 347,
+        "total_tokens": 5978
+      },
+      "routing": {
+        "provider": "copilot-cli",
+        "model": "claude-sonnet-5.5",
+        "is_fallback": false
+      }
+    }
+  ],
+  "stop_reason": null
+}

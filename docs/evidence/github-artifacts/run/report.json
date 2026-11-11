@@ -1,0 +1,310 @@
+{
+  "project_id": "stalecheck",
+  "run_id": "fd-1bbfc585f39740058bdfa7838d587002",
+  "mode": "replay",
+  "schema_version": "4.0",
+  "version": "0.4.0",
+  "title": "StaleCheck model-assisted stale-answer assessment",
+  "summary": "2 selected claim(s): 1 model-supported, 1 potentially changed, 0 unverifiable.",
+  "answer_text": "GitHub.com still supports actions/upload-artifact v3. GitHub.com retired v3 of the artifact actions on January 30, 2025.",
+  "answer_date": null,
+  "verification_date": "2026-11-11",
+  "primary_domains": [
+    "github.blog"
+  ],
+  "claims": [
+    {
+      "id": "claim-1",
+      "proposal": "proposal-1",
+      "text": "GitHub.com still supports actions/upload-artifact v3.",
+      "span": {
+        "start": 0,
+        "end": 53
+      },
+      "category": "availability",
+      "time_sensitivity": {
+        "level": "high",
+        "reason": "Contradicts the second sentence; v3 support status changed after deprecation and may differ now.",
+        "model_generated": true
+      },
+      "query": "actions/upload-artifact v3 deprecation retired GitHub.com support status",
+      "verdict": "POTENTIALLY_CHANGED",
+      "reason_code": "MODEL_CONTRADICTION_WITH_VERBATIM_QUOTE",
+      "proposed_verdict": "CHANGED",
+      "temporal_change_established": false,
+      "evidence_strength": {
+        "heuristic_score": 3,
+        "maximum": 3,
+        "calibrated": false,
+        "components": {
+          "verbatim_quote": true,
+          "preferred_domain_match": true,
+          "distinct_urls": 2,
+          "dated_urls": 2,
+          "future_date_present": false
+        }
+      },
+      "freshness": {
+        "state": "dated",
+        "newest_source_date": "2025-01-15",
+        "age_days": 665,
+        "score": 0,
+        "maximum": 100,
+        "calibrated": false
+      },
+      "evidence": [
+        {
+          "source_id": "claim-1-src-1",
+          "url": "https://github.blog/changelog/2024-04-16-deprecation-notice-v3-of-the-artifact-actions",
+          "relation": "contradicts",
+          "quote": "Starting January 30th, 2025, GitHub Actions customers will no longer be able to use v3 of actions/upload-artifact or actions/download-artifact.",
+          "quote_start": 0,
+          "quote_end": 143,
+          "relation_model_generated": true
+        },
+        {
+          "source_id": "claim-1-src-3",
+          "url": "https://github.blog/changelog/2025-01-15-github-actions-ubuntu-20-runner-image-brownout-dates-and-other-breaking-changes",
+          "relation": "contradicts",
+          "quote": "v3 of the artifact actions will continue to be supported for GitHub Enterprise Server customers.",
+          "quote_start": 6,
+          "quote_end": 102,
+          "relation_model_generated": true
+        }
+      ],
+      "inference": {
+        "model_generated": true,
+        "observed": "GitHub.com stopped supporting v3 of actions/upload-artifact on January 30, 2025; workflows using it fail. v3 remains supported only for GitHub Enterprise Server.",
+        "rationale": "Sources say v3 was retired on GitHub.com as of January 30, 2025, with workflow failures after that date. Only GHES continues to support it.",
+        "suggested_rewrite": "GitHub.com no longer supports actions/upload-artifact v3; since January 30, 2025 customers can't use it, though v3 remains supported for GitHub Enterprise Server.",
+        "automatically_applied": false,
+        "human_review_required": true
+      }
+    },
+    {
+      "id": "claim-2",
+      "proposal": "proposal-2",
+      "text": "GitHub.com retired v3 of the artifact actions on January 30, 2025.",
+      "span": {
+        "start": 54,
+        "end": 120
+      },
+      "category": "availability",
+      "time_sensitivity": {
+        "level": "medium",
+        "reason": "The retirement date may have been changed or extended; the exact date needs to be checked.",
+        "model_generated": true
+      },
+      "query": "GitHub Actions artifact v3 retirement date January 30 2025 upload-artifact download-artifact",
+      "verdict": "MODEL_SUPPORTED",
+      "reason_code": "MODEL_SUPPORT_WITH_VERBATIM_QUOTE",
+      "proposed_verdict": "SUPPORTED",
+      "temporal_change_established": false,
+      "evidence_strength": {
+        "heuristic_score": 3,
+        "maximum": 3,
+        "calibrated": false,
+        "components": {
+          "verbatim_quote": true,
+          "preferred_domain_match": true,
+          "distinct_urls": 2,
+          "dated_urls": 2,
+          "future_date_present": false
+        }
+      },
+      "freshness": {
+        "state": "dated",
+        "newest_source_date": "2024-11-05",
+        "age_days": 736,
+        "score": 0,
+        "maximum": 100,
+        "calibrated": false
+      },
+      "evidence": [
+        {
+          "source_id": "claim-2-src-1",
+          "url": "https://github.blog/changelog/2024-04-16-deprecation-notice-v3-of-the-artifact-actions",
+          "relation": "supports",
+          "quote": "Starting January 30th, 2025, GitHub Actions customers will no longer be able to use v3 of actions/upload-artifact or actions/download-artifact.",
+          "quote_start": 0,
+          "quote_end": 143,
+          "relation_model_generated": true
+        },
+        {
+          "source_id": "claim-2-src-2",
+          "url": "https://github.blog/changelog/2024-11-05-notice-of-breaking-changes-for-github-actions",
+          "relation": "supports",
+          "quote": "Artifact actions v3 will be closing down by January 30, 2025.",
+          "quote_start": 0,
+          "quote_end": 61,
+          "relation_model_generated": true
+        }
+      ],
+      "inference": {
+        "model_generated": true,
+        "observed": "Sources state that starting January 30, 2025, GitHub Actions customers can no longer use v3 of actions/upload-artifact or actions/download-artifact; v3 was scheduled to close down by that date.",
+        "rationale": "Sources consistently give January 30, 2025 as the v3 retirement date. They are forward-looking notices and do not confirm completion, but the date matches the claim.",
+        "suggested_rewrite": null,
+        "automatically_applied": false,
+        "human_review_required": true
+      }
+    }
+  ],
+  "evidence": [
+    {
+      "id": "claim-1-src-1",
+      "url": "https://github.blog/changelog/2024-04-16-deprecation-notice-v3-of-the-artifact-actions",
+      "title": "Deprecation notice: v3 of the artifact actions - GitHub Changelog",
+      "content": "Starting January 30th, 2025, GitHub Actions customers will no longer be able to use v3 of actions/upload-artifact or actions/download-artifact. Customers should update workflows to begin using v4 of the artifact actions as soon as possible. While v4 of the artifact actions improves upload and download speeds by up to 98% and includes several new features, there are key differences from previous versions that may require updates to your workflows. Please see the documentation in the project [...] The deprecation of v3 will be similar to the previously announced v1 and v2 deprecation plans, which is scheduled to take place on June 30, 2024. Version tags will not be removed from the project repositories, however, attempting to use a version of the actions after the deprecation date will result in a workflow failure. Artifacts within their retention period will remain accessible from the UI or REST API regardless of the version used to upload. This deprecation will not impact any existing [...] actions universe26\n\n### Release\n\nGitHub Actions workflow lockfiles are generally available  \n\nactions universe26\n\n### Improvement\n\nMeta API endpoints updated for Actions blob storage  \n\nactions\n\n### Release\n\nXcode 27 runner image generally available  \n\nactions\n\n### Release\n\nGitHub Actions workflow lockfiles in public preview  \n\nactions\n\n### Improvement\n\nStateless GitHub App installation tokens rolled out  \n\nactions ecosystem & accessibility\n\n### Retired",
+      "content_sha256": "db40e75869441959a6a7591287d981574d0cf3b8c5d42abe6d52885315370154",
+      "retrieved_at": "2026-11-11T10:42:10.353908+00:00",
+      "published_at": "2024-04-16T00:00:00+00:00",
+      "published_at_raw": "Tue, 16 Apr 2024 00:00:00 GMT",
+      "relevance_score": 0.8684817,
+      "claim_id": "claim-1",
+      "preferred_domain_match": true,
+      "publication_is_estimate": true,
+      "effective_from": null,
+      "effective_to": null
+    },
+    {
+      "id": "claim-1-src-2",
+      "url": "https://github.blog/changelog/2024-12-05-deprecation-notice-github-pages-actions-to-require-artifacts-actions-v4-on-github-com",
+      "title": "Deprecation notice: GitHub Pages actions to require artifacts actions v4 on GitHub.com - GitHub Changelog",
+      "content": "Skip to content   Skip to sidebar \n\n/  Blog\n\nTry GitHub Copilot app   Attend GitHub Universe\n\nBack to changelog\n\nRetired\n\n• 1 minute read\n\n# Deprecation notice: GitHub Pages actions to require artifacts actions v4 on GitHub.com\n\n### What’s Changing\n\nOn January 30, 2025, the actions/upload-artifact and actions/download-artifact actions will be deprecated and no longer supported. These actions are being replaced with v4 versions, offering improved performance and new features. [...] ### What You Need to Do\n\nIf your GitHub Page site is using a custom Actions workflow to deploy, it must be updated to use:\n\n `actions/upload-pages-artifact@v3`\n `actions/deploy-pages@v4`\n\nFor detailed instructions and examples, see: Using custom workflows with GitHub Pages.\n\n### Key Details\n\n Applies to GitHub.com only: This change does not affect GitHub Enterprise Server (GHES).\n Deadline: Update your workflows before January 30, 2025 to avoid deployment failures.\n\n## Related Posts [...] ### Release\n\nRepository security advisory comments API in public preview  \n\necosystem & accessibility supply chain security\n\n### Improvement\n\nAccessibility statements highlighted on repository overview  \n\necosystem & accessibility\n\n### Retired\n\nX25519-only TLS ends for GHE.com on October 7  \n\napplication security ecosystem & accessibility enterprise management tools\n\n### Retired\n\nSHA-1 in HTTPS on GitHub sunset  \n\necosystem & accessibility\n\n### Release",
+      "content_sha256": "005f2c6ab28a09236688d39b6b725174186e7b601cd9e436d760092b3835090e",
+      "retrieved_at": "2026-11-11T10:42:10.353908+00:00",
+      "published_at": "2024-12-05T00:00:00+00:00",
+      "published_at_raw": "Thu, 05 Dec 2024 00:00:00 GMT",
+      "relevance_score": 0.8252664,
+      "claim_id": "claim-1",
+      "preferred_domain_match": true,
+      "publication_is_estimate": true,
+      "effective_from": null,
+      "effective_to": null
+    },
+    {
+      "id": "claim-1-src-3",
+      "url": "https://github.blog/changelog/2025-01-15-github-actions-ubuntu-20-runner-image-brownout-dates-and-other-breaking-changes",
+      "title": "GitHub Actions: Ubuntu 20 runner image brownout dates and other breaking changes - GitHub Changelog",
+      "content": "Note: v3 of the artifact actions will continue to be supported for GitHub Enterprise Server customers. The brownouts and retirement will not affect your workflows.\n\n## actions/cache v1-v2 and actions/toolkit cache package closing down [...] Artifact actions v3 will be closing down by January 30th, 2025. To raise awareness of the upcoming removal, we will temporarily fail jobs using v3 of `actions/upload-artifact` or `actions/download-artifact`. Builds that are scheduled to run during the brownout periods will fail. The brownouts are scheduled for the following dates and times:  \n – January 16th 3pm – 7pm UTC  \n – January 23rd 2pm – 10pm UTC",
+      "content_sha256": "909d2d597c88e5decc83ed208a326b89f97ae005d7a5c501641e7e6b2afe57b4",
+      "retrieved_at": "2026-11-11T10:42:10.353908+00:00",
+      "published_at": "2025-01-15T00:00:00+00:00",
+      "published_at_raw": "Wed, 15 Jan 2025 00:00:00 GMT",
+      "relevance_score": 0.72348577,
+      "claim_id": "claim-1",
+      "preferred_domain_match": true,
+      "publication_is_estimate": true,
+      "effective_from": null,
+      "effective_to": null
+    },
+    {
+      "id": "claim-2-src-1",
+      "url": "https://github.blog/changelog/2024-04-16-deprecation-notice-v3-of-the-artifact-actions",
+      "title": "Deprecation notice: v3 of the artifact actions - GitHub Changelog",
+      "content": "Starting January 30th, 2025, GitHub Actions customers will no longer be able to use v3 of actions/upload-artifact or actions/download-artifact. Customers should update workflows to begin using v4 of the artifact actions as soon as possible. While v4 of the artifact actions improves upload and download speeds by up to 98% and includes several new features, there are key differences from previous versions that may require updates to your workflows. Please see the documentation in the project [...] This announcement will also be added to actions/upload-artifact and actions/download-artifact. Please visit the documentation to learn more about storing workflow data as artifacts in Actions.\n\n## Related Posts\n\n### Retired\n\npull\\_request\\_target blocked by default December 2  \n\nactions application security\n\n### Release\n\nGitHub Agentic Workflows generally available  \n\nactions copilot universe26\n\n### Improvement\n\nGitHub Actions adds multi-cloud compute to improve reliability [...] The deprecation of v3 will be similar to the previously announced v1 and v2 deprecation plans, which is scheduled to take place on June 30, 2024. Version tags will not be removed from the project repositories, however, attempting to use a version of the actions after the deprecation date will result in a workflow failure. Artifacts within their retention period will remain accessible from the UI or REST API regardless of the version used to upload. This deprecation will not impact any existing",
+      "content_sha256": "3462ef85df8d78f7e5640eba68a535ed995cbf354e349acd81c0a03cc35b1150",
+      "retrieved_at": "2026-11-11T10:42:19.371002+00:00",
+      "published_at": "2024-04-16T00:00:00+00:00",
+      "published_at_raw": "Tue, 16 Apr 2024 00:00:00 GMT",
+      "relevance_score": 0.83601975,
+      "claim_id": "claim-2",
+      "preferred_domain_match": true,
+      "publication_is_estimate": true,
+      "effective_from": null,
+      "effective_to": null
+    },
+    {
+      "id": "claim-2-src-2",
+      "url": "https://github.blog/changelog/2024-11-05-notice-of-breaking-changes-for-github-actions",
+      "title": "Notice of breaking changes for GitHub Actions - GitHub Changelog",
+      "content": "Artifact actions v3 will be closing down by January 30, 2025. To raise awareness of the upcoming removal, we will temporarily fail jobs using v3 of `actions/upload-artifact` or `actions/download-artifact`. Builds that are scheduled to run during the brownout periods will fail. The brownouts are scheduled for the following dates and times:\n\n January 9, 12pm – 1pm EST\n January 16, 10am – 2pm EST\n January 23, 9am – 5pm EST",
+      "content_sha256": "a9f6e4c9c8ed4d60677124ca5b75a9a77722c5f62a25d2c32cfef78c7c5daa89",
+      "retrieved_at": "2026-11-11T10:42:19.371002+00:00",
+      "published_at": "2024-11-05T00:00:00+00:00",
+      "published_at_raw": "Tue, 05 Nov 2024 00:00:00 GMT",
+      "relevance_score": 0.8183016,
+      "claim_id": "claim-2",
+      "preferred_domain_match": true,
+      "publication_is_estimate": true,
+      "effective_from": null,
+      "effective_to": null
+    },
+    {
+      "id": "claim-2-src-3",
+      "url": "https://github.blog/changelog/2024-12-05-notice-of-upcoming-releases-and-breaking-changes-for-github-actions",
+      "title": "Notice of upcoming releases and breaking changes for GitHub Actions - GitHub Changelog",
+      "content": "Artifact actions v3 will be closing down by January 30th, 2025. To raise awareness of the upcoming removal, we will temporarily fail jobs using v3 of `actions/upload-artifact` or `actions/download-artifact`. Builds that are scheduled to run during the brownout periods will fail. The brownouts are scheduled for the following dates and times:\n\n January 9th 5pm – 6pm UTC\n January 16th 3pm – 7pm UTC\n January 23rd 2pm – 10pm UTC [...] We are beginning the process of closing down the Ubuntu 20 hosted runner image, following our N-1 OS support policy. This image will be fully retired by April 15, 2025. We recommend updating workflows to use `ubuntu-22.04`, or `ubuntu-24.04`.\n\n### Artifacts v3 brownouts [...] If users run workflows that call the retired versions after March 1st, 2025, the workflows will fail. Announcements have been posted in the `actions/cache` and `actions/toolkit` repositories with additional information on the migration. Note that this does not affect GitHub Enterprise Server customers, you can continue to use all versions without failure.",
+      "content_sha256": "c3122b0f43d7c163f51a0ee51ddfb8cf321c8e4f66384e2fce47b1f81481d835",
+      "retrieved_at": "2026-11-11T10:42:19.371002+00:00",
+      "published_at": null,
+      "published_at_raw": null,
+      "relevance_score": 0.8178656,
+      "claim_id": "claim-2",
+      "preferred_domain_match": true,
+      "publication_is_estimate": true,
+      "effective_from": null,
+      "effective_to": null
+    }
+  ],
+  "counts": {
+    "MODEL_SUPPORTED": 1,
+    "POTENTIALLY_CHANGED": 1,
+    "UNVERIFIABLE": 0
+  },
+  "rejected_proposals": [],
+  "approval": {
+    "queries": [
+      "actions/upload-artifact v3 deprecation retired GitHub.com support status",
+      "GitHub Actions artifact v3 retirement date January 30 2025 upload-artifact download-artifact"
+    ],
+    "primary_domains": [
+      "github.blog"
+    ],
+    "sha256": "d734459b6883b74b30e210108e58bff9acbc8d6f9714c3f3468090b1e350df1b",
+    "approved": true
+  },
+  "stop_reason": null,
+  "usage": {
+    "attempts": 5,
+    "provenance": {
+      "gateway": "bifrost",
+      "search": "tavily"
+    },
+    "gateway_calls": 3,
+    "tokens": {
+      "known_subtotal": {
+        "prompt_tokens": 15745,
+        "completion_tokens": 889,
+        "total_tokens": 16634
+      },
+      "complete": true,
+      "scope": "provider_reported_not_invoice"
+    },
+    "search_calls": 2,
+    "credits": {
+      "known_subtotal": {
+        "credits": 2
+      },
+      "complete": true,
+      "scope": "provider_reported_not_invoice"
+    },
+    "routing": {
+      "observed_fallbacks": 0,
+      "unknown_calls": 0
+    }
+  },
+  "limitations": [
+    "All relations, observations, rationales and proposed edits are model-generated, not independently verified semantic entailment.",
+    "Verbatim quotation is checked against retained excerpts only. Domain preference does not authenticate a primary source; distinct URLs do not prove independence.",
+    "Current-source disagreement does not establish that an answer was once correct. Temporal change is not established by this pipeline.",
+    "Publication/update dates are provider estimates, not effective dates. Retrieval time and recent publication do not establish factual currency.",
+    "Evidence strength and freshness are uncalibrated metadata heuristics, not probabilities of correctness or currency: freshness only reflects how recent the newest quoted source is. Proposed edits are never automatically applied.",
+    "The journey deadline is cooperative. Socket timeouts do not impose a hard bound on DNS, response headers or a detached response socket.",
+    "Usage is a known subtotal plus completeness, not a monetary spending guarantee. Unknown routing means fallback behavior is unknown.",
+    "Unsigned transcripts and approval records establish internal consistency, not authenticated execution, consent, source truth or live provider compatibility."
+  ],
+  "input_sha256": "edfb5a589d0c194ba40bfcf06d095a90c7bc766a4cae8efcbb68de59b286c86d",
+  "config_sha256": "526ac6a9a47750d1e65c8c48f3fed53085a2b59605414ea5109f4c9181094ba8"
+}
